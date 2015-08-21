@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<cfinclude template="header.cfm">
+<cfinclude template="header-award.cfm">
 
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="400">
 	<tr><td>&nbsp;&nbsp;&nbsp;</td></tr>

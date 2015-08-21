@@ -57,7 +57,13 @@
 		<cfif session.emp_id is "">
 			<cfset session.emp_id = "#session.username#">
 		</cfif>
-		
+        
+        <cfif awardchoice is "1">
+        	<cfset session.awardtype = "1">
+        <cfelse>
+        	<cfset session.awardtype = "2">
+        </cfif>
+        		
 		<cflocation url="departments.cfm" addtoken="No">
 		<cfabort>
 	<cfelse>

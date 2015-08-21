@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<CFINCLUDE TEMPLATE="header.cfm">
+<CFINCLUDE TEMPLATE="header-award.cfm">
 
 <!-- Make sure employee and achievement values are carried over from achievement.cfm -->
 <cfoutput>Employee is #session.employee#</cfoutput><br />

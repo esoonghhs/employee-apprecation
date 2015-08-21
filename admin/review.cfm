@@ -28,7 +28,7 @@ function CountThis(visCnt) {
 <cfset enddate = createdatetime(year(now()),12,31,23,59,59)>
 
 <body>
-<cfinclude template="../header.cfm">
+<cfinclude template="../header-award.cfm">
 
 <cfquery name="getDept" datasource="#ds.hatsoff#">
 SELECT     employees.emp_id, employees.emp_full_name, employees.account_number, employees.fund_number, employees.account_title, 

@@ -1,21 +1,35 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <cfquery datasource="HatsOff">
 	Insert into audit
 	(admin_uid, nom_id, action, action_date, nominee_uid)
 	values
 	('#session.emp_id#', 0, 'Choose Department', #Now()#, '')
 </cfquery>
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
+<!--- troubleshoot lines --->
+<cfset empid = #session.emp_id#>
+<cfset logintime = #Now()#>
+<cfoutput>Logged in person UID is #empid#</cfoutput><br />
+<cfoutput>Time logged on is #logintime#</cfoutput><br />
+<cfoutput>The award type is "#session.awardtype#"</cfoutput><br />
+
 <head>
 	<title>Hats Off</title>
 </head>
 
 <body onload="document.frmScan.department.focus();">
-<cfinclude template="header.cfm">
+<!--- From awardtype determine which logo to use --->
+<cfif session.awardtype is 1>
+	<cfinclude template="header-hatsoff.cfm">
+<cfelse> 
+	<cfinclude template="header-safety.cfm">
+</cfif>
 
 <cfset session.dept = dept>
 <cfset session.letter = "0">
 <cfset session.ood = "0">
+<cfoutput>The session.dept is "#session.dept#"</cfoutput>
 
 <cfif session.dept is "Conferences">
 	<cfset session.vdept = "CCMC">

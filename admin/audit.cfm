@@ -12,7 +12,7 @@
 	                      audit ON administration.emp_id = audit.admin_uid
 	GROUP by emp_full_name, admin_uid  
 </cfquery>
-<cfinclude template="../header.cfm">
+<cfinclude template="../header-award.cfm">
 <br>
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="200">
 	<tr>

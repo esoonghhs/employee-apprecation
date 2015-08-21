@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<cfinclude template="../header.cfm">
+<cfinclude template="../header-award.cfm">
 <br>
 <form action="validate.cfm" method="post">
 <table align="center" border="0" cellpadding="2" cellspacing="0" width="250">

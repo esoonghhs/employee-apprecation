@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<CFINCLUDE TEMPLATE="header.cfm">
+<CFINCLUDE TEMPLATE="header-award.cfm">
 
 <body>
 <!-- Check duplicate UIDs for same nominator/nominee -->
