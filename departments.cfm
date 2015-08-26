@@ -12,8 +12,9 @@
 <cfset empid = #session.emp_id#>
 <cfset logintime = #Now()#>
 <cfoutput>Logged in person UID is #empid#</cfoutput><br />
-<cfoutput>Time logged on is #logintime#</cfoutput>
-<cfoutput>The award type is "#session.awardtype#"</cfoutput>
+<cfoutput>Time logged on is #logintime#</cfoutput><br />
+<cfoutput>The award type is "#session.awardtype#"</cfoutput></html><br />
+<cfoutput>The session_emp_id is #empid#</cfoutput>
 
 <head>
     <meta charset="utf-8">
@@ -24,7 +25,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
     
-	<title>Hats Off</title>
+	<title>Employee Appreciation  |  UCLA Housing and Hospitality Services</title>
     
     <!--- Bootstrap core CSS --->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
@@ -64,107 +65,44 @@
 </cfif>
 
 <!--- Match empid to emp_id in Table employees, then acct number to Table departments --->
-<!--- sample from ca5a <CFQUERY NAME="getNominatorDept" DATASOURCE="hatsoff">
-                SELECT e.emp_id, e.emp_full_name, e.emp_first. e.emp_last, d.Department_Name
-                FROM employees AS e
-                INNER JOIN departments AS d
-                ON e.account_number=d.account_number
-				WHERE e.emp_id = session.emp_id
-            </CFQUERY> 
-			
-			once we know the nominator's dept name, then use if else decison to output the follow codes for the correct dept to appear 
---->
-
 <CFQUERY NAME="getNominatorDept" DATASOURCE="hatsoff">
-	SELECT e.emp_id, e.emp_full_name, e.emp_first. e.emp_last, d.Department_Name
+	SELECT e.emp_id, e.emp_full_name, e.emp_first, e.emp_last, d.DepartmentName
 	FROM employees AS e
 	INNER JOIN departments AS d
 	ON e.account_number=d.account_number
-	WHERE e.emp_id = session.emp_id
+	WHERE e.emp_id = <cfqueryparam value="#empid#" maxlength="10">
 </CFQUERY> 
 
-<!--- troubleshoot lines --->
-<cfoutput>The nominator's dept is "#getNominatorDept.Department_Name#"</cfoutput>
-
 <table align="center" border="0" cellpadding="0" cellspacing="2" width="600">
 	<tr>
-		<td>
-			<table align="center">
-				<tr>
-					<td><a href="nominee.cfm?dept=Conferences">Conferences, Catering & Marketing</a></td>
-				</tr>
-				<tr>
-					<td><a href="nominee.cfm?dept=Dining">Dining Services</a></td>
-				</tr>
-				<tr>
-					<td><a href="nominee.cfm?dept=HHSAdmin">Housing Admin & HBO</a></td>
-				</tr>
-				<tr>
-					<td><a href="nominee.cfm?dept=HHSIT">Housing IT</a></td>
-				</tr>
-				<tr>
-					<td><a href="nominee.cfm?dept=Housing">Housing Services</a></td>
-				</tr>
-				<tr>
-					<td><a href="nominee.cfm?dept=Letter">Letter</a></td>
-				</tr>
-			</table>
-		</td>
-		<td>
-			<table align="center">
-				<tr>
-					<td><a href="nominee.cfm?dept=CampusService">Housing HR/Payroll</a></td>
-				</tr>
-				<tr>
-					<td><a href="nominee.cfm?dept=Lake">LACC & BRUINWOODS</a></td>
-				</tr>
-				<tr>
-					<td><a href="nominee.cfm?dept=HousingProjects">Housing Projects</a></td>
-				</tr>
-				<tr>
-					<td><a href="nominee.cfm?dept=Rooms">Rooms Division</a></td>
-				</tr>
-				<tr>
-					<td><a href="nominee.cfm?dept=UA">University Apartments</a></td>
-				</tr>
-                                  <tr>
-					<td><a href="nominee.cfm?dept=LUSKIN CONFERENCE CENTER">Luskin Conference Center</a></td>
-				</tr>
-                <tr>
-					<td><a href="nominee.cfm?dept=All">Out of Department</a></td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-</table>
-
-<table align="center" border="0" cellpadding="0" cellspacing="2" width="600">
-	<tr>
-    	<cfif getNominatorDept.Department_Name is Conferences>
-    		<td><a href="nominee.cfm?dept=Conferences">Conferences, Catering & Marketing</a></td>
-        <cfelseif getNominatorDept.Department_Name is Dining>
-            <td><a href="nominee.cfm?dept=Dining">Dining Services</a></td>
-        <cfelseif getNominatorDept.Department_Name is HHSAdmin>
-			<td><a href="nominee.cfm?dept=HHSAdmin">Housing Admin & HBO</a></td>
-        <cfelseif getNominatorDept.Department_Name is HHSIT>
-			<td><a href="nominee.cfm?dept=HHSIT">Housing IT</a></td>
-        <cfelseif getNominatorDept.Department_Name is Housing>
-			<td><a href="nominee.cfm?dept=Housing">Housing Services</a></td>
-        <cfelseif getNominatorDept.Department_Name is Letter>
-			<td><a href="nominee.cfm?dept=Letter">Letter</a></td>
-    	<cfelseif getNominatorDept.Department_Name is CampusService>
-			<td><a href="nominee.cfm?dept=CampusService">Housing HR/Payroll</a></td>
-        <cfelseif getNominatorDept.Department_Name is Lake>
-            <td><a href="nominee.cfm?dept=Lake">LACC & BRUINWOODS</a></td>
-        <cfelseif getNominatorDept.Department_Name is HousingProjects>
-            <td><a href="nominee.cfm?dept=HousingProjects">Housing Projects</a></td>
-        <cfelseif getNominatorDept.Department_Name is Rooms>
-            <td><a href="nominee.cfm?dept=Rooms">Rooms Division</a></td>
-        <cfelseif getNominatorDept.Department_Name is UA>
-           	<td><a href="nominee.cfm?dept=UA">University Apartments</a></td>
-        <cfelseif getNominatorDept.Department_Name is LUSKIN CONFERENCE CENTER>
-			<td><a href="nominee.cfm?dept=LUSKIN CONFERENCE CENTER">Luskin Conference Center</a></td>
+    	<td>
+    	<cfif getNominatorDept.DepartmentName is "Conferences">
+    		<cfoutput><a href="nominee.cfm?dept=Conferences">Conferences, Catering & Marketing</a></cfoutput>
+        <cfelseif getNominatorDept.DepartmentName is "Dining">
+            <cfoutput><a href="nominee.cfm?dept=Dining">Dining Services</a></cfoutput>
+        <cfelseif getNominatorDept.DepartmentName is "HHSAdmin">
+			<cfoutput><a href="nominee.cfm?dept=HHSAdmin">Housing Admin & HBO</a></cfoutput>
+        <cfelseif getNominatorDept.DepartmentName is "HHS IT">
+			<cfoutput><a href="nominee.cfm?dept=HHSIT">Housing IT</a></cfoutput>
+        <cfelseif getNominatorDept.DepartmentName is "Housing">
+			<cfoutput><a href="nominee.cfm?dept=Housing">Housing Services</a></cfoutput>
+        <cfelseif getNominatorDept.DepartmentName is "Letter">
+			<cfoutput><a href="nominee.cfm?dept=Letter">Letter</a></cfoutput>
+    	<cfelseif getNominatorDept.DepartmentName is "CampusService">
+			<cfoutput><a href="nominee.cfm?dept=CampusService">Housing HR/Payroll</a></cfoutput>
+        <cfelseif getNominatorDept.DepartmentName is "Lake">
+            <cfoutput><a href="nominee.cfm?dept=Lake">LACC & BRUINWOODS</a></cfoutput>
+        <cfelseif getNominatorDept.DepartmentName is "HousingProjects">
+            <cfoutput><a href="nominee.cfm?dept=HousingProjects">Housing Projects</a></cfoutput>
+        <cfelseif getNominatorDept.DepartmentName is "Rooms">
+            <cfoutput><a href="nominee.cfm?dept=Rooms">Rooms Division</a></cfoutput>
+        <cfelseif getNominatorDept.DepartmentName is "UA">
+           	<cfoutput><a href="nominee.cfm?dept=UA">University Apartments</a></cfoutput>
+        <cfelseif getNominatorDept.DepartmentName is "LUSKIN_CONFERENCE_CENTER">
+			<cfoutput><a href="nominee.cfm?dept=LUSKIN_CONFERENCE_CENTER">Luskin Conference Center</a></cfoutput>
         </cfif>
+        </td>
+        <td><a href="nominee.cfm?dept=All">Out of Department</a></td>
 	</tr>
 </table>
 
@@ -180,7 +118,7 @@
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
     
 <cfdump var="#empid#"><br />
-<cfdump var="#logintime#">
-<cfdump var="#getNominatorDept.Department_Name#">
+<cfdump var="#logintime#"><br />
+<cfdump var="#getNominatorDept.DepartmentName#">
 </body>
 </html>
