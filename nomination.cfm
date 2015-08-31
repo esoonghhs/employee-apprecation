@@ -4,13 +4,19 @@
 	values
 	('#session.emp_id#', 0, 'Choose Department', #Now()#, '')
 </cfquery>
+
+<cfquery name="getAchievements" datasource="hatsoff">
+	Select * From achievements
+	Order by achievement_id
+</cfquery>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <!--- troubleshoot lines --->
-<cfoutput>Logged in person UID is #empid#</cfoutput><br />
 <cfoutput>The award type is "#session.awardtype#"</cfoutput><br />
-<cfoutput>The department is"#getNominatorDept.DepartmentName#"</cfoutput>
+<cfoutput>The dept is "#dept#"</cfoutput><br />
+<cfoutput>The nominator is #session.emp_id#</cfoutput>
 
 <head>
     <meta charset="utf-8">
@@ -42,9 +48,6 @@
 <cfset session.dept = dept>
 <cfset session.letter = "0">
 <cfset session.ood = "0">
-
-<!--- troubleshoot lines --->
-<cfoutput>The session.dept is "#session.dept#"</cfoutput>
 
 <!--- set session.vdept value --->
 <cfif session.dept is "Conferences">
@@ -90,10 +93,18 @@
 	<cfset session.ood = "1">
 </cfif>
 
-<hr class="featurette-divider">
+<cfquery name="getEmps" datasource="HatsOff">
+	Select emp_id, emp_full_name
+	From employees inner join departments on employees.account_number = departments.account_number
+	<cfif session.vdept is not "All" and session.vdept is not "Letter">
+	Where departments.[departmentname] = '#session.vdept#'
+	</cfif>
+	Order by emp_full_name
+</cfquery>
 
-<!--- pass nomination.getDept & nomination.getEm values to summary.cfm for confirmation --->
+<!--- pass nomination.getDept & nomination.getEm & achievement values to summary.cfm for confirmation --->
 <cfform action="#URLSessionFormat("summary.cfm")#" method="POST" name="frmScan">
+<hr class="featurette-divider">
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr>
 		<td>
@@ -116,6 +127,60 @@
 			<cfselect name="employee" bind="cfc:nomination.getEmp ({department})" />
 		</td>
 	</tr>
+    <tr><td>&nbsp;</td></tr>
+
+	<tr>
+		<td>
+		3. Select the nominees achievement:
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<cfoutput query="getAchievements">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="achievement" value="#achievement_id#"> #achievement#<br>
+			</cfoutput>
+		</td>	
+	</tr>
+	<tr><td>&nbsp;</td></tr>
+	<tr>
+		<td>
+		4. In the space provided, describe the nominee's achievement (190 Character Limit): <strong><SPAN id=myCounter1>190</SPAN></strong> remaining</font>
+		</td>
+	</tr>
+	<tr>
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<textarea name="Description" cols="50" rows="6" id="Description"  onkeypress="return LimitThis()" onkeyup="return CountThis(myCounter1)" onmouseover="return CountThis(myCounter1)" wrap=physical maxLength="190" style="font-family:arial,helvetica, sans-serif;"></textarea>
+		</td>
+	</tr>
+	<tr><td>&nbsp;</td></tr>
+    
+	<tr>
+		<td>
+		5. Enter the Nominator's name:
+		</td>
+	</tr>
+	<tr>
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        	<cfoutput>#session.Empfullname#</cfoutput>
+            <input type="hidden" id="nominator" name="nominator" value="#emp_id#">
+		</td>
+	</tr>
+	<tr><td>&nbsp;</td></tr>
+	<tr>
+		<td>
+		6. Enter the Supervisor's name:
+		</td>
+	</tr>
+	<tr>
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<select name="supervisor">
+				<option value=""></option>
+				<cfoutput query="getEmps">
+					<option value="#emp_id#">#emp_full_name#</option>
+				</cfoutput>
+			</select>
+		</td>
+	</tr>
 	<tr><td>&nbsp;</td></tr>
 	<tr align="center">
 		<td>
@@ -134,14 +199,31 @@
 <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    
+    <script language = "Javascript">
+
+function LimitThis() {
+	var myObject=event.srcElement;
+	if (myObject.value.length==myObject.maxLength*1) return false;
+}
+
+function CountThis(visCnt) { 
+	var myObject=event.srcElement;
+	if (myObject.value.length>myObject.maxLength*1) myObject.value=myObject.value.substring(0,myObject.maxLength*1);
+	if (visCnt) visCnt.innerText=myObject.maxLength-myObject.value.length;
+	
+}
+</script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/vendor/holder.min.js"></script> 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
-    
-<cfdump var="#nomination.getDept#"><br />
-<cfdump var="#nomination.getEmp#">
+
+<!---  
+<cfdump var="#getDept#"><br />
+<cfdump var="#getEmp#">
+--->
 
 </body>
 </html>

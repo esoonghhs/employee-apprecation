@@ -1,4 +1,4 @@
-<cfif nominator is "">
+<!--- <cfif nominator is "">
 	<cfoutput>
 	<script language="javascript">
 	var agree=alert("You must pick a Nominator. Please go back and make a selection.");
@@ -22,7 +22,7 @@
 	</script>
 	</cfoutput>
 	<cfabort>
-</cfif>
+</cfif> --->
 
 <cfquery datasource="HatsOff">
 	Insert into audit
@@ -30,20 +30,20 @@
 	values
 	('#session.emp_id#', 0, 'Choose Nominator', #Now()#, '#session.employee#')
 </cfquery>
-<!--- <cfoutput>
+<cfoutput>
 	Department - #session.department#<br>
 	Nominee - #session.employee#<br>
 	Achievement - #session.achievement#<br>
 	Description - #session.description#<br>
-	Nominator - #nominator#<br>
-	Supervisor - #supervisor#
-</cfoutput> --->
+	Nominator - #session.nominator#<br>
+	Supervisor - #session.supervisor#
+</cfoutput>
 
 <cfquery datasource="HatsOff">
 	Insert into awards
 	(nominee_location, nominee_uid, nominee_achievement, nominee_achievement_desc, nominator_uid, supervisor_uid, nomination_status, nomination_createdate, letter, ood)
 	values
-	('#session.department#', '#session.employee#', #session.achievement#, '#rereplace(session.description, "'","'","All")#', '#nominator#', '#supervisor#', 'Pending', #now()#, #session.letter#, #session.ood#)
+	('#session.department#', '#session.employee#', #session.achievement#, '#rereplace(session.description, "'","'","All")#', '#session.nominator#', '#session.supervisor#', 'Pending', #now()#, #session.letter#, #session.ood#)
 </cfquery>
 
 <cfquery name="getID" datasource="HatsOff">

@@ -109,6 +109,54 @@
 	</tr>
 </table>
 
+<TABLE ALIGN="center">
+				<TR><TD>&nbsp;</TD></TR>
+				<CFOUTPUT>
+				<TR>
+					<TD ALIGN="center">
+						Number of Nominations&nbsp;<INPUT TYPE="Integer" NAME="NumNom" VALUE="" SIZE="2">
+					</TD>
+				</TR>
+				<TR><TD>&nbsp;</TD></TR>
+				</CFOUTPUT>
+				<tr>
+                    <td>
+						<cfif getNominatorDept.DepartmentName is "Conferences">
+                            <cfoutput><a href="nomination.cfm?dept=Conferences">Conferences, Catering & Marketing</a></cfoutput>
+                        <cfelseif getNominatorDept.DepartmentName is "Dining">
+                            <cfoutput><a href="nomination.cfm?dept=Dining">Dining Services</a></cfoutput>
+                        <cfelseif getNominatorDept.DepartmentName is "HHSAdmin">
+                            <cfoutput><a href="nomination.cfm?dept=HHSAdmin">Housing Admin & HBO</a></cfoutput>
+                        <cfelseif getNominatorDept.DepartmentName is "HHS IT">
+                            <cfoutput><a href="nomination.cfm?dept=HHSIT">Housing IT</a></cfoutput>
+                        <cfelseif getNominatorDept.DepartmentName is "Housing">
+                            <cfoutput><a href="nomination.cfm?dept=Housing">Housing Services</a></cfoutput>
+                        <cfelseif getNominatorDept.DepartmentName is "Letter">
+                            <cfoutput><a href="nomination.cfm?dept=Letter">Letter</a></cfoutput>
+                        <cfelseif getNominatorDept.DepartmentName is "CampusService">
+                            <cfoutput><a href="nomination.cfm?dept=CampusService">Housing HR/Payroll</a></cfoutput>
+                        <cfelseif getNominatorDept.DepartmentName is "Lake">
+                            <cfoutput><a href="nomination.cfm?dept=Lake">LACC & BRUINWOODS</a></cfoutput>
+                        <cfelseif getNominatorDept.DepartmentName is "HousingProjects">
+                            <cfoutput><a href="nomination.cfm?dept=HousingProjects">Housing Projects</a></cfoutput>
+                        <cfelseif getNominatorDept.DepartmentName is "Rooms">
+                            <cfoutput><a href="nomination.cfm?dept=Rooms">Rooms Division</a></cfoutput>
+                        <cfelseif getNominatorDept.DepartmentName is "UA">
+                            <cfoutput><a href="nomination.cfm?dept=UA">University Apartments</a></cfoutput>
+                        <cfelseif getNominatorDept.DepartmentName is "LUSKIN_CONFERENCE_CENTER">
+                            <cfoutput><a href="nomination.cfm?dept=LUSKIN_CONFERENCE_CENTER">Luskin Conference Center</a></cfoutput>
+                        </cfif>
+                    </td>
+        			<td><a href="nomination.cfm?dept=All">Out of Department</a></td>
+				</tr>
+                <INPUT TYPE="hidden" NAME="session.uid" VALUE="#session.uid#">
+				<TR> 
+					<TD COLSPAN="4" ALIGN="center">
+					<INPUT TYPE="Submit" VALUE="Continue">
+					</TD>
+				</TR>
+</TABLE>
+
 <cfinclude template="footer.cfm">
 
 <!-- Bootstrap core JavaScript

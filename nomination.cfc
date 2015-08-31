@@ -14,7 +14,7 @@
         SELECT account_number, account_title
         FROM departments
 		<cfif session.vdept is not "All" and session.vdept is not "Letter">
-		WHERE [department name] = '#session.vdept#'  
+		WHERE [departmentname] = '#session.vdept#'  
 		</cfif>
         ORDER BY account_title
         </cfquery>
