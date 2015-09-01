@@ -10,13 +10,21 @@
 	Order by achievement_id
 </cfquery>
 
+<CFQUERY NAME="getNominatorDept" DATASOURCE="hatsoff">
+	SELECT emp_full_name
+	FROM employees
+	WHERE emp_id = #session.emp_id#
+</CFQUERY>.
+<cfset emp_full_name = getNominatorDept.emp_full_name>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <!--- troubleshoot lines --->
 <cfoutput>The award type is "#session.awardtype#"</cfoutput><br />
 <cfoutput>The dept is "#dept#"</cfoutput><br />
-<cfoutput>The nominator is #session.emp_id#</cfoutput>
+<cfoutput>The nominator is #session.emp_id#</cfoutput><br />
+<cfoutput>The nominator is #emp_full_name#</cfoutput>
 
 <head>
     <meta charset="utf-8">
@@ -161,8 +169,8 @@
 	</tr>
 	<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        	<cfoutput>#session.Empfullname#</cfoutput>
-            <input type="hidden" id="nominator" name="nominator" value="#emp_id#">
+        	<cfoutput>#emp_full_name#</cfoutput>
+            <input type="hidden" id="nominator" name="nominator" value="#session.emp_id#">
 		</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>

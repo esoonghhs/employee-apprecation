@@ -1,5 +1,3 @@
-
-
 <CFIF uname IS "">
 	<CFLOCATION URL="login.cfm">
 </CFIF>

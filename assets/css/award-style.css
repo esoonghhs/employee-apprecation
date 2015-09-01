@@ -4,3 +4,16 @@ body {
 td {
 	font-size: 100%; color: #555555; font-family: Arial, Helvetica, sans-serif
 }
+
+nav {
+    background: url('../img/header-background.png') no-repeat;
+    background: linear-gradient(to left, rgb(53, 131, 190), rgb(16, 82, 134));
+}
+
+.navbar {
+    display: block;
+    padding-top: 18px;
+    min-height: 115px;
+    border-bottom: 6px solid rgb(255, 255, 255);
+    z-index: 7000;
+}

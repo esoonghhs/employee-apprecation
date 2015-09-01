@@ -114,7 +114,7 @@
 				<CFOUTPUT>
 				<TR>
 					<TD ALIGN="center">
-						Number of Nominations&nbsp;<INPUT TYPE="Integer" NAME="NumNom" VALUE="" SIZE="2">
+						Number of Nominations&nbsp;<INPUT TYPE="text" NAME="NumNom" VALUE="" SIZE="2">
 					</TD>
 				</TR>
 				<TR><TD>&nbsp;</TD></TR>
@@ -122,7 +122,7 @@
 				<tr>
                     <td>
 						<cfif getNominatorDept.DepartmentName is "Conferences">
-                            <cfoutput><a href="nomination.cfm?dept=Conferences">Conferences, Catering & Marketing</a></cfoutput>
+                            <cfoutput><INPUT TYPE="button" <a href="nomination.cfm?dept=Conferences">Conferences, Catering & Marketing</a></cfoutput>
                         <cfelseif getNominatorDept.DepartmentName is "Dining">
                             <cfoutput><a href="nomination.cfm?dept=Dining">Dining Services</a></cfoutput>
                         <cfelseif getNominatorDept.DepartmentName is "HHSAdmin">
