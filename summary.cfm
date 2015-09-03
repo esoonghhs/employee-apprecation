@@ -52,7 +52,7 @@ Supervisor - #supervisor#
 
 <div class="container">
 <div class="page-header">
-        <h1>Summary of your nomination</h1>
+        <h1 class="text-center">Summary of your nomination</h1>
       </div>
       <div class="row">
         <div class="col-md-12">
@@ -77,6 +77,7 @@ Supervisor - #supervisor#
         </div>
       </div>
 </div>
+<hr class="featurette-divider">
 
 <cfset session.department = #department#>
 <cfset session.employee = #employee#>
@@ -85,22 +86,33 @@ Supervisor - #supervisor#
 <cfset session.nominator = #nominator#>
 <cfset session.supervisor = #supervisor#>
 
+<table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
+	<tr align="center">
+		<td>
+        	<div class="alert alert-warning" role="alert">
+                <p class="text-center"><strong><small>Make sure correctness of information before click Submit!</small></strong></p>
+                <p class="text-center"><strong><small>Otherwise, click Edit to go back to change information.</small></strong></p>
+            </div>
+        </td>
+	</tr>
+</table>
+
 <!--- pass nomination.getDept & nomination.getEm & achievement values to summary.cfm for confirmation --->
 <cfform action="#URLSessionFormat("process.cfm")#" method="POST">
-<hr class="featurette-divider">
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr align="center">
 		<td>
         	<input type="button" value="    Cancel   " onclick="window.location='logoff.cfm';">
         </td>
         <td>
-        	<input type="hidden" id="session.department" name="session.department" value="#session.department#">
+        	<input type="hidden" id="session.awardtype" name="session.awardtype" value="#session.awardtype#">
+            <input type="hidden" id="session.department" name="session.department" value="#session.department#">
             <input type="hidden" id="session.employee" name="session.employee" value="#session.employee#">
             <input type="hidden" id="session.achievement" name="session.achievement" value="#session.achievement#">
             <input type="hidden" id="session.description" name="session.description" value="#session.description#">
             <input type="hidden" id="session.nominator" name="session.nominator" value="#session.nominator#">
             <input type="hidden" id="session.supervisor" name="session.supervisor" value="#session.supervisor#">
-            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Please make sure all information is correct before clicking the submit button!"><input type="submit" value="  Submit  "></button>
+           <input type="submit" value="  Submit  ">
         </td>
         <td>
             <input type="button" value="    Edit   " onclick="history.go(-1);return true;">
