@@ -17,11 +17,10 @@
     <!--- Custom styles for this template --->
     <link href="assets/css/signin.css" rel="stylesheet">
     <link href="assets/css/carousel.css" rel="stylesheet">
-    
 </head>
 
 <body>
-<cfinclude template="header-award.cfm">           
+<cfinclude template="header-award.cfm">
 <br>
 <div class="container">
 <!--- Two columns of thumbnails --->
@@ -33,38 +32,85 @@
 			<img src="assets/img/hatsoff2.jpg" alt="HatsOff Logo" width="290" height="140" title="HatsOff Logo">
             <h2><button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#hatsoffModal">Nominate</h2><br />
 			<h4>Qualifications</h4>
-			<p>Rewarding UCLA Housing & Hospitality Services Team Members for their exceptional efforts. The Hats Off program is designed to provide a timely 'tip of the hat' for a job well done, recognizing team members for exceptional service and performance in day-to-day work.
-
-            
+			<p class="text-justify">Rewarding UCLA Housing & Hospitality Services Team Members for their exceptional efforts. The Hats Off program is designed to provide a timely 'tip of the hat' for a job well done, recognizing team members for exceptional service and performance in day-to-day work.
             <a data-toggle="collapse" href="#collapseHatsoff" aria-expanded="false" aria-controls="collapseHatsoff">View details &raquo;</a></p>
-<div class="collapse" id="collapseHatsoff">
-	<div class="well">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
-           et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip 
-           ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
-           qui officia deserunt mollit anim id est laborum.
-        </p>
-  	</div>
-</div>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+			<div class="collapse" id="collapseHatsoff">
+                <div class="well">
+					<p class="text-justify">
+                
+<strong>Hats Off Employee Recognition Program Summary - DRAFT</strong><br />
+Rewarding UCLA Housing & Hospitality Services Team Members for their exceptional efforts.
+The Hats Off program is designed to provide a timely 'tip of the hat' for a job well done, recognizing team members for exceptional service and performance in day-to-day work. Award recipients are eligible to receive a non-cash award valued at $75 in the form of a gift card to one of three retailers. Some frequently asked questions are below:<br /><br />
+<em>Q: 	Who can receive a Hats Off award?</em><br />
+A: 	Any UCLA H&HS team member who meets one of six criteria:<br />
+<ul class="text-left">
+<li>Exemplary Team Effort</li>
+<li>Excellence in Customer Service</li>
+<li>Dedication to True Bruin Values</li>
+<li>Dedication to Organizational Goals</li>
+<li>Outstanding Performance on a Continual Basis</li>
+<li>Dedication to Safety and Injury/Illness Prevention</li>
+</ul></p>
+<p class="text-left">
+<em>Q:	Who can nominate someone for a Hats Off award?</em><br />
+A: 	Any team member can make a Hats Off nomination. If you do not have a network login, speak with your manager or supervisor to submit a nomination on your behalf.<br /><br />
+<em>Q:	What is a non-cash award?</em><br />
+A:	According to University of California&rsquo;s G-41 Policy, a non-cash award can be a gift certificate or gift card of no more than $75 value that is not taxed. Hats Off Award recipients may choose between Amazon.com, Starbucks, or Target gift cards. The default card is a Target card. Team members may change their card preference online at www.housing.ucla.edu/hatsoff.<br /><br />
+<em>Q: 	How often can I receive a Hats Off award?</em><br />
+A:	UC policy stipulates that team members may receive up to three non-cash awards per calendar year. Team members may continue to receive 'Letter Only' awards once they have reached their three non-cash award limit.<br /><br />
+<em>Q:	Can I nominate a director?</em><br />
+A: 	Yes! If you would like to nominate a director, please select 'Out-of-Department' on the landing page to nominate him/her—even if you are nominating your own director.<br /><br />
+<em>Q:	What is the award process?</em><br />
+<ol class="text-left"> 
+<li>A team member performs an award-worthy activity.</li>
+<li>A nomination is submitted using the online nomination form.</li>
+<li>The program coordinator processes nominations in batches and prepares a card order.</li>
+<li>Gift cards are ordered through the campus.</li>
+<li>Upon gift card arrival, directors pick up award packets and distribute awards to award recipients.</li>
+<li>Award recipients pick up gift cards from the HR/Payroll office.
+You may find step-by-step instructions online to nominate team members at http://www.housing.ucla.edu/hats-off-forms/hats-off-nomination-instructions.pdf</li>
+</ol></p>
+<p class="text-left">
+<em>Q: 	Who should I talk to if I have more questions?</em><br />
+A:	Ask your supervisor, or contact the program coordinator Aliana Lungo-Shapiro, Business Analytics Manager, UCLA Housing & Hospitality Services (x56080) or alungo@ha.ucla.edu. 
+</p>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                     
+					</p>
+                </div>
+            </div>
         </div><!-- /.col-lg-6 -->
+        
         <div class="col-lg-6">
         	<!-- Safety award logo -->
             <img src="assets/img/safety.png" alt="Safety Logo" width="140" height="140" title="Safety Logo">
           	<!-- Trigger the login modal with a button -->
 			<h2><button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#safetyModal">Nominate</h2><br />
             <h4>Qualifications</h4>
-			<p>Eligible team members may be awarded an On-the-Spot safety award for any of the 6 reasons below. A detailed explanation of the reason/event must be given on the nomination form. 
-            <a http="#" data-toggle="modal" data-target="#safetyDetailsModal">View details &raquo;</a></p>
+			<p class="text-justify">Eligible team members may be awarded an On-the-Spot safety award for any of the 6 reasons below. A detailed explanation of the reason/event must be given on the nomination form. 
+            <a data-toggle="collapse" href="#collapseSafety" aria-expanded="false" aria-controls="collapseSafety">View details &raquo;</a></p>
+			<div class="collapse" id="collapseSafety">
+                <div class="well">
+					<p class="text-justify">
+                        <strong>Criteria for Award:</strong><br /> Eligible team members may be awarded an On-the-Spot safety award for any of the 6 reasons below. A detailed explanation of 
+                        		the reason/event must be given on the nomination form.
+                        <ol class="text-left">
+                            <li>Proper use of PPE (Personal Protective Equipment) </li>
+                            <li>Proper use of equipment or trained technique</li>
+                            <li>Reporting unsafe situation(s)</li>
+                            <li>Practicing consistent safe behaviors</li>
+                            <li>Proper food sanitation practices</li>
+                            <li>Specific safe practice or behavior</li>
+                        </ol>
+					</p>
+                </div>
+            </div>
         </div><!-- /.col-lg-6 -->
       </div><!-- /.row -->
       
@@ -123,81 +169,7 @@
 					</div> <!--- modal-content --->
 				</div> <!--- modal-dialog --->
 			</div> <!--- modal fade --->
-            
-            <!--- HatsOff Qualification Details Modal --->
-              <div class="modal fade" id="hatsoffDetailsModal" role="dialog">
-                <div class="modal-dialog">
-                
-                  <!--- Modal content --->
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title">Qualifications for HatsOff Nomination</h4>
-                    </div> <!--- modal-header --->
-                    <div class="modal-body">
-						<pre>
-Hats Off Employee Recognition Program Summary - DRAFT
-Rewarding UCLA Housing & Hospitality Services Team Members for their exceptional efforts.
-The Hats Off program is designed to provide a timely “tip of the hat” for a job well done, recognizing team members for exceptional service and performance in day-to-day work. Award recipients are eligible to receive a non-cash award valued at $75 in the form of a gift card to one of three retailers. Some frequently asked questions are below…
-Q: 	Who can receive a Hats Off award?
-A: 	Any UCLA H&HS team member who meets one of six criteria:
--	Exemplary Team Effort
--	Excellence in Customer Service
--	Dedication to True Bruin Values
--	Dedication to Organizational Goals
--	Outstanding Performance on a Continual Basis
--	Dedication to Safety and Injury/Illness Prevention
-Q:	Who can nominate someone for a Hats Off award?
-A: 	Any team member can make a Hats Off nomination. If you do not have a network login, speak with your manager or supervisor to submit a nomination on your behalf.
-Q:	What is a non-cash award?
-A:	According to University of California’s G-41 Policy, a non-cash award can be a gift certificate or gift card of no more than $75 value that is not taxed. Hats Off Award recipients may choose between Amazon.com, Starbucks, or Target gift cards. The default card is a Target card. Team members may change their card preference online at www.housing.ucla.edu/hatsoff.
-Q: 	How often can I receive a Hats Off award?
-A:	UC policy stipulates that team members may receive up to three non-cash awards per calendar year. Team members may continue to receive “Letter Only” awards once they have reached their three non-cash award limit.
-Q:	Can I nominate a director?
-A: 	Yes! If you would like to nominate a director, please select “Out-of-Department” on the landing page to nominate him/her—even if you are nominating your own director.
-Q:	What is the award process?
-1)	A team member performs an award-worthy activity.
-2)	A nomination is submitted using the online nomination form.
-3)	The program coordinator processes nominations in batches and prepares a card order.
-4)	Gift cards are ordered through the campus.
-5)	Upon gift card arrival, directors pick up award packets and distribute awards to award recipients.
-6)	Award recipients pick up gift cards from the HR/Payroll office.
-You may find step-by-step instructions online to nominate team members at http://www.housing.ucla.edu/hats-off-forms/hats-off-nomination-instructions.pdf
-Q: 	Who should I talk to if I have more questions?
-A:	Ask your supervisor, or contact the program coordinator Aliana Lungo-Shapiro, Business Analytics Manager, UCLA Housing & Hospitality Services (x56080) or alungo@ha.ucla.edu. 
-</pre>
-                    </div> <!--- modal-body --->
-                  </div> <!--- modal-content --->
-                  
-                </div> <!--- modal-dialog --->
-              </div> <!--- modal fade --->
-              
-              <!--- Safety Qualification Details Modal --->
-              <div class="modal fade" id="safetyDetailsModal" role="dialog">
-                <div class="modal-dialog">
-                
-                  <!--- Modal content --->
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title">Qualifications for Safety Nomination</h4>
-                    </div> <!--- modal-header --->
-                    <div class="modal-body">
-						<pre>
-Criteria for Award: Eligible team members may be awarded an On-the-Spot safety award for any of the 6 reasons below. A detailed explanation of the reason/event must be given on the nomination form. 
-1.	Proper use of PPE (Personal Protective Equipment)
-2.	Proper use of equipment or trained technique
-3.	Reporting unsafe situation(s)
-4.	Practicing consistent safe behaviors
-5.	Proper food sanitation practices
-6.	Specific safe practice or behavior
-</pre>
-                    </div> <!--- modal-body --->
-                  </div> <!--- modal-content --->
-                  
-                </div> <!--- modal-dialog --->
-              </div> <!--- modal fade --->
-      
+     
       <!--- FOOTER --->
 
 </div><!--- /.container --->

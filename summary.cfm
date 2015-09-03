@@ -4,7 +4,7 @@ Department - #session.department#<
 Nominee - #session.employee#
 Achievement - #session.achievement#<
 Description - #session.description#
-Nominator - #nominator#
+Nominator - #session.nominator#
 Supervisor - #supervisor#
 --->
 
@@ -12,8 +12,14 @@ Supervisor - #supervisor#
 <html lang="en">
 
 <!--- troubleshoot lines --->
-<cfoutput>The award type is "#session.awardtype#"</cfoutput><br />
+<cfoutput></cfoutput><br />
+<cfoutput></cfoutput><br />
+<cfoutput></cfoutput><br />
+<cfoutput></cfoutput><br />
+<!--- <cfoutput>The award type is "#session.awardtype#"</cfoutput><br />
 <cfoutput>The session.dept is "#session.dept#"</cfoutput>
+<cfoutput>Nominator - #nominator#</cfoutput>
+<cfoutput>Supervisor - #supervisor#</cfoutput> --->
 
 <head>
     <meta charset="utf-8">
@@ -44,6 +50,7 @@ Supervisor - #supervisor#
 	<cfinclude template="header-safety.cfm">
 </cfif>
 
+<div class="container">
 <div class="page-header">
         <h1>Summary of your nomination</h1>
       </div>
@@ -69,6 +76,7 @@ Supervisor - #supervisor#
           </table>
         </div>
       </div>
+</div>
 
 <cfset session.department = #department#>
 <cfset session.employee = #employee#>
@@ -78,7 +86,7 @@ Supervisor - #supervisor#
 <cfset session.supervisor = #supervisor#>
 
 <!--- pass nomination.getDept & nomination.getEm & achievement values to summary.cfm for confirmation --->
-<cfform action="#URLSessionFormat("process.cfm")#" method="POST" name="frmScan">
+<cfform action="#URLSessionFormat("process.cfm")#" method="POST">
 <hr class="featurette-divider">
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr align="center">
@@ -92,10 +100,10 @@ Supervisor - #supervisor#
             <input type="hidden" id="session.description" name="session.description" value="#session.description#">
             <input type="hidden" id="session.nominator" name="session.nominator" value="#session.nominator#">
             <input type="hidden" id="session.supervisor" name="session.supervisor" value="#session.supervisor#">
-            <input type="submit" onmouseover="hover();" value="  Submit  ">
+            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Please make sure all information is correct before clicking the submit button!"><input type="submit" value="  Submit  "></button>
         </td>
         <td>
-            <input type="button" value="    Edit   " onclick="window.location='nomination.cfm?dept=#dept#';">
+            <input type="button" value="    Edit   " onclick="history.go(-1);return true;">
 		</td>
 	</tr>
 </table>
@@ -108,18 +116,8 @@ Supervisor - #supervisor#
 <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script type="text/javascript">
-    function hover() {
-       if (confirm('Please make sure all information is correct before clicking the submit button!')) {
-           formelement.submit();
-       } else {
-           return false;
-       }
-    }
-	</script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/vendor/holder.min.js"></script> 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
 

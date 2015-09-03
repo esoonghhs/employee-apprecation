@@ -14,10 +14,11 @@
 <cfoutput></cfoutput><br />
 <cfoutput></cfoutput><br />
 <cfoutput></cfoutput><br />
-<cfoutput>Logged in person UID is #session.empUID#</cfoutput><br />
+<cfoutput></cfoutput><br />
+<!--- <cfoutput>Logged in person session.empUID is #session.empUID#</cfoutput><br />
 <cfoutput>Time logged on is #logintime#</cfoutput><br />
 <cfoutput>The award type is #session.awardtype#</cfoutput><br />
-<cfoutput>The session_emp_id is #session.emp_id#</cfoutput>
+<cfoutput>The session_emp_id is #session.emp_id#</cfoutput> --->
 
 <head>
     <meta charset="utf-8">
@@ -51,7 +52,7 @@
 	<table align="center" border="0" cellpadding="0" cellspacing="0" width="400">
 	<tr>
 		<td align="center">
-			To begin making a Hats Off Nomination, select your department from the list below.
+			To begin making a Hats Off Nomination, <br />select your department from the list below.
 		</td>
 	</tr>
 </table>
@@ -60,7 +61,7 @@
 	<table align="center" border="0" cellpadding="0" cellspacing="0" width="400">
 	<tr>
 		<td align="center">
-			To begin making a Safety Nomination, select your department from the list below.
+			To begin making a Safety Nomination, <br />select your department from the list below.
 		</td>
 	</tr>
 </table>
@@ -73,13 +74,12 @@
 	FROM employees AS e
 	INNER JOIN departments AS d
 	ON e.account_number=d.account_number
-	WHERE e.emp_id = <cfqueryparam value="#empid#" cfsqltype="cf_sql_integer">
+	WHERE e.emp_id = <cfqueryparam value="#session.empUID#">
 </CFQUERY>
 
 <cfset session.Empfullname = #getNominatorDept.emp_full_name#>
-<cfoutput>The nominator is #session.Empfullname#</cfoutput>
 
-<table align="center" border="0" cellpadding="0" cellspacing="2" width="600">
+<table align="center" border="0" cellpadding="0" cellspacing="2" width="300">
 	<tr>
     	<td>
     	<cfif getNominatorDept.DepartmentName is "Conferences">
@@ -108,6 +108,7 @@
 			<cfoutput><a href="nomination.cfm?dept=LUSKIN_CONFERENCE_CENTER">Luskin Conference Center</a></cfoutput>
         </cfif>
         </td>
+        <td>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</td>
         <td><a href="nomination.cfm?dept=All">Out of Department</a></td>
 	</tr>
 </table>
@@ -123,7 +124,8 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
     
-<cfdump var="#empid#"><br />
+<cfdump var="#session.emp_id#"><br />
+<cfdump var="#session.empUID#"><br />
 <cfdump var="#logintime#"><br />
 <cfdump var="#getNominatorDept.emp_id#"><br />
 <cfdump var="#getNominatorDept.DepartmentName#">

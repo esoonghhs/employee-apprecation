@@ -13,7 +13,7 @@
 <CFQUERY NAME="getNominatorDept" DATASOURCE="hatsoff">
 	SELECT emp_full_name
 	FROM employees
-	WHERE emp_id = #session.emp_id#
+	WHERE emp_id = #session.empUID#
 </CFQUERY>.
 <cfset emp_full_name = getNominatorDept.emp_full_name>
 
@@ -21,10 +21,14 @@
 <html lang="en">
 
 <!--- troubleshoot lines --->
-<cfoutput>The award type is "#session.awardtype#"</cfoutput><br />
+<cfoutput></cfoutput><br />
+<cfoutput></cfoutput><br />
+<cfoutput></cfoutput><br />
+<cfoutput></cfoutput><br />
+<!--- <cfoutput>The award type is "#session.awardtype#"</cfoutput><br />
 <cfoutput>The dept is "#dept#"</cfoutput><br />
-<cfoutput>The nominator is #session.emp_id#</cfoutput><br />
-<cfoutput>The nominator is #emp_full_name#</cfoutput>
+<cfoutput>The nominator is #session.empUID#</cfoutput><br />
+<cfoutput>The nominator is #emp_full_name#</cfoutput> --->
 
 <head>
     <meta charset="utf-8">
@@ -56,6 +60,7 @@
 <cfset session.dept = dept>
 <cfset session.letter = "0">
 <cfset session.ood = "0">
+<cfset nominator = session.empUID>
 
 <!--- set session.vdept value --->
 <cfif session.dept is "Conferences">
@@ -110,9 +115,11 @@
 	Order by emp_full_name
 </cfquery>
 
-<!--- pass nomination.getDept & nomination.getEm & achievement values to summary.cfm for confirmation --->
-<cfform action="#URLSessionFormat("summary.cfm")#" method="POST" name="frmScan">
 <hr class="featurette-divider">
+
+<!--- pass nomination.getDept & nomination.getEm & achievement values to summary.cfm for confirmation --->
+<cfform action="#URLSessionFormat("summary.cfm")#" method="POST">
+
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr>
 		<td>
@@ -169,8 +176,8 @@
 	</tr>
 	<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        	<cfoutput>#emp_full_name#</cfoutput>
-            <input type="hidden" id="nominator" name="nominator" value="#session.emp_id#">
+        	<cfoutput>#emp_full_name#</cfoutput><br />
+            <cfinput type="hidden" id="nominator" value="#nominator#" name="nominator">
 		</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>
