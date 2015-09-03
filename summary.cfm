@@ -90,8 +90,8 @@ Supervisor - #supervisor#
 	<tr align="center">
 		<td>
         	<div class="alert alert-warning" role="alert">
-                <p class="text-center"><strong><small>Make sure correctness of information before click Submit!</small></strong></p>
-                <p class="text-center"><strong><small>Otherwise, click Edit to go back to change information.</small></strong></p>
+                <p class="text-center"><strong><small>Review for correctness of information before click Submit!</small></strong></p>
+                <p class="text-center"><strong><small>If incorrect, click Edit to go back to change information.</small></strong></p>
             </div>
         </td>
 	</tr>
