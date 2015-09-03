@@ -12,7 +12,7 @@
  
 	   <cfldap action="QUERY"
 	   name="AuthenticateUser"
-	   attributes="givenname,samaccountname,dn,cn,mail"
+	   attributes="givenname,samaccountname,employeeID,dn,cn,mail"
 	   start="dc=hhs,dc=local"
 	   maxrows="1"
 	   scope="subtree"
@@ -26,6 +26,31 @@
 	   <cfset LoginMessage = "User Authentication Failed">
 	   </cfcatch>
 	  </cftry>
+      
+      <!--- Validate what values are returned from AD for testing purposes
+      <table border=1 cellspacing=2 cellpadding=2> 
+      <tr> 
+         <th colspan=4><cfoutput>#AuthenticateUser.RecordCount# matches found</cfoutput> 
+         </th> 
+      </tr> 
+      <tr> 
+         <th>GivenName</th> 
+         <th>AccountName</th> 
+         <th>EmployeeID</th> 
+         <th>dn</th>
+         <th>cn</th> 
+         <th>mail</th> 
+      </tr> 
+     <cfoutput query="AuthenticateUser"> 
+      <tr> 
+         <td>#givenname#</td> 
+         <td>#samaccountname#</td> 
+         <td>#employeeID#</a></td> 
+         <td>#dn#</td>
+         <td>#cn#</td> 
+         <td>#mail#</td>  
+     </tr> 
+     </cfoutput> --->
 	  
 	<cfif IsDefined('AuthenticateUser.recordcount')>
 		<cfif AuthenticateUser.recordcount GT "0">
@@ -42,6 +67,7 @@
 			<cfset session.username="jsinger">
 		<cfelse>
 			<cfset session.username="#form.uname#">
+            <cfset session.empUID="#AuthenticateUser.employeeID#">
 		</cfif>
 
 		<cfquery name="getID" datasource="Hatsoff">

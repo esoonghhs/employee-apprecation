@@ -11,10 +11,13 @@
 <!--- troubleshoot lines --->
 <cfset empid = #session.emp_id#>
 <cfset logintime = #Now()#>
-<cfoutput>Logged in person UID is #empid#</cfoutput><br />
+<cfoutput></cfoutput><br />
+<cfoutput></cfoutput><br />
+<cfoutput></cfoutput><br />
+<cfoutput>Logged in person UID is #session.empUID#</cfoutput><br />
 <cfoutput>Time logged on is #logintime#</cfoutput><br />
 <cfoutput>The award type is #session.awardtype#</cfoutput><br />
-<cfoutput>The session_emp_id is #empid#</cfoutput>
+<cfoutput>The session_emp_id is #session.emp_id#</cfoutput>
 
 <head>
     <meta charset="utf-8">

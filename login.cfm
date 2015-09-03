@@ -17,10 +17,11 @@
     <!--- Custom styles for this template --->
     <link href="assets/css/signin.css" rel="stylesheet">
     <link href="assets/css/carousel.css" rel="stylesheet">
+    
 </head>
 
 <body>
-<cfinclude template="header-award.cfm">
+<cfinclude template="header-award.cfm">           
 <br>
 <div class="container">
 <!--- Two columns of thumbnails --->
@@ -33,7 +34,28 @@
             <h2><button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#hatsoffModal">Nominate</h2><br />
 			<h4>Qualifications</h4>
 			<p>Rewarding UCLA Housing & Hospitality Services Team Members for their exceptional efforts. The Hats Off program is designed to provide a timely 'tip of the hat' for a job well done, recognizing team members for exceptional service and performance in day-to-day work.
-            <a http="#" data-toggle="modal" data-target="#hatsoffDetailsModal">View details &raquo;</a></p>
+
+            
+            <a data-toggle="collapse" href="#collapseHatsoff" aria-expanded="false" aria-controls="collapseHatsoff">View details &raquo;</a></p>
+<div class="collapse" id="collapseHatsoff">
+	<div class="well">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
+           et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip 
+           ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+           qui officia deserunt mollit anim id est laborum.
+        </p>
+  	</div>
+</div>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
         </div><!-- /.col-lg-6 -->
         <div class="col-lg-6">
         	<!-- Safety award logo -->
