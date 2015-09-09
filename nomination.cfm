@@ -5,10 +5,19 @@
 	('#session.emp_id#', 0, 'Choose Department', #Now()#, '')
 </cfquery>
 
-<cfquery name="getAchievements" datasource="hatsoff">
-	Select * From achievements
+<cfif session.awardtype is 1>
+    <cfquery name="getAchievements" datasource="hatsoff">
+        Select * From achievements
+        Order by achievement_id
+    </cfquery>
+</cfif>
+
+<cfif session.awardtype is 2>
+<cfquery name="getAchievementsafety" datasource="hatsoff">
+	Select * From achievementsafety
 	Order by achievement_id
 </cfquery>
+</cfif>
 
 <CFQUERY NAME="getNominatorDept" DATASOURCE="hatsoff">
 	SELECT emp_full_name
@@ -119,7 +128,6 @@
 
 <!--- pass nomination.getDept & nomination.getEm & achievement values to summary.cfm for confirmation --->
 <cfform action="#URLSessionFormat("summary.cfm")#" method="POST">
-
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr>
 		<td>
@@ -151,9 +159,15 @@
 	</tr>
 	<tr>
 		<td>
-			<cfoutput query="getAchievements">
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="achievement" value="#achievement_id#"> #achievement#<br>
-			</cfoutput>
+        	<cfif session.awardtype is 1>
+				<cfoutput query="getAchievements">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="achievement" value="#achievement_id#"> #achievement#<br>
+                </cfoutput>
+            <cfelse>
+            	<cfoutput query="getAchievementsafety">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="achievement" value="#achievement_id#"> #achievement#<br>
+                </cfoutput>
+            </cfif>
 		</td>	
 	</tr>
 	<tr><td>&nbsp;</td></tr>
