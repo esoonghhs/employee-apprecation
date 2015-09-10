@@ -77,40 +77,49 @@
 	WHERE e.emp_id = <cfqueryparam value="#session.empUID#">
 </CFQUERY>
 
+<!--- Convert SQL SELECT results to array --->
+        <cfloop index="i" from="1" to="#getNominatorDept.RecordCount#">
+            <cfset result[i][1]=getNominatorDept.emp_id[i]>
+            <cfset result[i][2]=getNominatorDept.DepartmentName[i]>
+        </cfloop>
+
 <cfset session.Empfullname = #getNominatorDept.emp_full_name#>
 
-<table align="center" border="0" cellpadding="0" cellspacing="2" width="300">
-	<tr>
+<table align="center" border="0" cellpadding="0" cellspacing="4" width="200">
+	<cfloop index="i" from="1" to="#getNominatorDept.RecordCount#">
+    <tr>
     	<td>
-    	<cfif getNominatorDept.DepartmentName is "Conferences">
-    		<cfoutput><a href="nomination.cfm?dept=Conferences">Conferences, Catering & Marketing</a></cfoutput>
-        <cfelseif getNominatorDept.DepartmentName is "Dining">
-            <cfoutput><a href="nomination.cfm?dept=Dining">Dining Services</a></cfoutput>
-        <cfelseif getNominatorDept.DepartmentName is "HHSAdmin">
-			<cfoutput><a href="nomination.cfm?dept=HHSAdmin">Housing Admin & HBO</a></cfoutput>
-        <cfelseif getNominatorDept.DepartmentName is "HHS IT">
-			<cfoutput><a href="nomination.cfm?dept=HHSIT">Housing IT</a></cfoutput>
-        <cfelseif getNominatorDept.DepartmentName is "Housing">
-			<cfoutput><a href="nomination.cfm?dept=Housing">Housing Services</a></cfoutput>
-        <cfelseif getNominatorDept.DepartmentName is "Letter">
-			<cfoutput><a href="nomination.cfm?dept=Letter">Letter</a></cfoutput>
-    	<cfelseif getNominatorDept.DepartmentName is "CampusService">
-			<cfoutput><a href="nomination.cfm?dept=CampusService">Housing HR/Payroll</a></cfoutput>
-        <cfelseif getNominatorDept.DepartmentName is "Lake">
-            <cfoutput><a href="nomination.cfm?dept=Lake">LACC & BRUINWOODS</a></cfoutput>
-        <cfelseif getNominatorDept.DepartmentName is "HousingProjects">
-            <cfoutput><a href="nomination.cfm?dept=HousingProjects">Housing Projects</a></cfoutput>
-        <cfelseif getNominatorDept.DepartmentName is "Rooms">
-            <cfoutput><a href="nomination.cfm?dept=Rooms">Rooms Division</a></cfoutput>
-        <cfelseif getNominatorDept.DepartmentName is "UA">
-           	<cfoutput><a href="nomination.cfm?dept=UA">University Apartments</a></cfoutput>
-        <cfelseif getNominatorDept.DepartmentName is "LUSKIN_CONFERENCE_CENTER">
-			<cfoutput><a href="nomination.cfm?dept=LUSKIN_CONFERENCE_CENTER">Luskin Conference Center</a></cfoutput>
-        </cfif>
+			<cfif result[i][2] is "Conferences">
+                <cfoutput><a href="nomination.cfm?dept=Conferences">Conferences, Catering & Marketing</a></cfoutput>
+            <cfelseif result[i][2] is "Dining">
+                <cfoutput><a href="nomination.cfm?dept=Dining">Dining Services</a></cfoutput>
+            <cfelseif result[i][2] is "HHSAdmin">
+                <cfoutput><a href="nomination.cfm?dept=HHSAdmin">Housing Admin & HBO</a></cfoutput>
+            <cfelseif result[i][2] is "HHS IT">
+                <cfoutput><a href="nomination.cfm?dept=HHSIT">Housing IT</a></cfoutput>
+            <cfelseif result[i][2] is "Housing">
+                <cfoutput><a href="nomination.cfm?dept=Housing">Housing Services</a></cfoutput>
+            <cfelseif result[i][2] is "Letter">
+                <cfoutput><a href="nomination.cfm?dept=Letter">Letter</a></cfoutput>
+            <cfelseif result[i][2] is "CampusService">
+                <cfoutput><a href="nomination.cfm?dept=CampusService">Housing HR/Payroll</a></cfoutput>
+            <cfelseif result[i][2] is "Lake">
+                <cfoutput><a href="nomination.cfm?dept=Lake">LACC & BRUINWOODS</a></cfoutput>
+            <cfelseif result[i][2] is "HousingProjects">
+                <cfoutput><a href="nomination.cfm?dept=HousingProjects">Housing Projects</a></cfoutput>
+            <cfelseif result[i][2] is "Rooms">
+                <cfoutput><a href="nomination.cfm?dept=Rooms">Rooms Division</a></cfoutput>
+            <cfelseif result[i][2] is "UA">
+                <cfoutput><a href="nomination.cfm?dept=UA">University Apartments</a></cfoutput>
+            <cfelseif result[i][2] is "LUSKIN_CONFERENCE_CENTER">
+                <cfoutput><a href="nomination.cfm?dept=LUSKIN_CONFERENCE_CENTER">Luskin Conference Center</a></cfoutput>
+            </cfif>
         </td>
-        <td>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</td>
+    </tr>
+    </cfloop>
+    <tr>
         <td><a href="nomination.cfm?dept=All">Out of Department</a></td>
-	</tr>
+    </tr>
 </table>
 
 <cfinclude template="footer.cfm">
@@ -129,5 +138,6 @@
 <cfdump var="#logintime#"><br />
 <cfdump var="#getNominatorDept.emp_id#"><br />
 <cfdump var="#getNominatorDept.DepartmentName#">
+<cfdump var="#result#">
 </body>
 </html>
