@@ -34,10 +34,11 @@
 <cfoutput></cfoutput><br />
 <cfoutput></cfoutput><br />
 <cfoutput></cfoutput><br />
-<!--- <cfoutput>The award type is "#session.awardtype#"</cfoutput><br />
+<cfoutput>The award type is "#session.awardtype#"</cfoutput><br />
 <cfoutput>The dept is "#dept#"</cfoutput><br />
 <cfoutput>The nominator is #session.empUID#</cfoutput><br />
-<cfoutput>The nominator is #emp_full_name#</cfoutput> --->
+<cfoutput>The nominator is #emp_full_name#</cfoutput>
+<cfoutput>The numNom is #numNom#</cfoutput>
 
 <head>
     <meta charset="utf-8">
@@ -126,6 +127,9 @@
 
 <hr class="featurette-divider">
 
+<!--- if nomination is single, then do the follow cfform insert --->
+<cfif numNom is 1>
+
 <!--- pass nomination.getDept & nomination.getEm & achievement values to summary.cfm for confirmation --->
 <cfform action="#URLSessionFormat("summary.cfm")#" method="POST">
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
@@ -161,11 +165,11 @@
 		<td>
         	<cfif session.awardtype is 1>
 				<cfoutput query="getAchievements">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="achievement" value="#achievement_id#"> #achievement#<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#" tooltip="#achievement_descrip#"> #achievement#<br>
                 </cfoutput>
             <cfelse>
             	<cfoutput query="getAchievementsafety">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="achievement" value="#achievement_id#"> #achievement#<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#"> #achievement#<br>
                 </cfoutput>
             </cfif>
 		</td>	
@@ -178,7 +182,7 @@
 	</tr>
 	<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<textarea name="Description" cols="50" rows="6" id="Description"  onkeypress="return LimitThis()" onkeyup="return CountThis(myCounter1)" onmouseover="return CountThis(myCounter1)" wrap=physical maxLength="190" style="font-family:arial,helvetica, sans-serif;"></textarea>
+			<cftextarea name="Description" cols="50" rows="6" id="Description"  onkeypress="return LimitThis()" onkeyup="return CountThis(myCounter1)" onmouseover="return CountThis(myCounter1)" wrap=physical maxLength="190" style="font-family:arial,helvetica, sans-serif;"></cftextarea>
 		</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>
@@ -192,6 +196,17 @@
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         	<cfoutput>#emp_full_name#</cfoutput><br />
             <cfinput type="hidden" id="nominator" value="#nominator#" name="nominator">
+		</td>
+        <td>
+        	<cfoutput>If you are assisting someone to do the nomination, please select their name from this menu                 
+        </td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<select name="nominator">
+				<option value=""></option>
+				<cfoutput query="getEmps">
+					<option value="#emp_id#">#emp_full_name#</option>
+				</cfoutput>
+			</select>
 		</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>
@@ -220,8 +235,99 @@
 	</tr>
 </table>
 </cfform>
+</cfif>
 
 <hr class="featurette-divider">
+
+<!--- if nomination is multiple, then do the follow cfform insert --->
+<cfif numNom gt 1>
+
+<!--- pass nomination.getDept & nomination.getEm & achievement values to summary.cfm for confirmation --->
+<cfform action="#URLSessionFormat("summary.cfm")#" method="POST">
+<table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
+<tr>
+		<td>
+		1. Enter the Nominator's name:
+		</td>
+	</tr>
+	<tr>
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        	<cfoutput>#emp_full_name#</cfoutput><br />
+            <cfinput type="hidden" id="nominator" value="#nominator#" name="nominator">
+		</td>
+        <td>
+        	<cfoutput>If you are assisting someone to do the nomination, please select their name from this menu                 
+        </td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<select name="nominator">
+				<option value=""></option>
+				<cfoutput query="getEmps">
+					<option value="#emp_id#">#emp_full_name#</option>
+				</cfoutput>
+			</select>
+		</td>
+	</tr>
+	<tr><td>&nbsp;</td></tr>
+	<tr>
+		<td>
+		2. Enter the Supervisor's name:
+		</td>
+	</tr>
+	<tr>
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<select name="supervisor">
+				<option value=""></option>
+				<cfoutput query="getEmps">
+					<option value="#emp_id#">#emp_full_name#</option>
+				</cfoutput>
+			</select>
+		</td>
+	</tr>
+    <tr>
+		<td>
+		3. Select the nominees achievement:
+		</td>
+	</tr>
+	<tr>
+		<td>
+        	<cfif session.awardtype is 1>
+				<cfoutput query="getAchievements">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#" tooltip="#achievement_descrip#"> #achievement#<br>
+                </cfoutput>
+            <cfelse>
+            	<cfoutput query="getAchievementsafety">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#"> #achievement#<br>
+                </cfoutput>
+            </cfif>
+		</td>	
+	</tr>
+</table>
+
+<table align="center" border="1" border-collapse='collapse' cellpadding="0" cellspacing="4" width="400">
+	<tr>
+        <th>Location Where Nominee Works</th>
+        <th>Nominee Name</th>
+        <th>Describe Nominee's Achievement (190 Character Limit)</th>
+        <th></th>
+	</tr>
+    <cfloop index="i" from="1" to="#numNom#">
+  	<tr>
+        <td><cfselect name="department[i]" bind="cfc:nomination.getDept ()" bindonload="true" /></td>
+        <td><cfselect name="employee[i]" bind="cfc:nomination.getEmp ({department})" /></td> 
+        <td><cftextarea name="Description[i]" cols="50" rows="6" id="Description"  onkeypress="return LimitThis()" onkeyup="return CountThis(myCounter[i])" onmouseover="return CountThis(myCounter1)" wrap=physical maxLength="190"></cftextarea></td>
+        <td><strong><SPAN id=myCounter[i]>190</SPAN></strong> remaining</font></td>
+  	</tr>
+    </cfloop>
+</table>
+<table align="center" border="1" border-collapse='collapse' cellpadding="0" cellspacing="4" width="400">
+	<tr align="center">
+		<td>
+			<cfinput type="submit" value="  Next  ">
+			<br><br>
+			<cfinput type="button" value="    Log Off   " onclick="window.location='logoff.cfm';">
+		</td>
+	</tr>
+</table>
 
 <cfinclude template="footer.cfm">
 
@@ -230,19 +336,18 @@
     <!-- Placed at the end of the document so the pages load faster -->
     
     <script language = "Javascript">
-
-function LimitThis() {
-	var myObject=event.srcElement;
-	if (myObject.value.length==myObject.maxLength*1) return false;
-}
-
-function CountThis(visCnt) { 
-	var myObject=event.srcElement;
-	if (myObject.value.length>myObject.maxLength*1) myObject.value=myObject.value.substring(0,myObject.maxLength*1);
-	if (visCnt) visCnt.innerText=myObject.maxLength-myObject.value.length;
-	
-}
-</script>
+		function LimitThis() {
+			var myObject=event.srcElement;
+			if (myObject.value.length==myObject.maxLength*1) return false;
+		}
+		
+		function CountThis(visCnt) { 
+			var myObject=event.srcElement;
+			if (myObject.value.length>myObject.maxLength*1) myObject.value=myObject.value.substring(0,myObject.maxLength*1);
+			if (visCnt) visCnt.innerText=myObject.maxLength-myObject.value.length;
+			
+		}
+	</script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/vendor/holder.min.js"></script> 
@@ -253,9 +358,30 @@ function CountThis(visCnt) {
 <cfdump var="#getDept#"><br />
 <cfdump var="#getEmp#">
 --->
+<cfdump var="#nominator#">
 
 </body>
 </html>
+
+<!---
+Variables must be passed to summary.cfm
+SINGLE NOMINATION
+Department - #session.department#<
+Nominee - #session.employee#
+Achievement - #session.achievement#<
+Description - #session.description#
+Nominator - #session.nominator#
+Supervisor - #supervisor#
+numNom = 1
+BULK NOMINATION
+Department[i] - #session.department#<
+Nominee[i] - #session.employee#
+Achievement - #session.achievement#<
+Description[i] - #session.description#
+Nominator - #session.nominator#
+Supervisor - #supervisor#
+numNom > 1
+--->
 
 <!---
 ================================================== -->

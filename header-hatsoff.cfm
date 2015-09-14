@@ -22,7 +22,7 @@
 		</td>
 		<TD ALIGN="center" VALIGN="middle">
 			<!-- employee appreciation logo -->
-            <img src="assets/img/hatsoff2.jpg" alt="HatsOff Logo" width="290" height="140" title="HatsOff Logo">
+            <img src="assets/img/hatsoff3.png" alt="HatsOff Logo" width="390" height="140" title="HatsOff Logo">
 		</TD>
 		<td align="left" valign="middle" width="40%">
 		</td>
