@@ -87,13 +87,11 @@
 <cfset session.Empfullname = #getNominatorDept.emp_full_name#>
 
 <!--- Single Nomination --->
+<a class="btn btn-lg btn-primary" data-toggle="collapse" href="#collapseSingle" aria-expanded="false" aria-controls="collapseSingle">Nominating an Individual</a>
+			<div class="collapse" id="collapseSingle">
+                <div class="well">
 <cfform action="#URLSessionFormat("nomination.cfm")#" method="POST">
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
-	<tr>
-    	<td>
-        	Number of nominations:&nbsp;<cfinput type="text" name="numNom" VALUE="" SIZE="2">
-       	</td>
-    </tr>
 	<cfloop index="i" from="1" to="#getNominatorDept.RecordCount#">
     <tr>
     	<td>
@@ -142,10 +140,15 @@
     </tr>
 </table>
 </cfform>
+</div>
+</div>
 
 <hr class="featurette-divider">
 
 <!--- Bulk Nomination --->
+<a class="btn btn-lg btn-primary" data-toggle="collapse" href="#collapseBulk" aria-expanded="false" aria-controls="collapseBulk">Nominating Multiple People</a>
+			<div class="collapse" id="collapseBulk">
+                <div class="well">
 <cfform action="#URLSessionFormat("nomination.cfm")#" method="POST">
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr>
@@ -191,11 +194,13 @@
     </tr>
     <tr>
     	<td>
-            <cfinput type="Submit" valueE="Next">
+            <cfinput type="Submit" value="Next">
         </td>
     </tr>
 </table>
 </cfform>
+</div>
+</div>
 
 <cfinclude template="footer.cfm">
 

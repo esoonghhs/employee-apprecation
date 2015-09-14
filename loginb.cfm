@@ -30,7 +30,11 @@
         <div class="col-lg-6">
 			<!-- HatsOff award logo -->
 			<img src="assets/img/hatsoff2.jpg" alt="HatsOff Logo" width="290" height="140" title="HatsOff Logo">
-            <h2><button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#hatsoffModal">Nominate</h2><br />
+            <cfform action="#URLSessionFormat("departments.cfm")#" method="POST">
+            	<input type="hidden" id="awardchoice" name="awardchoice" value="1">
+            <cfinput class="btn btn-lg btn-primary" type="Submit" value="Next">
+            </cfform>
+            <br />
 			<h4>Qualifications</h4>
 			<p class="text-justify">Rewarding UCLA Housing & Hospitality Services Team Members for their exceptional efforts. The Hats Off program is designed to provide a timely 'tip of the hat' for a job well done, recognizing team members for exceptional service and performance in day-to-day work.
             <a data-toggle="collapse" href="#collapseHatsoff" aria-expanded="false" aria-controls="collapseHatsoff">View details &raquo;</a></p>
@@ -92,14 +96,7 @@ You may find step-by-step instructions online to nominate team members at http:/
 <em>Q: 	Who should I talk to if I have more questions?</em><br />
 A:	Ask your supervisor, or contact the program coordinator Aliana Lungo-Shapiro, Business Analytics Manager, UCLA Housing & Hospitality Services (x56080) or alungo@ha.ucla.edu. 
 </p>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                     
+      
 					</p>
                 </div>
             </div>
@@ -109,7 +106,11 @@ A:	Ask your supervisor, or contact the program coordinator Aliana Lungo-Shapiro,
         	<!-- Safety award logo -->
             <img src="assets/img/safety.png" alt="Safety Logo" width="140" height="140" title="Safety Logo">
           	<!-- Trigger the login modal with a button -->
-			<h2><button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#safetyModal">Nominate</h2><br />
+			<cfform action="#URLSessionFormat("departments.cfm")#" method="POST">
+            	<input type="hidden" id="awardchoice" name="awardchoice" value="2">
+            <cfinput class="btn btn-lg btn-primary" type="Submit" value="Next">
+            </cfform>
+            <br />
             <h4>Qualifications</h4>
 			<p class="text-justify">Eligible team members may be awarded an On-the-Spot safety award for any of the 6 reasons below. A detailed explanation of the reason/event must be given on the nomination form. 
             <a data-toggle="collapse" href="#collapseSafety" aria-expanded="false" aria-controls="collapseSafety">View details &raquo;</a></p>
@@ -131,62 +132,6 @@ A:	Ask your supervisor, or contact the program coordinator Aliana Lungo-Shapiro,
             </div>
         </div><!-- /.col-lg-6 -->
       </div><!-- /.row -->
-      
-      <!--- Login Modal --->
-			<div class="modal fade" id="hatsoffModal" role="dialog">
-				<div class="modal-dialog">
-					<!--- Login Modal content --->
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button><br />
-						</div> <!--- modal-header --->
-                        <!--- Form to submit logon information --->
-						<form action="validate.cfm" method="post"> <!--- Submit hatsoff login form information to validate.cfm --->
-						<div class="form-signin">	
-                            <b>HatsOff Logon</b>
-                            <h2 class="form-signin-heading">Please log in</h2>
-                            <input type="hidden" id="awardchoice" name="awardchoice" value="1"> <!--- pass awardchoice value, 1 is HatsOff, to validate.cfm , control logo appearance & award needed items on pages --->
-                          	<label for="inputText" class="sr-only">HHS Network ID (same as PC login)</label>
-                            <input type="text" id="uname" name="uname" class="form-control" placeholder="HHS Network ID (same as PC login)" required autofocus>
-                            <label for="inputPassword" class="sr-only">HHS Network Password</label>
-                            <input type="password" id="pword" name="pword" class="form-control" placeholder="HHS Network Password" required><br />
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
-                        </div> <!--- form-signin --->
-                        </form>
-                        <div class="modal-footer">
-          					<p>Employee Appreciation | UCLA Housing and Hospitality Services &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-						</div>
-					</div> <!--- modal-content --->
-				</div> <!--- modal-dialog --->
-			</div> <!--- modal fade --->
-            
-			<!--- Login Modal --->
-			<div class="modal fade" id="safetyModal" role="dialog">
-				<div class="modal-dialog">
-					<!--- Login Modal content --->
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button><br />
-						</div> <!--- modal-header --->
-                        <!--- Form to submit logon information --->
-						<form action="validate.cfm" method="post"> <!--- Submit safety login form information to validate.cfm --->
-						<div class="form-signin">	
-                            <b>Safety Logon</b>
-                            <h2 class="form-signin-heading">Please log in</h2>
-                            <input type="hidden" id="awardchoice" name="awardchoice" value="2"> <!--- pass awardchoice value, 2 is Safety, to validate.cfm , control logo appearance & award needed items on pages --->
-                            <label for="inputText" class="sr-only">HHS Network ID (same as PC login)</label>
-                            <input type="text" id="emailid" name="uname" class="form-control" placeholder="HHS Network ID (same as PC login)" required autofocus>
-                            <label for="inputPassword" class="sr-only">HHS Network Password</label>
-                            <input type="password" id="inputPassword" name="pword" class="form-control" placeholder="HHS Network Password" required><br />
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
-                        </div> <!--- form-signin --->
-                        </form>
-                        <div class="modal-footer">
-          					<p>Employee Appreciation | UCLA Housing and Hospitality Services &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-						</div>
-					</div> <!--- modal-content --->
-				</div> <!--- modal-dialog --->
-			</div> <!--- modal fade --->
      
       <!--- FOOTER --->
 

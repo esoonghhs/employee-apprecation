@@ -18,6 +18,10 @@ Supervisor - #supervisor#
 numNom > 1
 --->
 
+<cfif achievement is ''>
+	<cfoutput><b>You did not select an achievement. Please do so. Please click <Edit> button below to go back to nomination form to make an achievement selection.</b></cfoutput>
+</cfif>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -173,7 +177,10 @@ numNom > 1
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr align="center">
 		<td>
-        	<cfinput type="button" value="    Cancel   " onclick="window.location='logoff.cfm';">
+        	<cfinput type="button" value="    Log Off   " onclick="window.location='logoff.cfm';">
+        </td>
+        <td>
+        	<cfinput type="button" value="    Cancel   " onclick="window.location='loginb.cfm';">
         </td>
         <td>
         	<cfinput type="hidden" id="session.awardtype" name="session.awardtype" value="#session.awardtype#">
@@ -186,7 +193,8 @@ numNom > 1
             <cfinput type="submit" value="  Submit  ">
         </td>
         <td>
-            <cfinput type="button" value="    Edit   " onclick="history.go(-1);return true;">
+            <!--- <cfinput type="button" value="    Edit   " onclick="history.go(-1);return true;"> --->
+            <cfinput type="button" value="    Edit   " onclick="javascript, window.history.back();">
 		</td>
 	</tr>
 </table>
@@ -198,7 +206,10 @@ numNom > 1
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr align="center">
 		<td>
-        	<cfinput type="button" value="    Cancel   " onclick="window.location='logoff.cfm';">
+        	<cfinput type="button" value="    Log Off   " onclick="window.location='logoff.cfm';">
+        </td>
+        <td>
+        	<cfinput type="button" value="    Cancel   " onclick="window.location='loginb.cfm';">
         </td>
         <td>
         	<cfinput type="hidden" id="session.awardtype" name="session.awardtype" value="#session.awardtype#">
@@ -213,7 +224,8 @@ numNom > 1
             <cfinput type="submit" value="  Submit  ">
         </td>
         <td>
-            <cfinput type="button" value="    Edit   " onclick="history.go(-1);return true;">
+            <!--- <cfinput type="button" value="    Edit   " onclick="history.go(-1);return true;"> --->
+            <cfinput type="button" value="    Edit   " onclick="javascript, window.history.back();">
 		</td>
 	</tr>
 </table>

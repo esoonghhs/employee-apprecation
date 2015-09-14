@@ -58,15 +58,15 @@
 	<tr><td>&nbsp;&nbsp;&nbsp;</td></tr>
 	<tr>
 		<td align="center">
-				<input type="button" value="Make Another Nomination" onclick="window.location='nomination.cfm?dept=dept';">
+				<input type="button" vclass="btn btn-lg btn-primary" alue="Make Another Nomination" onclick="window.location='nomination.cfm?dept=dept';">
         </td>
         <td>&nbsp;&nbsp;&nbsp;</td>
         <td align="center">
-				<input type="button" value="Make Another Nomination in Another Department" onclick="window.location='nomination.cfm?dept=All';">
+				<input type="button" class="btn btn-lg btn-primary" value="Make Another Nomination in Another Department" onclick="window.location='nomination.cfm?dept=All';">
         </td>
         <td>&nbsp;&nbsp;&nbsp;</td>
         <<td align="center">
-			<input type="button" value="    Log Off   " onclick="window.location='logoff.cfm';">
+			<input type="button" class="btn btn-lg btn-primary" value="    Return to Main Screen   " onclick="window.location='logoff.cfm';">
 		</td>
 	</tr>
 </table>

@@ -169,7 +169,7 @@
                 </cfoutput>
             <cfelse>
             	<cfoutput query="getAchievementsafety">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#"> #achievement#<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#" tooltip="#achievement_descrip#"> #achievement#<br>
                 </cfoutput>
             </cfif>
 		</td>	
