@@ -17,10 +17,10 @@
 <cfoutput></cfoutput><br />
 <cfoutput></cfoutput><br />
 <cfoutput></cfoutput><br />
-<!--- <cfoutput>Logged in person session.empUID is #session.empUID#</cfoutput><br />
+<cfoutput>Logged in person session.empUID is #session.empUID#</cfoutput><br />
 <cfoutput>Time logged on is #logintime#</cfoutput><br />
 <cfoutput>The award type is #session.awardtype#</cfoutput><br />
-<cfoutput>The session_emp_id is #session.emp_id#</cfoutput> --->
+<cfoutput>The session_emp_id is #session.emp_id#</cfoutput>
 
 <head>
     <meta charset="utf-8">
@@ -87,6 +87,12 @@
 <cfset session.Empfullname = #getNominatorDept.emp_full_name#>
 
 <!--- Single Nomination --->
+<div class="container">
+<div class="container marketing">
+      <div class="row">
+      <div class="col-lg-4">
+      </div>
+        <div class="col-lg-4">
 <a class="btn btn-lg btn-primary" data-toggle="collapse" href="#collapseSingle" aria-expanded="false" aria-controls="collapseSingle">Nominating an Individual</a>
 			<div class="collapse" id="collapseSingle">
                 <div class="well">
@@ -135,17 +141,29 @@
     </tr>
     <tr>
     	<td>
-            <cfinput type="Submit" valueE="Next">
+            <input type="Submit" value="Next">
         </td>
     </tr>
 </table>
 </cfform>
 </div>
 </div>
+</div>
+<div class="col-lg-4">
+</div>
+</div>
+</div>
+</div>
 
 <hr class="featurette-divider">
 
 <!--- Bulk Nomination --->
+<div class="container">
+<div class="container marketing">
+      <div class="row">
+      <div class="col-lg-4">
+      </div>
+        <div class="col-lg-4">
 <a class="btn btn-lg btn-primary" data-toggle="collapse" href="#collapseBulk" aria-expanded="false" aria-controls="collapseBulk">Nominating Multiple People</a>
 			<div class="collapse" id="collapseBulk">
                 <div class="well">
@@ -194,11 +212,17 @@
     </tr>
     <tr>
     	<td>
-            <cfinput type="Submit" value="Next">
+            <input type="Submit" value="Next">
         </td>
     </tr>
 </table>
 </cfform>
+</div>
+</div>
+</div>
+<div class="col-lg-4">
+</div>
+</div>
 </div>
 </div>
 

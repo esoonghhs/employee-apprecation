@@ -26,6 +26,8 @@
 </CFQUERY>.
 <cfset emp_full_name = getNominatorDept.emp_full_name>
 
+<cfset session.numNom = #numNom#>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -128,14 +130,14 @@
 <hr class="featurette-divider">
 
 <!--- if nomination is single, then do the follow cfform insert --->
-<cfif numNom is 1>
+<cfif session.numNom is 1>
 
 <!--- pass nomination.getDept & nomination.getEm & achievement values to summary.cfm for confirmation --->
 <cfform action="#URLSessionFormat("summary.cfm")#" method="POST">
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr>
 		<td>
-		1. Select the location where your nominee works: 
+		<b>1. Select the location where your nominee works:</b>
 		</td>
 	</tr>
 	<tr>
@@ -146,7 +148,7 @@
 	<tr><td>&nbsp;</td></tr>
 	<tr>
 		<td>
-		2. Select the nominee from the list below
+		<b>2. Select the nominee from the list below</b>
 		</td>
 	</tr>
 	<tr>
@@ -158,49 +160,54 @@
 
 	<tr>
 		<td>
-		3. Select the nominees achievement:
+		<b>3. Select the nominees achievement:</b>
 		</td>
 	</tr>
 	<tr>
 		<td>
         	<cfif session.awardtype is 1>
 				<cfoutput query="getAchievements">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#" tooltip="#achievement_descrip#"> #achievement#<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#"> #achievement#<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em><small>#achievement_descrip#</small></em><br /><br />
                 </cfoutput>
             <cfelse>
             	<cfoutput query="getAchievementsafety">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#" tooltip="#achievement_descrip#"> #achievement#<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#"> #achievement#<br /><br />
                 </cfoutput>
             </cfif>
 		</td>	
 	</tr>
 	<tr><td>&nbsp;</td></tr>
+
 	<tr>
 		<td>
-		4. In the space provided, describe the nominee's achievement (190 Character Limit): <strong><SPAN id=myCounter1>190</SPAN></strong> remaining</font>
+		<b>4. In the space provided, describe the nominee's achievement (190 Character Limit):</b> <strong><SPAN id=myCounter1>190</SPAN></strong> remaining</font>
 		</td>
 	</tr>
 	<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<cftextarea name="Description" cols="50" rows="6" id="Description"  onkeypress="return LimitThis()" onkeyup="return CountThis(myCounter1)" onmouseover="return CountThis(myCounter1)" wrap=physical maxLength="190" style="font-family:arial,helvetica, sans-serif;"></cftextarea>
+			<textarea name="Description" cols="50" rows="6" id="Description"  onkeypress="return LimitThis()" onkeyup="return CountThis(myCounter1)" onmouseover="return CountThis(myCounter1)" wrap=physical maxLength="190" style="font-family:arial,helvetica, sans-serif;"></textarea>
 		</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>
-    
 	<tr>
 		<td>
-		5. Enter the Nominator's name:
+		<b>5. Enter the Nominator's name:</b>
 		</td>
 	</tr>
+    <tr><td>&nbsp;</td></tr>
 	<tr>
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<td>&nbsp;&nbsp;&nbsp;
         	<cfoutput>#emp_full_name#</cfoutput><br />
             <cfinput type="hidden" id="nominator" value="#nominator#" name="nominator">
 		</td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr>
         <td>
-        	<cfoutput>If you are assisting someone to do the nomination, please select their name from this menu                 
+        	<cfoutput>If you are assisting someone to do the nomination, please select their name from this menu</cfoutput>                 
         </td>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <td>>&nbsp;&nbsp;&nbsp;</td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;
 			<select name="nominator">
 				<option value=""></option>
 				<cfoutput query="getEmps">
@@ -212,9 +219,10 @@
 	<tr><td>&nbsp;</td></tr>
 	<tr>
 		<td>
-		6. Enter the Supervisor's name:
+		<b>6. Enter the Supervisor's name:</b>
 		</td>
 	</tr>
+    <tr><td>&nbsp;</td></tr>
 	<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<select name="supervisor">
@@ -226,12 +234,21 @@
 		</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>
-	<tr align="center">
+    <tr><td>&nbsp;</td></tr>
+    <tr><td>&nbsp;</td></tr>
+	<tr>
 		<td>
-			<input type="submit" value="  Next  ">
-			<br><br>
-			<input type="button" value="    Log Off   " onclick="window.location='logoff.cfm';">
+        	<input type="hidden" name="session.numNom" value ="#session.numNom#">
+			<input type="submit" class="btn btn-lg btn-primary" value="  Next  ">
 		</td>
+    
+        <td>
+			<input type="button" class="btn btn-lg btn-primary" value="    Log Off   " onclick="window.location='logoff.cfm';">
+		</td>
+        <td></td>
+        <td>
+        	<input type="button" class="btn btn-lg btn-primary" value="    Return to Main Screen   " onclick="window.location='loginb.cfm';">
+        </td>
 	</tr>
 </table>
 </cfform>
@@ -256,7 +273,7 @@
             <cfinput type="hidden" id="nominator" value="#nominator#" name="nominator">
 		</td>
         <td>
-        	<cfoutput>If you are assisting someone to do the nomination, please select their name from this menu                 
+        	<cfoutput>If you are assisting someone to do the nomination, please select their name from this menu</cfoutput>                
         </td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<select name="nominator">
@@ -314,7 +331,7 @@
   	<tr>
         <td><cfselect name="department[i]" bind="cfc:nomination.getDept ()" bindonload="true" /></td>
         <td><cfselect name="employee[i]" bind="cfc:nomination.getEmp ({department})" /></td> 
-        <td><cftextarea name="Description[i]" cols="50" rows="6" id="Description"  onkeypress="return LimitThis()" onkeyup="return CountThis(myCounter[i])" onmouseover="return CountThis(myCounter1)" wrap=physical maxLength="190"></cftextarea></td>
+        <td><textarea name="Description[i]" cols="50" rows="6" id="Description"  onkeypress="return LimitThis()" onkeyup="return CountThis(myCounter[i])" onmouseover="return CountThis(myCounter1)" wrap=physical maxLength="190"></textarea></td>
         <td><strong><SPAN id=myCounter[i]>190</SPAN></strong> remaining</font></td>
   	</tr>
     </cfloop>
@@ -322,19 +339,25 @@
 <table align="center" border="1" border-collapse='collapse' cellpadding="0" cellspacing="4" width="400">
 	<tr align="center">
 		<td>
-			<cfinput type="submit" value="  Next  ">
-			<br><br>
-			<cfinput type="button" value="    Log Off   " onclick="window.location='logoff.cfm';">
+			<input type="submit" class="btn btn-lg btn-primary" value="  Next  ">
+			
 		</td>
+        <td>
+        	<input type="button" class="btn btn-lg btn-primary" value="    Log Off   " onclick="window.location='logoff.cfm';">
+        </td>
+        <td>
+        	<input type="button" class="btn btn-lg btn-primary" value="    Return to Main Screen   " onclick="window.location='loginb.cfm';">
+        </td>
 	</tr>
 </table>
+</cfform>
+</cfif>
 
 <cfinclude template="footer.cfm">
 
 <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    
     <script language = "Javascript">
 		function LimitThis() {
 			var myObject=event.srcElement;
