@@ -29,7 +29,7 @@
       <div class="row">
         <div class="col-lg-6">
 			<!-- HatsOff award logo -->
-			<img src="assets/img/hatsoff2.jpg" alt="HatsOff Logo" width="290" height="140" title="HatsOff Logo">
+			<img src="assets/img/hatsoff3.png" alt="HatsOff Logo" width="290" height="140" title="HatsOff Logo">
             <h2><button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#hatsoffModal">Nominate</h2><br />
 			<h4>Qualifications</h4>
 			<p class="text-justify">Rewarding UCLA Housing & Hospitality Services Team Members for their exceptional efforts. The Hats Off program is designed to provide a timely 'tip of the hat' for a job well done, recognizing team members for exceptional service and performance in day-to-day work.
