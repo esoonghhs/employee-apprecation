@@ -91,7 +91,12 @@
 		<cflocation url="departments.cfm" addtoken="No">
 		<cfabort>
 	<cfelse>
-		<cflocation url="login.cfm" addtoken="No">
+        <cfif awardchoice is "1">
+        	<cfset session.awardtype = "1">
+        <cfelse>
+        	<cfset session.awardtype = "2">
+        </cfif>
+		<cflocation url="login-error.cfm" addtoken="No">
 		<cfabort>
 	</cfif>
 
