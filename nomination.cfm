@@ -36,11 +36,11 @@
 <cfoutput></cfoutput><br />
 <cfoutput></cfoutput><br />
 <cfoutput></cfoutput><br />
-<cfoutput>The award type is "#session.awardtype#"</cfoutput><br />
+<!--- <cfoutput>The award type is "#session.awardtype#"</cfoutput><br />
 <cfoutput>The dept is "#dept#"</cfoutput><br />
 <cfoutput>The nominator is #session.empUID#</cfoutput><br />
 <cfoutput>The nominator is #emp_full_name#</cfoutput>
-<cfoutput>The numNom is #numNom#</cfoutput>
+<cfoutput>The numNom is #numNom#</cfoutput> --->
 
 <head>
     <meta charset="utf-8">
@@ -167,11 +167,11 @@
 		<td>
         	<cfif session.awardtype is 1>
 				<cfoutput query="getAchievements">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#"> #achievement#<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em><small>#achievement_descrip#</small></em><br /><br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#" checked=#checked#> #achievement#<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em><small>#achievement_descrip#</small></em><br /><br />
                 </cfoutput>
             <cfelse>
             	<cfoutput query="getAchievementsafety">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#"> #achievement#<br /><br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#" checked="#checked#"> #achievement#<br /><br />
                 </cfoutput>
             </cfif>
 		</td>	
@@ -180,12 +180,12 @@
 
 	<tr>
 		<td>
-		<b>4. In the space provided, describe the nominee's achievement (190 Character Limit):</b> <strong><SPAN id=myCounter1>190</SPAN></strong> remaining</font>
+		<b>4. In the space provided, describe the nominee's achievement:</b> <strong><SPAN id=myCounter1>190</SPAN></strong> Characters Remaining (and reduce number as you type)
 		</td>
 	</tr>
 	<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<textarea name="Description" cols="50" rows="6" id="Description"  onkeypress="return LimitThis()" onkeyup="return CountThis(myCounter1)" onmouseover="return CountThis(myCounter1)" wrap=physical maxLength="190" style="font-family:arial,helvetica, sans-serif;"></textarea>
+			<textarea name="Description" cols="50" rows="6" id="Description"  placeholder="Achievement description" onkeypress="return LimitThis()" onkeyup="return CountThis(myCounter1)" onmouseover="return CountThis(myCounter1)" wrap=physical maxLength="190" style="font-family:arial,helvetica, sans-serif;"></textarea>
 		</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>
@@ -217,38 +217,12 @@
 		</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>
-	<tr>
-		<td>
-		<b>6. Enter the Supervisor's name:</b>
-		</td>
-	</tr>
-    <tr><td>&nbsp;</td></tr>
-	<tr>
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<select name="supervisor">
-				<option value=""></option>
-				<cfoutput query="getEmps">
-					<option value="#emp_id#">#emp_full_name#</option>
-				</cfoutput>
-			</select>
-		</td>
-	</tr>
-	<tr><td>&nbsp;</td></tr>
-    <tr><td>&nbsp;</td></tr>
     <tr><td>&nbsp;</td></tr>
 	<tr>
 		<td>
         	<input type="hidden" name="session.numNom" value ="#session.numNom#">
 			<input type="submit" class="btn btn-lg btn-primary" value="  Next  ">
 		</td>
-    
-        <td>
-			<input type="button" class="btn btn-lg btn-primary" value="    Log Off   " onclick="window.location='logoff.cfm';">
-		</td>
-        <td></td>
-        <td>
-        	<input type="button" class="btn btn-lg btn-primary" value="    Return to Main Screen   " onclick="window.location='loginb.cfm';">
-        </td>
 	</tr>
 </table>
 </cfform>
@@ -322,7 +296,7 @@
 
 <table align="center" border="1" border-collapse='collapse' cellpadding="0" cellspacing="4" width="400">
 	<tr>
-        <th>Location Where Nominee Works</th>
+        <th>Nominee Department</th>
         <th>Nominee Name</th>
         <th>Describe Nominee's Achievement (190 Character Limit)</th>
         <th></th>
