@@ -17,10 +17,10 @@
 <cfoutput></cfoutput><br />
 <cfoutput></cfoutput><br />
 <cfoutput></cfoutput><br />
-<cfoutput>Logged in person session.empUID is #session.empUID#</cfoutput><br />
+<!--- <cfoutput>Logged in person session.empUID is #session.empUID#</cfoutput><br />
 <cfoutput>Time logged on is #logintime#</cfoutput><br />
 <cfoutput>The award type is #session.awardtype#</cfoutput><br />
-<cfoutput>The session_emp_id is #session.emp_id#</cfoutput>
+<cfoutput>The session_emp_id is #session.emp_id#</cfoutput> --->
 
 <head>
     <meta charset="utf-8">
@@ -88,74 +88,74 @@
 
 <!--- Single Nomination --->
 <div class="container">
-<div class="container marketing">
-      <div class="row">
-      <div class="col-lg-4">
-      </div>
-        <div class="col-lg-4">
-<a class="btn btn-lg btn-primary" data-toggle="collapse" href="#collapseSingle" aria-expanded="false" aria-controls="collapseSingle">Nominating an Individual</a>
-			<div class="collapse" id="collapseSingle">
-                <div class="well">
-<cfform action="#URLSessionFormat("nomination.cfm")#" method="POST">
-<table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
-	<cfloop index="i" from="1" to="#getNominatorDept.RecordCount#">
-    <tr>
-    	<td>
-			<cfif result[i] is "Conferences">
-                <cfinput type="radio" name="dept" value="Conferences">Conferences, Catering & Marketing
-            <cfelseif result[i] is "Dining">
-                <cfinput type="radio" name="dept" value="Dining">Dining Services
-            <cfelseif result[i] is "HHSAdmin">
-                <cfinput type="radio" name="dept" value="HHSAdmin">Housing Admin & HBO
-            <cfelseif result[i] is "HHS IT">
-                <cfinput type="radio" name="dept" value="HHSIT">Housing IT
-            <cfelseif result[i] is "Housing">
-                <cfinput type="radio" name="dept" value="Housing">Housing Services
-            <cfelseif result[i] is "Letter">
-                <cfinput type="radio" name="dept" value="Letter">Letter
-            <cfelseif result[i] is "CampusService">
-                <cfinput type="radio" name="dept" value="CampusService">Housing HR/Payroll
-            <cfelseif result[i] is "Lake">
-                <cfinput type="radio" name="dept" value="Lake">LACC & BRUINWOODS
-            <cfelseif result[i] is "HousingProjects">
-                <cfinput type="radio" name="dept" value="HousingProjects">Dining Services
-            <cfelseif result[i] is "Rooms">
-                <cfinput type="radio" name="dept" value="Rooms">Rooms Division
-            <cfelseif result[i] is "UA">
-                <cfinput type="radio" name="dept" value="UA">University Apartments
-            <cfelseif result[i] is "LUSKIN_CONFERENCE_CENTER">
-                <cfinput type="radio" name="dept" value="LUSKIN_CONFERENCE_CENTER">Luskin Conference Center
-            <cfelseif result[i] is "Dining">
-                <cfinput type="radio" name="dept" value="Dining">Dining Services
-            </cfif>
-        </td>
-    </tr>
-    </cfloop>
-    <tr>
-        <td><cfinput type="radio" name="All" value="All">Out of Department</td>
-    </tr>
-    <tr>
-    	<td>
-        	<cfinput type="Hidden" name="numNom" value="1">
-        </td>
-    </tr>
-    <tr>
-    	<td>
-            <input type="Submit" value="Next">
-        </td>
-    </tr>
-</table>
-</cfform>
-</div>
-</div>
-</div>
-<div class="col-lg-4">
-</div>
-</div>
-</div>
+    <div class="container marketing">
+        <div class="row">
+            <div class="col-lg-4">
+            </div>
+            <div class="col-lg-4">
+            <a class="btn btn-lg btn-primary">Single Nomination</a><br /><br />
+    <cfform action="#URLSessionFormat("nomination.cfm")#" method="POST">
+    <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
+        <cfloop index="i" from="1" to="#getNominatorDept.RecordCount#">
+        <tr>
+            <td>
+                <cfif result[i] is "Conferences">
+                    <cfinput type="radio" name="dept" value="Conferences" checked="yes">Conferences, Catering & Marketing
+                <cfelseif result[i] is "Dining">
+                    <cfinput type="radio" name="dept" value="Dining" checked="yes">Dining Services
+                <cfelseif result[i] is "HHSAdmin">
+                    <cfinput type="radio" name="dept" value="HHSAdmin" checked="yes">Housing Admin & HBO
+                <cfelseif result[i] is "HHS IT">
+                    <cfinput type="radio" name="dept" value="HHSIT" checked="yes">Housing IT
+                <cfelseif result[i] is "Housing">
+                    <cfinput type="radio" name="dept" value="Housing" checked="yes">Housing Services
+                <cfelseif result[i] is "Letter">
+                    <cfinput type="radio" name="dept" value="Letter" checked="yes">Letter
+                <cfelseif result[i] is "CampusService">
+                    <cfinput type="radio" name="dept" value="CampusService" checked="yes">Housing HR/Payroll
+                <cfelseif result[i] is "Lake">
+                    <cfinput type="radio" name="dept" value="Lake" checked="yes">LACC & BRUINWOODS
+                <cfelseif result[i] is "HousingProjects">
+                    <cfinput type="radio" name="dept" value="HousingProjects">Dining Services
+                <cfelseif result[i] is "Rooms">
+                    <cfinput type="radio" name="dept" value="Rooms" checked="yes">Rooms Division
+                <cfelseif result[i] is "UA">
+                    <cfinput type="radio" name="dept" value="UA" checked="yes">University Apartments
+                <cfelseif result[i] is "LUSKIN_CONFERENCE_CENTER">
+                    <cfinput type="radio" name="dept" value="LUSKIN_CONFERENCE_CENTER" checked="yes">Luskin Conference Center
+                <cfelseif result[i] is "Dining">
+                    <cfinput type="radio" name="dept" value="Dining" checked="yes">Dining Services
+                </cfif>
+            </td>
+        </tr>
+        </cfloop>
+        <tr>
+            <td><cfinput type="radio" name="All" value="All">Out of Department</td>
+        </tr>
+        <tr>
+            <td>
+                <cfinput type="Hidden" name="numNom" value="1">
+            </td>
+        </tr>
+        <tr>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                <input type="Submit" class="btn btn btn-primary" value="Next">
+            </td>
+        </tr>
+    </table>
+    </cfform>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+    </div>
 </div>
 
-<hr class="featurette-divider">
+<br />
+<hr>
 
 <!--- Bulk Nomination --->
 <div class="container">
@@ -164,45 +164,44 @@
       <div class="col-lg-4">
       </div>
         <div class="col-lg-4">
-<a class="btn btn-lg btn-primary" data-toggle="collapse" href="#collapseBulk" aria-expanded="false" aria-controls="collapseBulk">Nominating Multiple People</a>
-			<div class="collapse" id="collapseBulk">
-                <div class="well">
+<a class="btn btn-lg btn-primary">Nominating Multiple People</a><br /><br />
 <cfform action="#URLSessionFormat("nomination.cfm")#" method="POST">
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr>
     	<td>
-        	Number of nominations:&nbsp;<cfinput type="text" name="numNom" value="" size="2">
+        	<cfset numNom = "2">
+        	Number of nominations:&nbsp;<cfinput type="text" name="numNom" value="#numNom#" placeholder="2" size="2">
        	</td>
     </tr>
 	<cfloop index="i" from="1" to="#getNominatorDept.RecordCount#">
     <tr>
     	<td>
 			<cfif result[i] is "Conferences">
-                <cfinput type="radio" name="dept" value="Conferences">Conferences, Catering & Marketing
+                <cfinput type="radio" name="dept" value="Conferences" checked="yes">Conferences, Catering & Marketing
             <cfelseif result[i] is "Dining">
-                <cfinput type="radio" name="dept" value="Dining">Dining Services
+                <cfinput type="radio" name="dept" value="Dining" checked="yes">Dining Services
             <cfelseif result[i] is "HHSAdmin">
-                <cfinput type="radio" name="dept" value="HHSAdmin">Housing Admin & HBO
+                <cfinput type="radio" name="dept" value="HHSAdmin" checked="yes">Housing Admin & HBO
             <cfelseif result[i] is "HHS IT">
-                <cfinput type="radio" name="dept" value="HHSIT">Housing IT
+                <cfinput type="radio" name="dept" value="HHSIT" checked="yes">Housing IT
             <cfelseif result[i] is "Housing">
-                <cfinput type="radio" name="dept" value="Housing">Housing Services
+                <cfinput type="radio" name="dept" value="Housing" checked="yes">Housing Services
             <cfelseif result[i] is "Letter">
-                <cfinput type="radio" name="dept" value="Letter">Letter
+                <cfinput type="radio" name="dept" value="Letter" checked="yes">Letter
             <cfelseif result[i] is "CampusService">
-                <cfinput type="radio" name="dept" value="CampusService">Housing HR/Payroll
+                <cfinput type="radio" name="dept" value="CampusService" checked="yes">Housing HR/Payroll
             <cfelseif result[i] is "Lake">
-                <cfinput type="radio" name="dept" value="Lake">LACC & BRUINWOODS
+                <cfinput type="radio" name="dept" value="Lake" checked="yes">LACC & BRUINWOODS
             <cfelseif result[i] is "HousingProjects">
-                <cfinput type="radio" name="dept" value="HousingProjects">Dining Services
+                <cfinput type="radio" name="dept" value="HousingProjects" checked="yes">Dining Services
             <cfelseif result[i] is "Rooms">
-                <cfinput type="radio" name="dept" value="Rooms">Rooms Division
+                <cfinput type="radio" name="dept" value="Rooms" checked="yes">Rooms Division
             <cfelseif result[i] is "UA">
-                <cfinput type="radio" name="dept" value="UA">University Apartments
+                <cfinput type="radio" name="dept" value="UA" checked="yes">University Apartments
             <cfelseif result[i] is "LUSKIN_CONFERENCE_CENTER">
-                <cfinput type="radio" name="dept" value="LUSKIN_CONFERENCE_CENTER">Luskin Conference Center
+                <cfinput type="radio" name="dept" value="LUSKIN_CONFERENCE_CENTER" checked="yes">Luskin Conference Center
             <cfelseif result[i] is "Dining">
-                <cfinput type="radio" name="dept" value="Dining">Dining Services
+                <cfinput type="radio" name="dept" value="Dining" checked="yes">Dining Services
             </cfif>
         </td>
     </tr>
@@ -210,9 +209,12 @@
     <tr>
         <td><cfinput type="radio" name="All" value="All">Out of Department</td>
     </tr>
+            <tr>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        </tr>
     <tr>
     	<td>
-            <input type="Submit" value="Next">
+            <input type="Submit" class="btn btn btn-primary" value="Next">
         </td>
     </tr>
 </table>
@@ -221,8 +223,6 @@
 </div>
 </div>
 <div class="col-lg-4">
-</div>
-</div>
 </div>
 </div>
 

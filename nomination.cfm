@@ -180,8 +180,7 @@
 
 	<tr>
 		<td>
-		<b>4. In the space provided, describe the nominee's achievement:</b> <strong><SPAN id=myCounter1>190</SPAN></strong> Characters Remaining (and reduce number as you type)
-		</td>
+		<b>4. In the space provided, describe the nominee's achievement:</b> <strong><SPAN id=myCounter1>190</SPAN></strong> Characters Remaining</td>
 	</tr>
 	<tr>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -206,7 +205,8 @@
         <td>
         	<cfoutput>If you are assisting someone to do the nomination, please select their name from this menu</cfoutput>                 
         </td>
-        <td>>&nbsp;&nbsp;&nbsp;</td>
+    </tr>
+    <tr>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;
 			<select name="nominator">
 				<option value=""></option>
@@ -259,24 +259,9 @@
 		</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>
-	<tr>
-		<td>
-		2. Enter the Supervisor's name:
-		</td>
-	</tr>
-	<tr>
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<select name="supervisor">
-				<option value=""></option>
-				<cfoutput query="getEmps">
-					<option value="#emp_id#">#emp_full_name#</option>
-				</cfoutput>
-			</select>
-		</td>
-	</tr>
     <tr>
 		<td>
-		3. Select the nominees achievement:
+		2. Select the nominees achievement:
 		</td>
 	</tr>
 	<tr>
@@ -298,7 +283,7 @@
 	<tr>
         <th>Nominee Department</th>
         <th>Nominee Name</th>
-        <th>Describe Nominee's Achievement (190 Character Limit)</th>
+        <th>In the space provided, describe the nominee's achievement</th>
         <th></th>
 	</tr>
     <cfloop index="i" from="1" to="#numNom#">
@@ -306,22 +291,16 @@
         <td><cfselect name="department[i]" bind="cfc:nomination.getDept ()" bindonload="true" /></td>
         <td><cfselect name="employee[i]" bind="cfc:nomination.getEmp ({department})" /></td> 
         <td><textarea name="Description[i]" cols="50" rows="6" id="Description"  onkeypress="return LimitThis()" onkeyup="return CountThis(myCounter[i])" onmouseover="return CountThis(myCounter1)" wrap=physical maxLength="190"></textarea></td>
-        <td><strong><SPAN id=myCounter[i]>190</SPAN></strong> remaining</font></td>
+        <td><strong><SPAN>id=myCounter1>190</SPAN></strong> Characters Remaining</td>
   	</tr>
     </cfloop>
 </table>
 <table align="center" border="1" border-collapse='collapse' cellpadding="0" cellspacing="4" width="400">
-	<tr align="center">
+	<tr>
 		<td>
+        	<input type="hidden" name="session.numNom" value ="#session.numNom#">
 			<input type="submit" class="btn btn-lg btn-primary" value="  Next  ">
-			
 		</td>
-        <td>
-        	<input type="button" class="btn btn-lg btn-primary" value="    Log Off   " onclick="window.location='logoff.cfm';">
-        </td>
-        <td>
-        	<input type="button" class="btn btn-lg btn-primary" value="    Return to Main Screen   " onclick="window.location='loginb.cfm';">
-        </td>
 	</tr>
 </table>
 </cfform>

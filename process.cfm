@@ -36,14 +36,13 @@
 	Achievement - #session.achievement#<br>
 	Description - #session.description#<br>
 	Nominator - #session.nominator#<br>
-	Supervisor - #session.supervisor#
 </cfoutput>
 
 <cfquery datasource="HatsOff">
 	Insert into awards
 	(nominee_location, nominee_uid, nominee_achievement, nominee_achievement_desc, nominator_uid, supervisor_uid, nomination_status, nomination_createdate, letter, ood)
 	values
-	('#session.department#', '#session.employee#', #session.achievement#, '#rereplace(session.description, "'","'","All")#', '#session.nominator#', '#session.supervisor#', 'Pending', #now()#, #session.letter#, #session.ood#)
+	('#session.department#', '#session.employee#', #session.achievement#, '#rereplace(session.description, "'","'","All")#', '', '#session.nominator#', 'Pending', #now()#, #session.letter#, #session.ood#)
 </cfquery>
 
 <cfquery name="getID" datasource="HatsOff">
@@ -71,5 +70,5 @@
 	('#userid#', #getID.nom_id#, 'Nomination', #now()#, '#session.employee#')
 </cfquery>
 
-<cflocation url="complete.cfm">
+<cflocation url="login.cfm">
 <cfabort>

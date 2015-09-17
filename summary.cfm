@@ -6,7 +6,6 @@ Nominee - #employee#
 Achievement - #achievement#<
 Description - #description#
 Nominator - #session.nominator#
-Supervisor - #supervisor#
 numNom = 1
 BULK NOMINATION
 Department[i] - #session.department#
@@ -14,7 +13,6 @@ Nominee[i] - #session.employee#
 Achievement - #session.achievement#
 Description[i] - #session.description#
 Nominator - #session.nominator#
-Supervisor - #supervisor#
 numNom > 1
 --->
 
@@ -62,7 +60,6 @@ numNom > 1
 <cfoutput>#achievement#</cfoutput><br />
 <cfoutput>#description#</cfoutput><br />
 <cfoutput>Nominator - #nominator#</cfoutput><br />
-<cfoutput>Supervisor - #supervisor#</cfoutput><br />
 <cfoutput>#session.numNom#</cfoutput>
 
 <head>
@@ -97,7 +94,7 @@ numNom > 1
 <cfif session.numNom is 1>
 <div class="container">
 <div class="page-header">
-        <h1 class="text-center">Summary of your nomination</h1>
+        <h1 class="text-center">Summary of Your Nomination</h1>
       </div>
       <div class="row">
         <div class="col-md-12">
@@ -127,7 +124,7 @@ numNom > 1
 <cfif session.numNom GT 1>
 <div class="container">
 	<div class="page-header">
-        <h1 class="text-center">Summary of your nomination</h1>
+        <h1 class="text-center">Summary of Your Nomination</h1>
 	</div>
       <div class="row">
         <div class="col-md-12">
@@ -166,7 +163,7 @@ numNom > 1
 </div>
 </cfif>
 
-<hr class="featurette-divider">
+<hr>
 
 <!--- Need to set session variables if numNom is 1, if great than 1 use loop --->
 
@@ -176,12 +173,10 @@ numNom > 1
     <cfset session.achievement = #achievement#>
     <cfset session.description = #Description#>
     <cfset session.nominator = #nominator#>
-    <cfset session.supervisor = #supervisor#>
 </cfif>
 
 <cfif session.numNom GT 1>
 	<cfset session.nominator = #nominator#>
-    <cfset session.supervisor = #supervisor#>
     <cfset session.achievement = #achievement#>
     <cfloop index="i" from="1" to="#numNom#">
 		<cfset session.department[i] = #department[i]#>
@@ -190,13 +185,16 @@ numNom > 1
 	</cfloop>
 </cfif>
 
-<table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
+<table align="center" border="0" cellpadding="0" cellspacing="4" width="425">
 	<tr align="center">
 		<td>
         	<div class="alert alert-warning" role="alert">
-                <p class="text-center"><strong><small>Review the information above before pressing Submit.</small></strong></p>
-                <p class="text-center"><strong><small>Press Edit if you would like to change the information.</small></strong></p>
-                <p class="text-center"><strong><small>Press Cancel to return to the main page without submitting.</small></strong></p>
+            
+
+
+                <p class="text-left"><small>Press <b>Edit</b> if you would like to change the information.</small></p>
+                <p class="text-left"><small>Press <b>Submit</b> if no changes are required.</small></p>
+                <p class="text-left"><small>Press <b>Cancel</b> to return to the main page without submitting.</small></p>
             </div>
         </td>
 	</tr>
@@ -208,26 +206,28 @@ numNom > 1
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr align="center">
 		<td>
-        	<input type="button" class="btn btn-lg btn-primary" value="    Log Off   " onclick="window.location='logoff.cfm';">
-        </td>
-        <td>
-        	<input type="button" class="btn btn-lg btn-primary" value="    Return to Main Screen   " onclick="window.location='loginb.cfm';">
-        </td>
-        <td>
+            <!--- <cfinput type="button" value="    Edit   " onclick="history.go(-1);return true;"> --->
+            <input type="button" class="btn btn-lg btn-primary" value="    Edit   " onclick="history.go(-1);">
+		</td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr align="center">
+         <td>
         	<cfinput type="hidden" id="session.awardtype" name="session.awardtype" value="#session.awardtype#">
             <cfinput type="hidden" id="session.department" name="session.department" value="#session.department#">
             <cfinput type="hidden" id="session.employee" name="session.employee" value="#session.employee#">
             <cfinput type="hidden" id="session.achievement" name="session.achievement" value="#session.achievement#">
             <cfinput type="hidden" id="session.description" name="session.description" value="#session.description#">
             <cfinput type="hidden" id="session.nominator" name="session.nominator" value="#session.nominator#">
-            <cfinput type="hidden" id="session.supervisor" name="session.supervisor" value="#session.supervisor#">
-            <input type="submit" class="btn btn-lg btn-primary" value="  Submit  ">
+            <input type="submit" class="btn btn-lg btn-primary" value="  Submit  " onClick="alert('Your nomination submission was successful.')">
         </td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr align="center">
         <td>
-            <!--- <cfinput type="button" value="    Edit   " onclick="history.go(-1);return true;"> --->
-            <input type="button" class="btn btn-lg btn-primary" value="    Edit   " onclick="history.go(-1);">
-		</td>
-	</tr>
+        	<input type="button" class="btn btn-lg btn-primary" value="    Cancel   " onclick="window.location='logiin.cfm';">
+        </td>
+    </tr>
 </table>
 </cfform>
 </cfif>
@@ -237,16 +237,15 @@ numNom > 1
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr align="center">
 		<td>
-        	<input type="button" value="    Log Off   " onclick="window.location='logoff.cfm';">
-        </td>
-        <td>
-        	<input type="button" value="    Cancel   " onclick="window.location='loginb.cfm';">
-        </td>
+            <!--- <cfinput type="button" value="    Edit   " onclick="history.go(-1);return true;"> --->
+            <input type="button" class="btn btn-lg btn-primary" value="    Edit   " onclick="history.go(-1);">
+		</td>
+    </tr>
+        <tr align="center">
         <td>
         	<cfinput type="hidden" id="session.awardtype" name="session.awardtype" value="#session.awardtype#">
             <cfinput type="hidden" id="session.department" name="session.department" value="#session.department#">
             <cfinput type="hidden" id="session.nominator" name="session.nominator" value="#session.nominator#">
-            <cfinput type="hidden" id="session.supervisor" name="session.supervisor" value="#session.supervisor#">
         	<cfloop index="i" from="1" to="#numNom#">
                 <cfinput type="hidden" id="session.employee[i]" name="session.employee[i]" value="#session.employee[i]#">
                 <cfinput type="hidden" id="session.achievement[i]" name="session.achievement[i]" value="#session.achievement[i]#">
@@ -254,16 +253,15 @@ numNom > 1
             </cfloop>
             <input type="submit" value="  Submit  ">
         </td>
-        <td>
-            <!--- <cfinput type="button" value="    Edit   " onclick="history.go(-1);return true;"> --->
-            <input type="button" value="    Edit   " onclick="javascript, window.history.back();">
-		</td>
 	</tr>
+    <tr align="center">
+        <td>
+        	<input type="button" value="    Cancel   " onclick="window.location='logiin.cfm';">
+        </td>
+    </tr>
 </table>
 </cfform>
 </cfif>
-
-<hr class="featurette-divider">
 
 <cfinclude template="footer.cfm">
 

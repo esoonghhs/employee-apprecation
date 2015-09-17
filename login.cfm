@@ -27,10 +27,10 @@
     <div class="container marketing">
       <!-- Three columns of text below the carousel -->
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
 			<!-- HatsOff award logo -->
-			<img src="assets/img/hatsoff3.png" alt="HatsOff Logo" width="290" height="140" title="HatsOff Logo">
-            <h2><button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#hatsoffModal">Nominate</h2><br /><br />
+			<p class="text-center"><img src="assets/img/hatsoff3.png" alt="HatsOff Logo" width="290" height="140" title="HatsOff Logo"></p>
+            <h2 class="text-center"><button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#hatsoffModal">Nominate</h2><br /><br />
 			<h4>Qualifications</h4>
 			<p class="text-justify">Rewarding UCLA Housing & Hospitality Services Team Members for their exceptional efforts. The Hats Off program is designed to provide a timely 'tip of the hat' for a job well done, recognizing team members for exceptional service and performance in day-to-day work.
             <a data-toggle="collapse" href="#collapseHatsoff" aria-expanded="false" aria-controls="collapseHatsoff">View details &raquo;</a></p>
@@ -97,11 +97,18 @@ A:	Ask your supervisor, or contact the program coordinator Aliana Lungo-Shapiro,
             </div>
         </div><!-- /.col-lg-6 -->
         
-        <div class="col-lg-6">
+        <div class="col-lg-4">
+        <br /><br /><br /><br /><br /><br /><br /><br />
+        <p class="text-center">
+        <input type="button" class="btn btn-lg btn-primary" value="    Log Off   " onclick="window.location='logoff.cfm';">
+        </p>
+        </div>
+        
+        <div class="col-lg-4">
         	<!-- Safety award logo -->
-            <img src="assets/img/safety.png" alt="Safety Logo" width="140" height="140" title="Safety Logo">
+            <p class="text-center"><img src="assets/img/safety.png" alt="Safety Logo" width="140" height="140" title="Safety Logo"></p>
           	<!-- Trigger the login modal with a button -->
-			<h2><button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#safetyModal">Nominate</h2><br /><br />
+			<h2 class="text-center"><button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#safetyModal">Nominate</h2><br /><br />
             <h4>Qualifications</h4>
 			<p class="text-justify">Eligible team members may be awarded an On-the-Spot safety award for any of the 6 reasons below. A detailed explanation of the reason/event must be given on the nomination form. 
             <a data-toggle="collapse" href="#collapseSafety" aria-expanded="false" aria-controls="collapseSafety">View details &raquo;</a></p>
