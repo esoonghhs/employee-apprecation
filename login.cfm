@@ -1,3 +1,6 @@
+<cfset awardtypeController = "0">
+<cfset session.awardtypeController = #awardtypeController#>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +30,7 @@
     <div class="container marketing">
       <!-- Three columns of text below the carousel -->
       <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-6">
 			<!-- HatsOff award logo -->
 			<p class="text-center"><img src="assets/img/hatsoff3.png" alt="HatsOff Logo" width="290" height="140" title="HatsOff Logo"></p>
             <h2 class="text-center"><button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#hatsoffModal">Nominate</h2><br /><br />
@@ -96,15 +99,8 @@ A:	Ask your supervisor, or contact the program coordinator Aliana Lungo-Shapiro,
                 </div>
             </div>
         </div><!-- /.col-lg-6 -->
-        
-        <div class="col-lg-4">
-        <br /><br /><br /><br /><br /><br /><br /><br />
-        <p class="text-center">
-        <input type="button" class="btn btn-lg btn-primary" value="    Log Off   " onclick="window.location='logoff.cfm';">
-        </p>
-        </div>
-        
-        <div class="col-lg-4">
+
+      <div class="col-lg-6">
         	<!-- Safety award logo -->
             <p class="text-center"><img src="assets/img/safety.png" alt="Safety Logo" width="140" height="140" title="Safety Logo"></p>
           	<!-- Trigger the login modal with a button -->

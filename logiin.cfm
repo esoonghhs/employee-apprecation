@@ -29,13 +29,13 @@
       <div class="row">
         <div class="col-lg-6">
 			<!-- HatsOff award logo -->
-			<img src="assets/img/hatsoff3.png" alt="HatsOff Logo" width="290" height="140" title="HatsOff Logo"><br /><br /><br />
+			<p class="text-center"><img src="assets/img/hatsoff3.png" alt="HatsOff Logo" width="290" height="140" title="HatsOff Logo"></p><br />
             <cfform action="#URLSessionFormat("departments.cfm")#" method="POST">
-            	<cfset session.awardtype = "1">
-            	<input type="hidden" id="session.awardtype" name="session.awardtype" value="#session.awardtype#">
-            <input class="btn btn-lg btn-primary" type="Submit" value="Nominate">
+            	<cfset awardtype = "1">
+            	<input type="hidden" id="awardtype" name="awardtype" value = "1">
+            	<h2 class="text-center"><input class="btn btn-lg btn-primary" type="Submit" value="Nominate"></h2>
             </cfform>
-            <br /><br />
+            <br />
 			<h4>Qualifications</h4>
 			<p class="text-justify">Rewarding UCLA Housing & Hospitality Services Team Members for their exceptional efforts. The Hats Off program is designed to provide a timely 'tip of the hat' for a job well done, recognizing team members for exceptional service and performance in day-to-day work.
             <a data-toggle="collapse" href="#collapseHatsoff" aria-expanded="false" aria-controls="collapseHatsoff">View details &raquo;</a></p>
@@ -105,14 +105,14 @@ A:	Ask your supervisor, or contact the program coordinator Aliana Lungo-Shapiro,
         
         <div class="col-lg-6">
         	<!-- Safety award logo -->
-            <img src="assets/img/safety.png" alt="Safety Logo" width="140" height="140" title="Safety Logo"><br /><br /><br />
+            <p class="text-center"><img src="assets/img/safety.png" alt="Safety Logo" width="140" height="140" title="Safety Logo"></p><br />
           	<!-- Trigger the login modal with a button -->
 			<cfform action="#URLSessionFormat("departments.cfm")#" method="POST">
-            	<cfset session.awardtype = "2">
-            	<input type="hidden" id="session.awardtype" name="session.awardtype" value="#session.awardtype#">
-            <input class="btn btn-lg btn-primary" type="Submit" value="Nominate">
+            	<cfset awardtype = "2">
+            	<input type="hidden" id="awardtype" name="awardtype" value="2">
+            <h2 class="text-center"><input class="btn btn-lg btn-primary" class="text-center" type="Submit" value="Nominate"></h2>
             </cfform>
-            <br /><br />
+            <br />
             <h4>Qualifications</h4>
 			<p class="text-justify">Eligible team members may be awarded an On-the-Spot safety award for any of the 6 reasons below. A detailed explanation of the reason/event must be given on the nomination form. 
             <a data-toggle="collapse" href="#collapseSafety" aria-expanded="false" aria-controls="collapseSafety">View details &raquo;</a></p>

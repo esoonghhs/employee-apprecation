@@ -8,4 +8,4 @@ Thank you for supporting the H&HS Hats Off program. As part of the holiday black
 	<cfif not isdefined('session.username')>
 		<cflocation url="login.cfm">
 	</cfif>
-</cfif>  
+</cfif>

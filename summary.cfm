@@ -39,28 +39,47 @@ numNom > 1
 <cfset deptName = getDeptName.DepartmentName>
 
 <!--- Find selected achievement description --->
-<CFQUERY NAME="getAchievement" DATASOURCE="hatsoff">
+<CFQUERY NAME="getAchievement1" DATASOURCE="hatsoff">
 	SELECT achievement
 	FROM achievements
 	WHERE achievement_id = #achievement#
 </CFQUERY>.
-<cfset achievDesc = getAchievement.achievement>
+<cfset achievDesc1 = getAchievement1.achievement>
+
+<!--- Find selected achievementsafety description --->
+<CFQUERY NAME="getAchievement2" DATASOURCE="hatsoff">
+	SELECT achievement
+	FROM achievementsafety
+	WHERE achievement_id = #achievement#
+</CFQUERY>.
+<cfset achievDesc2 = getAchievement2.achievement>
+
+<cfoutput></cfoutput><br />
+<cfoutput></cfoutput><br />
+<cfoutput></cfoutput><br />
+<cfoutput></cfoutput><br />
+
+<!--- Set the desired nominator --->
+<cfoutput>Nominator is #nominator#</cfoutput><br />
+<cfoutput>The replacement nominator is #nominatorAnother#</cfoutput><br />
+<cfif len(#nominatorAnother#) eq 0>
+	<cfset nominator = #nominator#>
+<cfelse>
+	<cfset nominator = #nominatorAnother#>
+</cfif>
+<cfoutput>Nominator is #nominator#</cfoutput><br />
 
 <!DOCTYPE html>
 <html lang="en">
 
-<!--- troubleshoot lines --->
-<cfoutput></cfoutput><br />
-<cfoutput></cfoutput><br />
-<cfoutput></cfoutput><br />
-<cfoutput></cfoutput><br />
+<!--- troubleshoot lines 
 <cfoutput>The award type is "#session.awardtype#"</cfoutput><br />
 <cfoutput>The session.dept is "#session.dept#"</cfoutput><br />
 <cfoutput>#employee#</cfoutput><br />
 <cfoutput>#achievement#</cfoutput><br />
 <cfoutput>#description#</cfoutput><br />
-<cfoutput>Nominator - #nominator#</cfoutput><br />
-<cfoutput>#session.numNom#</cfoutput>
+<cfoutput>The session numNom is #session.numNom#</cfoutput> --->
+
 
 <head>
     <meta charset="utf-8">
@@ -84,11 +103,21 @@ numNom > 1
 </head>
 
 <body onload="document.frmScan.nomination.focus();">
-<!--- From awardtype determine which logo to use --->
-<cfif session.awardtype is 1>
-	<cfinclude template="header-hatsoff.cfm">
-<cfelse> 
-	<cfinclude template="header-safety.cfm">
+<!--- From awardtype determine which variable to use to determine logo --->
+<cfif session.awardtypeController eq 0>
+	<cfif session.awardtype is 1>
+        <cfinclude template="header-hatsoff.cfm">
+    <cfelse> 
+        <cfinclude template="header-safety.cfm">
+    </cfif>
+</cfif>
+
+<cfif session.awardtypeController eq 1>
+	<cfif awardtype is 1>
+        <cfinclude template="header-hatsoff.cfm">
+    <cfelse> 
+        <cfinclude template="header-safety.cfm">
+    </cfif>
 </cfif>
 
 <cfif session.numNom is 1>
@@ -111,7 +140,22 @@ numNom > 1
               <tr>
                 <td><cfoutput>#deptName#</cfoutput></td>
                 <td><cfoutput>#nomineeName#</cfoutput></td>
-                <td><cfoutput>#achievement#&nbsp;&nbsp;&nbsp;#achievDesc#</cfoutput></td>
+                <td>
+                 	<cfif session.awardtypeController eq 0>
+						<cfif session.awardtype is 1>
+							<cfoutput>#achievement#&nbsp;&nbsp;&nbsp;#achievDesc1#</cfoutput>
+                        <cfelse>
+                    		<cfoutput>#achievement#&nbsp;&nbsp;&nbsp;#achievDesc2#</cfoutput>
+                        </cfif>
+                    </cfif>
+                    <cfif session.awardtypeController eq 1>
+						<cfif awardtype is 1>
+							<cfoutput>#achievement#&nbsp;&nbsp;&nbsp;#achievDesc1#</cfoutput>
+                        <cfelse>
+                    		<cfoutput>#achievement#&nbsp;&nbsp;&nbsp;#achievDesc2#</cfoutput>
+                        </cfif>
+                    </cfif>
+                </td>
                 <td><cfoutput>#Description#</cfoutput></td>
               </tr>
             </tbody>

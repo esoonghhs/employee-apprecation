@@ -70,5 +70,5 @@
 	('#userid#', #getID.nom_id#, 'Nomination', #now()#, '#session.employee#')
 </cfquery>
 
-<cflocation url="login.cfm">
+<cflocation url="logiin.cfm" addtoken="no">
 <cfabort>

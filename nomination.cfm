@@ -127,6 +127,15 @@
 	Order by emp_full_name
 </cfquery>
 
+<cfquery name="getDept" datasource="HatsOff">
+        SELECT account_number, account_title
+        FROM departments
+		<cfif session.vdept is not "All" and session.vdept is not "Letter">
+			WHERE [departmentname] = '#session.vdept#'  
+		</cfif>
+        ORDER BY account_title 
+</cfquery>
+
 <hr class="featurette-divider">
 
 <!--- if nomination is single, then do the follow cfform insert --->
@@ -141,8 +150,13 @@
 		</td>
 	</tr>
 	<tr>
-		<td>
-			<cfselect name="department" bind="cfc:nomination.getDept ()" bindonload="true" />
+    	<td>
+			<cfselect name="department" required="yes">
+				<option value=""></option>
+				<cfoutput query="getDept">
+					<option value="#account_number#" selected>#account_title#</option>
+				</cfoutput>
+			</cfselect>
 		</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>
@@ -151,9 +165,8 @@
 		<b>2. Select the nominee from the list below</b>
 		</td>
 	</tr>
-	<tr>
 		<td>
-			<cfselect name="employee" bind="cfc:nomination.getEmp ({department})" />
+			<cfselect name="employee" bind="cfc:nomination.getEmp ({department})" required="yes" />
 		</td>
 	</tr>
     <tr><td>&nbsp;</td></tr>
@@ -167,7 +180,7 @@
 		<td>
         	<cfif session.awardtype is 1>
 				<cfoutput query="getAchievements">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#" checked=#checked#> #achievement#<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em><small>#achievement_descrip#</small></em><br /><br />
+                 <dl><cfinput type="radio" name="achievement" value="#achievement_id#" checked=#checked#><dt>#achievement#</dt><em><small><dd>#achievement_descrip#</dd></dl></small></em>
                 </cfoutput>
             <cfelse>
             	<cfoutput query="getAchievementsafety">
@@ -180,10 +193,10 @@
 
 	<tr>
 		<td>
-		<b>4. In the space provided, describe the nominee's achievement:</b> <strong><SPAN id=myCounter1>190</SPAN></strong> Characters Remaining</td>
+		<b>4. In the space provided, describe the nominee's<br />&nbsp;&nbsp;&nbsp;&nbsp;achievement:</b> <strong><SPAN id=myCounter1>190</SPAN></strong> Characters Remaining</td>
 	</tr>
 	<tr>
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<td>
 			<textarea name="Description" cols="50" rows="6" id="Description"  placeholder="Achievement description" onkeypress="return LimitThis()" onkeyup="return CountThis(myCounter1)" onmouseover="return CountThis(myCounter1)" wrap=physical maxLength="190" style="font-family:arial,helvetica, sans-serif;"></textarea>
 		</td>
 	</tr>
@@ -203,12 +216,13 @@
     <tr><td>&nbsp;</td></tr>
     <tr>
         <td>
-        	<cfoutput>If you are assisting someone to do the nomination, please select their name from this menu</cfoutput>                 
+        	<cfoutput>&nbsp;&nbsp;&nbsp;&nbsp;If you are assisting someone to do the nomination,<br />&nbsp;&nbsp;&nbsp;&nbsp;please select their name from this menu</cfoutput>                 
         </td>
     </tr>
+    <tr><td>&nbsp;</td></tr>
     <tr>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;
-			<select name="nominator">
+			<select name="nominatorAnother">
 				<option value=""></option>
 				<cfoutput query="getEmps">
 					<option value="#emp_id#">#emp_full_name#</option>
@@ -219,9 +233,9 @@
 	<tr><td>&nbsp;</td></tr>
     <tr><td>&nbsp;</td></tr>
 	<tr>
-		<td>
+        <td>
         	<input type="hidden" name="session.numNom" value ="#session.numNom#">
-			<input type="submit" class="btn btn-lg btn-primary" value="  Next  ">
+			<input align="center" type="submit" class="btn btn-lg btn-primary" value="  Next  ">
 		</td>
 	</tr>
 </table>
