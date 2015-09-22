@@ -166,9 +166,10 @@
                 </cfif>
             </td>
         </tr>
+        
         </cfloop>
         <tr>
-            <td><cfinput type="radio" name="All" value="All">  Out of Department</td>
+            <td><cfinput type="radio" name="dept" value="All">  Out of Department</td>
         </tr>
         <tr>
             <td>
@@ -180,8 +181,7 @@
             </td>
         </tr>
         <tr>
-        <td>&nbsp;&nbsp;&nbsp;</td>
-        </tr>
+        <td>&nbsp;&nbsp;&nbsp;</td> 
         <tr>
             <td>
                 <input type="Submit" class="btn btn-lg btn-primary" value="Next">
@@ -249,10 +249,19 @@
     </tr>
     </cfloop>
     <tr>
-        <td><cfinput type="radio" name="All" value="All">  Out of Department</td>
+        <td><cfinput type="radio" name="dept" value="All">  Out of Department</td>
     </tr>
-            <tr>
+    <tr>
         <td>&nbsp;&nbsp;&nbsp;</td>
+    </tr>
+    <tr>
+            <td>
+                <cfinput type="Hidden" name="numNom" value="1">
+                <cfinput type="Hidden" name="awardtypeController" value="#awardtypeController#">
+                <cfif StructKeyExists(form, "awardtype")>
+                	<cfinput type="Hidden" name="awardtype" value="#awardtype#">
+                </cfif>
+            </td>
         </tr>
     <tr>
     	<td>
