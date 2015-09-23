@@ -1,3 +1,9 @@
+<!---
+Variables passed from validate.cfm
+session.emp_id (nominator)
+session.awardtype
+--->
+
 <cfquery datasource="HatsOff">
 	Insert into audit
 	(admin_uid, nom_id, action, action_date, nominee_uid)
@@ -14,9 +20,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!--- troubleshoot lines --->
+<!--- troubleshoot lines
 <cfset empid = #session.emp_id#>
-<cfset logintime = #Now()#>
+<cfset logintime = #Now()#>  --->
 <cfoutput></cfoutput><br />
 <cfoutput></cfoutput><br />
 <cfoutput></cfoutput><br />
@@ -211,8 +217,11 @@
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr>
     	<td>
-        	<cfset numNom = "2">
-        	Number of nominations:&nbsp;<cfinput type="text" name="numNom" value="#numNom#" placeholder="2" size="2">
+        	<cfoutput>The numNom is #numNom#</cfoutput><br /> 
+			<cfset numNom = 2>
+            <cfoutput>The numNom is #numNom#</cfoutput><br /> 
+        	Number of nominations:&nbsp;<input type="text" name="numNom" value="" placeholder="2" size="2" required>
+            <cfoutput>The numNom is #numNom#</cfoutput><br /> 
        	</td>
     </tr>
 	<cfloop index="i" from="1" to="#getNominatorDept.RecordCount#">
@@ -256,7 +265,6 @@
     </tr>
     <tr>
             <td>
-                <cfinput type="Hidden" name="numNom" value="1">
                 <cfinput type="Hidden" name="awardtypeController" value="#awardtypeController#">
                 <cfif StructKeyExists(form, "awardtype")>
                 	<cfinput type="Hidden" name="awardtype" value="#awardtype#">
@@ -297,3 +305,17 @@
 <cfdump var="#result#">
 </body>
 </html>
+
+<!---
+Variables passed to nomination.cfm
+SINGLE NOMINATION
+dept
+numNom
+awardtypeController
+awardtype*
+BULK NOMINATION
+dept
+numNom
+awardtypeController
+awardtype*
+--->

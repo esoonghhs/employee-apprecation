@@ -1,3 +1,10 @@
+<!---
+Variables passed from login.cfm
+awardchoice
+uname
+pword
+--->
+
 <CFIF uname IS "">
 	<CFLOCATION URL="login.cfm">
 </CFIF>
@@ -104,8 +111,10 @@
 	<CFLOCATION URL="login.cfm" addtoken="No">
 	<CFABORT>
 </CFIF>
-
-
 <CFABORT>
 
-
+<!---
+Variables passed to departments.cfm
+session.emp_id (nominator)
+session.awardtype
+--->

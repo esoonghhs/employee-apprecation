@@ -1,3 +1,17 @@
+<!---
+Variables passed from departments.cfm
+SINGLE NOMINATION
+dept
+numNom
+awardtypeController
+awardtype*
+BULK NOMINATION
+dept
+numNom
+awardtypeController
+awardtype*
+--->
+
 <cfquery datasource="HatsOff">
 	Insert into audit
 	(admin_uid, nom_id, action, action_date, nominee_uid)
@@ -44,6 +58,7 @@
 </CFQUERY>.
 <cfset emp_full_name = getNominatorDept.emp_full_name>
 
+<!--- change numNom to session.numNom so can pass value to subsequent pages --->
 <cfset session.numNom = #numNom#>
 
 <!DOCTYPE html>
@@ -57,8 +72,8 @@
 <!--- <cfoutput>The award type is "#session.awardtype#"</cfoutput><br />
 <cfoutput>The dept is "#dept#"</cfoutput><br />
 <cfoutput>The nominator is #session.empUID#</cfoutput><br />
-<cfoutput>The nominator is #emp_full_name#</cfoutput>
-<cfoutput>The numNom is #numNom#</cfoutput> --->
+<cfoutput>The nominator is #emp_full_name#</cfoutput><br /> --->
+<cfoutput>The numNom is #numNom#</cfoutput><br /> 
 <cfoutput>The awardTypeController is #awardTypeController#</cfoutput><br />
 
 <head>
@@ -156,22 +171,6 @@
 	Order by emp_full_name
 </cfquery>
 
-<cfquery name="getDept" datasource="HatsOff">
-        SELECT account_number, account_title
-        FROM departments
-		<cfif session.vdept is not "All" and session.vdept is not "Letter">
-			WHERE [departmentname] = '#session.vdept#'  
-		</cfif>
-        ORDER BY account_title 
-</cfquery>
-
-<cfquery name="getEmployees" datasource="HatsOff">
-        SELECT emp_id, emp_full_name
-        FROM employees
-        WHERE account_number = '#getDept.account_number#'
-        ORDER BY emp_full_name
-</cfquery>
-
 <hr class="featurette-divider">
 
 <!--- if nomination is single, then do the follow cfform insert --->
@@ -187,7 +186,7 @@
 	</tr>
 	<tr>
 		<td>
-			<cfselect name="department" bind="cfc:nominee.getDept ()" bindonload="true" />
+			<cfselect name="department" bind="cfc:nomination.getDept ()" bindonload="true" />
 		</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>
@@ -198,65 +197,10 @@
 	</tr>
 	<tr>
 		<td>
-			<cfselect name="employee1" bind="cfc:nominee.getEmp ({department})" />
+			<cfselect name="employee" bind="cfc:nomination.getEmp ({department})" />
 		</td>
 	</tr>
     <tr><td>&nbsp;</td></tr>
-    <tr>
-		<td>
-			<cfselect name="employee2" bind="cfc:nominee.getEmp ({department})" />
-		</td>
-	</tr>
-    <tr><td>&nbsp;</td></tr>
-     <tr>
-		<td>
-			<cfselect name="employee3" bind="cfc:nominee.getEmp ({department})" />
-		</td>
-	</tr>
-    <tr><td>&nbsp;</td></tr>
-     <tr>
-		<td>
-			<cfselect name="employee4" bind="cfc:nominee.getEmp ({department})" />
-		</td>
-	</tr>
-    <tr><td>&nbsp;</td></tr>
-     <tr>
-		<td>
-			<cfselect name="employee5" bind="cfc:nominee.getEmp ({department})" />
-		</td>
-	</tr>
-    <tr><td>&nbsp;</td></tr>
-     <tr>
-		<td>
-			<cfselect name="employee6" bind="cfc:nominee.getEmp ({department})" />
-		</td>
-	</tr>
-    <tr><td>&nbsp;</td></tr>
-     <tr>
-		<td>
-			<cfselect name="employee7" bind="cfc:nominee.getEmp ({department})" />
-		</td>
-	</tr>
-    <tr><td>&nbsp;</td></tr>
-     <tr>
-		<td>
-			<cfselect name="employee8" bind="cfc:nominee.getEmp ({department})" />
-		</td>
-	</tr>
-    <tr><td>&nbsp;</td></tr>
-     <tr>
-		<td>
-			<cfselect name="employee9" bind="cfc:nominee.getEmp ({department})" />
-		</td>
-	</tr>
-    <tr><td>&nbsp;</td></tr>
-     <tr>
-		<td>
-			<cfselect name="employee10" bind="cfc:nominee.getEmp ({department})" />
-		</td>
-	</tr>
-    <tr><td>&nbsp;</td></tr>
-   
 	<tr>
 		<td>
 		<b>3. Select the nominees achievement:</b>
@@ -297,7 +241,7 @@
 	</tr>
 	<tr>
 		<td>
-			<textarea name="Description" cols="50" rows="6" id="Description"  placeholder="Achievement description" onkeypress="return LimitThis()" onkeyup="return CountThis(myCounter1)" onmouseover="return CountThis(myCounter1)" wrap=physical maxLength="190" style="font-family:arial,helvetica, sans-serif;"></textarea>
+			<textarea name="Description" cols="50" rows="6" id="Description"  placeholder="Achievement description" onkeypress="return LimitThis()" onkeyup="return CountThis(myCounter1)" onmouseover="return CountThis(myCounter1)" wrap=physical maxLength="190" style="font-family:arial,helvetica, sans-serif;" required></textarea>
 		</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>
@@ -336,7 +280,7 @@
         <td>
         	<cfset session.awardtypeController = #awardtypeController#>
         	<input type="hidden" name="session.numNom" value ="#session.numNom#">
-            <cfinput type="Hidden" name="session.awardtypeController" value="#session.awardtypeController#">
+            <input type="Hidden" name="session.awardtypeController" value="#session.awardtypeController#">
             <cfif StructKeyExists(form, "awardtype")>
 				<cfinput type="Hidden" name="awardtype" value="#awardtype#">
             </cfif>
@@ -352,50 +296,13 @@
 <!--- if nomination is multiple, then do the follow cfform insert --->
 <cfif numNom gt 1>
 
-
-
-
-
-
-
-
 <!--- pass nomination.getDept & nomination.getEm & achievement values to summary.cfm for confirmation --->
 <cfform action="#URLSessionFormat("summary.cfm")#" method="POST">
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 <tr><td>&nbsp;</td></tr>
 	<tr>
 		<td>
-		<b>1. Enter the Nominator's name:</b>
-		</td>
-	</tr>
-    <tr><td>&nbsp;</td></tr>
-	<tr>
-		<td>&nbsp;&nbsp;&nbsp;
-        	<cfoutput>#emp_full_name#</cfoutput><br />
-            <cfinput type="hidden" id="nominator" value="#nominator#" name="nominator">
-		</td>
-    </tr>
-    <tr><td>&nbsp;</td></tr>
-    <tr>
-        <td>
-        	<cfoutput>&nbsp;&nbsp;&nbsp;&nbsp;If you are assisting someone to do the nomination,<br />&nbsp;&nbsp;&nbsp;&nbsp;please select their name from this menu</cfoutput>                 
-        </td>
-    </tr>
-    <tr><td>&nbsp;</td></tr>
-    <tr>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;
-			<select name="nominatorAnother">
-				<option value=""></option>
-				<cfoutput query="getEmps">
-					<option value="#emp_id#">#emp_full_name#</option>
-				</cfoutput>
-			</select>
-		</td>
-	</tr>
-    <tr><td>&nbsp;</td></tr>
-    <tr>
-		<td>
-		2. Select the location where your nominee works: 
+			<b>1. Select the location where your nominee works:</b>
 		</td>
 	</tr>
 	<tr>
@@ -406,7 +313,7 @@
     <tr><td>&nbsp;</td></tr>
     <tr>
 		<td>
-		<b>3. Select the nominees achievement:</b>
+		<b>2. Select the nominees achievement:</b>
 		</td>
 	</tr>
 	<tr>
@@ -434,8 +341,39 @@
                     </cfoutput>
                 </cfif>
             </cfif>
-		</td>	
-
+		</td>
+   </tr>
+   <tr>
+		<td>
+		<b>3. Enter the Nominator's name:</b>
+		</td>
+	</tr>
+    <tr><td>&nbsp;</td></tr>
+	<tr>
+		<td>&nbsp;&nbsp;&nbsp;
+        	<cfoutput>#emp_full_name#</cfoutput><br />
+            <cfinput type="hidden" id="nominator" value="#nominator#" name="nominator">
+		</td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr>
+        <td>
+        	<cfoutput>&nbsp;&nbsp;&nbsp;&nbsp;If you are assisting someone to do the nomination,<br />&nbsp;&nbsp;&nbsp;&nbsp;please select their name from this menu</cfoutput>                 
+        </td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;
+			<select name="nominatorAnother">
+				<option value=""></option>
+				<cfoutput query="getEmps">
+					<option value="#emp_id#">#emp_full_name#</option>
+				</cfoutput>
+			</select>
+		</td>
+	</tr>
+    <tr><td>&nbsp;</td></tr>	
+	<tr><td>&nbsp;</td></tr>
 </table>
 
 <table align="center" border="1" border-collapse='collapse' cellpadding="0" cellspacing="4" width="400">
@@ -444,8 +382,27 @@
         <th>In the space provided, describe the nominee's achievement</th>
         <th></th>
 	</tr>
+    <cfloop index="i" from = "1" to = "#numNom#">
+    <tr>
+    	<td><cfselect name="employee#i#" bind="cfc:nomination.getEmp ({department})" /></td>
+    	<td><textarea name="Description#i#" cols="70" rows="3" id="Description"  placeholder="Achievement description" wrap="soft" required></textarea></td>
+    </tr>
+    </cfloop>
+</table>
 
-
+<table align="center" border="0" border-collapse='collapse' cellpadding="0" cellspacing="4" width="400">
+    <tr><td>&nbsp;</td></tr>
+    <tr><td>&nbsp;</td></tr>
+	<tr>
+		<td>
+        	<input type="hidden" name="session.numNom" value ="#session.numNom#">
+            <input type="Hidden" name="session.awardtypeController" value="#session.awardtypeController#">
+            <cfif StructKeyExists(form, "awardtype")>
+				<cfinput type="Hidden" name="awardtype" value="#awardtype#">
+            </cfif>
+			<input type="submit" class="btn btn-lg btn-primary" value="  Next  ">
+		</td>
+	</tr>
 </table>
 </cfform>
 </cfif>
@@ -476,50 +433,35 @@
 
 <!---  
 <cfdump var="#getDept#"><br />
-<cfdump var="#getEmp#">
---->
-<cfdump var="#nominator#">
+<cfdump var="#getDept.account_title#"><br />
+<cfdump var="#getEmployees.emp_full_name#"><br />
+<cfdump var="#getDept#"><br />
+<cfdump var="#getEmployees#"><br />
+<cfdump var="#nominator#"> --->
 
 </body>
 </html>
 
 <!---
-Variables must be passed to summary.cfm
+Variables passed to summary.cfm
 SINGLE NOMINATION
-Department - #session.department#<
-Nominee - #session.employee#
-Achievement - #session.achievement#<
-Description - #session.description#
-Nominator - #session.nominator#
-Supervisor - #supervisor#
-numNom = 1
+department
+employee
+achievement
+Description
+nominator
+nominatorAnother
+session.numNom = 1
+session.awardtypeController
+awardtype
 BULK NOMINATION
-Department[i] - #session.department#<
-Nominee[i] - #session.employee#
-Achievement - #session.achievement#<
-Description[i] - #session.description#
-Nominator - #session.nominator#
-Supervisor - #supervisor#
-numNom > 1
+department
+achievement
+nominator
+nominatorAnother
+employee[i]
+Description[i]
+session.numNom = 2
+session.awardtypeController
+awardtype
 --->
-
-<!---
-================================================== -->
-      <!-- START THE FEATURETTES -->
-
-      <hr class="featurette-divider">
-
-      <div class="row featurette">
-        <div class="col-md-7 col-md-push-5">
-          <h2 class="featurette-heading">Bulk Nomination <span class="text-muted"></span></h2>
-          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-        </div>
-        <div class="col-md-5 col-md-pull-7">
-          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-        </div>
-      </div>
-
-      <hr class="featurette-divider">
-
-      <!-- /END THE FEATURETTES -->
-    </div><!-- /.container --->
