@@ -182,33 +182,81 @@
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr>
 		<td>
-		<b>1. Select the location where your nominee works:</b>
+		1. Select the location where your nominee works: 
 		</td>
 	</tr>
 	<tr>
-    	<td>
-			<cfselect name="department" required="yes">
-				<cfoutput query="getDept">
-					<option value="#account_number#" selected>#account_title#</option>
-				</cfoutput>
-			</cfselect>
+		<td>
+			<cfselect name="department" bind="cfc:nominee.getDept ()" bindonload="true" />
 		</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>
 	<tr>
 		<td>
-		<b>2. Select the nominee from the list below</b>
+		2. Select the nominee from the list below
 		</td>
 	</tr>
-    	<td>
-			<cfselect name="employee" required="yes">
-				<cfoutput query="getEmployees">
-					<option value="#emp_id#" selected>#emp_full_name#</option>
-				</cfoutput>
-			</cfselect>
+	<tr>
+		<td>
+			<cfselect name="employee1" bind="cfc:nominee.getEmp ({department})" />
 		</td>
 	</tr>
     <tr><td>&nbsp;</td></tr>
+    <tr>
+		<td>
+			<cfselect name="employee2" bind="cfc:nominee.getEmp ({department})" />
+		</td>
+	</tr>
+    <tr><td>&nbsp;</td></tr>
+     <tr>
+		<td>
+			<cfselect name="employee3" bind="cfc:nominee.getEmp ({department})" />
+		</td>
+	</tr>
+    <tr><td>&nbsp;</td></tr>
+     <tr>
+		<td>
+			<cfselect name="employee4" bind="cfc:nominee.getEmp ({department})" />
+		</td>
+	</tr>
+    <tr><td>&nbsp;</td></tr>
+     <tr>
+		<td>
+			<cfselect name="employee5" bind="cfc:nominee.getEmp ({department})" />
+		</td>
+	</tr>
+    <tr><td>&nbsp;</td></tr>
+     <tr>
+		<td>
+			<cfselect name="employee6" bind="cfc:nominee.getEmp ({department})" />
+		</td>
+	</tr>
+    <tr><td>&nbsp;</td></tr>
+     <tr>
+		<td>
+			<cfselect name="employee7" bind="cfc:nominee.getEmp ({department})" />
+		</td>
+	</tr>
+    <tr><td>&nbsp;</td></tr>
+     <tr>
+		<td>
+			<cfselect name="employee8" bind="cfc:nominee.getEmp ({department})" />
+		</td>
+	</tr>
+    <tr><td>&nbsp;</td></tr>
+     <tr>
+		<td>
+			<cfselect name="employee9" bind="cfc:nominee.getEmp ({department})" />
+		</td>
+	</tr>
+    <tr><td>&nbsp;</td></tr>
+     <tr>
+		<td>
+			<cfselect name="employee10" bind="cfc:nominee.getEmp ({department})" />
+		</td>
+	</tr>
+    <tr><td>&nbsp;</td></tr>
+   
 	<tr>
 		<td>
 		<b>3. Select the nominees achievement:</b>

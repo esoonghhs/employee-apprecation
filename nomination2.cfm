@@ -165,13 +165,6 @@
         ORDER BY account_title 
 </cfquery>
 
-<cfquery name="getEmployees" datasource="HatsOff">
-        SELECT emp_id, emp_full_name
-        FROM employees
-        WHERE account_number = '#getDept.account_number#'
-        ORDER BY emp_full_name
-</cfquery>
-
 <hr class="featurette-divider">
 
 <!--- if nomination is single, then do the follow cfform insert --->
@@ -179,8 +172,7 @@
 
 <!--- pass nomination.getDept & nomination.getEm & achievement values to summary.cfm for confirmation --->
 <cfform action="#URLSessionFormat("summary.cfm")#" method="POST">
-<table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
-	<tr>
+<table align="center" border="0" cellpadding="0" cellspacing="4" width="400"><tr>
 		<td>
 		<b>1. Select the location where your nominee works:</b>
 		</td>
@@ -195,6 +187,12 @@
 		</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>
+    <cfquery name="getEmployees" datasource="HatsOff">
+        SELECT emp_id, emp_full_name
+        FROM employees
+        WHERE account_number = '#getDept.account_number#'
+        ORDER BY emp_full_name
+	</cfquery>
 	<tr>
 		<td>
 		<b>2. Select the nominee from the list below</b>
@@ -208,6 +206,7 @@
 			</cfselect>
 		</td>
 	</tr>
+	
     <tr><td>&nbsp;</td></tr>
 
 	<tr>
