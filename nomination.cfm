@@ -95,7 +95,7 @@ awardtype*
     <link href="assets/css/carousel.css" rel="stylesheet">
 </head>
 
-<body onload="document.frmScan.department.focus();">
+<body>
 <!--- From awardtype determine which variable to use to determine logo --->
 <cfif awardTypeController eq 0>
 	<cfif session.awardtype is 1>
@@ -251,7 +251,7 @@ awardtype*
 		</td>
 	</tr>
     <tr><td>&nbsp;</td></tr>
-	<tr>
+	<!--- <tr>
 		<td>&nbsp;&nbsp;&nbsp;
         	<cfoutput>#emp_full_name#</cfoutput><br />
             <cfinput type="hidden" id="nominator" value="#nominator#" name="nominator">
@@ -270,6 +270,12 @@ awardtype*
 				<option value=""></option>
 				<cfoutput query="getEmps">
 					<option value="#emp_id#">#emp_full_name#</option>
+				</cfoutput>
+			</select> --->
+            <select name="nominator">
+				<option value=""></option>
+				<cfoutput query="getEmps">
+					<option value="#emp_id#" <cfif #nominator# eq #emp_id#>selected="selected"</cfif>>#emp_full_name#</option>
 				</cfoutput>
 			</select>
 		</td>
@@ -290,8 +296,6 @@ awardtype*
 </table>
 </cfform>
 </cfif>
-
-<hr class="featurette-divider">
 
 <!--- if nomination is multiple, then do the follow cfform insert --->
 <cfif numNom gt 1>
@@ -382,12 +386,20 @@ awardtype*
         <th>In the space provided, describe the nominee's achievement</th>
         <th></th>
 	</tr>
+    <cfset employeeArray = ArrayNew( 1 ) />
+    <cfset DescriptionArray = ArrayNew( 1 ) />
     <cfloop index="i" from = "1" to = "#numNom#">
     <tr>
-    	<td><cfselect name="employee#i#" bind="cfc:nomination.getEmp ({department})" /></td>
-    	<td><textarea name="Description#i#" cols="70" rows="3" id="Description"  placeholder="Achievement description" wrap="soft" required></textarea></td>
+    	<td><cfselect name="employeeArray#i#" bind="cfc:nomination.getEmp ({department})" /></td>
+  		<td><cftextarea name="DescriptionArray#i#" cols="70" rows="3" id="Description"  placeholder="Achievement description" wrap="soft" required="yes"></cftextarea></td>
     </tr>
     </cfloop>
+    <!---
+    <cfloop index="i" from = "1" to = "#numNom#">
+    	<cfset session.employeeArray[i] = #evaluate("employee#i#")#>
+        <cfset session.DescriptionArray[i] = evaluate("DescriptionArray#i#")>
+    </cfloop>
+	--->
 </table>
 
 <table align="center" border="0" border-collapse='collapse' cellpadding="0" cellspacing="4" width="400">
@@ -395,6 +407,12 @@ awardtype*
     <tr><td>&nbsp;</td></tr>
 	<tr>
 		<td>
+            <!---
+			<cfloop index="i" from = "1" to = "#numNom#">
+            	<input type="hidden" name="session.employeeArray[i]">
+                <input type="hidden" name="session.DescriptionArray[i]">
+            </cfloop>
+			--->
         	<input type="hidden" name="session.numNom" value ="#session.numNom#">
             <input type="Hidden" name="session.awardtypeController" value="#session.awardtypeController#">
             <cfif StructKeyExists(form, "awardtype")>
@@ -459,8 +477,8 @@ department
 achievement
 nominator
 nominatorAnother
-employee[i]
-Description[i]
+session.employeeArray[i]
+DescriptionArray[i]
 session.numNom = 2
 session.awardtypeController
 awardtype

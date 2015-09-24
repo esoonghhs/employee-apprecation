@@ -1,13 +1,20 @@
 <!--- Variables with values passed from summary.cfm
+SINGLE NOMINATION
+session.awardtypeController
+session.numNom
 session.awardtype
+awardtype*
+session.vdept
 session.department
 session.employee
 session.achievement
 session.description
 session.nominator
+BULK NOMINATION
 --->
+<output>session.awardtypeController is #awardtypeController#></output>
 			
-<!--- <cfif awardTypeController eq 0> --->
+<cfif session.awardtypeController eq 0>
 <cfif session.awardtype is 1>
     <cfquery name="getAchievements" datasource="hatsoff">
         Select * From achievements
@@ -21,9 +28,9 @@ session.nominator
 	Order by achievement_id
 </cfquery>
 </cfif>
-<!--- </cfif> --->
+</cfif>
 
-<!--- <cfif awardTypeController eq 1>
+<cfif session.awardtypeController eq 1>
 <cfif awardtype is 1>
     <cfquery name="getAchievements" datasource="hatsoff">
         Select * From achievements
@@ -37,14 +44,16 @@ session.nominator
 	Order by achievement_id
 </cfquery>
 </cfif>
-</cfif> --->
+</cfif>
 
+<!---
 <CFQUERY NAME="getNominatorDept" DATASOURCE="hatsoff">
 	SELECT emp_full_name
 	FROM employees
 	WHERE emp_id = #session.empUID#
 </CFQUERY>.
 <cfset emp_full_name = getNominatorDept.emp_full_name>
+--->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -59,8 +68,7 @@ session.nominator
 <cfoutput>The nominator is #session.empUID#</cfoutput><br />
 <cfoutput>The nominator is #emp_full_name#</cfoutput>
 <cfoutput>The numNom is #numNom#</cfoutput> 
-<cfoutput>The awardTypeController is #awardTypeController#</cfoutput><br /> --->
-<cfoutput>#session.description#</cfoutput>
+<cfoutput>The session.awardtypeController is #session.awardtypeController#</cfoutput><br /> --->
 
 <head>
     <meta charset="utf-8">
@@ -83,26 +91,28 @@ session.nominator
 
 <body>
 <!--- From awardtype determine which variable to use to determine logo --->
-<!--- <cfif awardTypeController eq 0> --->
+<cfif session.awardtypeController eq 0>
 	<cfif session.awardtype is 1>
         <cfinclude template="header-hatsoff.cfm">
     <cfelse> 
         <cfinclude template="header-safety.cfm">
     </cfif><br />
-<!--- </cfif> --->
+</cfif>
 
-<!--- <cfif awardTypeController eq 1>
+<cfif session.awardtypeController eq 1>
 	<cfif awardtype is 1>
         <cfinclude template="header-hatsoff.cfm">
     <cfelse> 
         <cfinclude template="header-safety.cfm">
     </cfif><br />
-</cfif> 
+</cfif>
 
+<!---
 <cfset session.dept = dept>
 <cfset session.letter = "0">
 <cfset session.ood = "0">
-<cfset nominator = session.empUID> --->
+<cfset nominator = session.empUID> 
+--->
 
 <!--- set session.vdept value --->
 <cfif session.dept is "Conferences">
@@ -166,17 +176,23 @@ session.nominator
         ORDER BY account_title 
 </cfquery>
 
+<!--- Find selected department name --->
+<CFQUERY NAME="getDeptName" DATASOURCE="hatsoff">
+	SELECT DepartmentName
+	FROM departments
+	WHERE account_number = #session.department#
+</CFQUERY>.
+<cfset deptName = getDeptName.DepartmentName>
+
 <cfquery name="getEmployees" datasource="HatsOff">
         SELECT emp_id, emp_full_name
         FROM employees
-        WHERE account_number = '#getDept.account_number#'
+        WHERE emp_id = '#session.employee#'
         ORDER BY emp_full_name
 </cfquery>
+<cfset nomineeName = getEmployees.emp_full_name>
 
 <hr class="featurette-divider">
-
-<cfset department = "760416">
-<cfset employee = "203348153">
 
 <!--- if nomination is single, then do the follow cfform insert --->
 <cfif session.numNom is 1>
@@ -189,27 +205,45 @@ session.nominator
 		<b>1. Select the location where your nominee works:</b>
 		</td>
 	</tr>
-	<tr>
-    	<td>
-			<cfselect name="department" required="yes">
-				<cfoutput query="getDept">
-					<option value="#account_number#" <cfif #session.department# eq #account_number#>selected="selected"</cfif> >#account_title#</option>
-				</cfoutput>
-			</cfselect>
+    <tr>
+        <td>
+        	<p>&nbsp;&nbsp;&nbsp;&nbsp;previous selection:</p>
+        	<cfoutput>&nbsp;&nbsp;&nbsp;&nbsp;#deptName#</cfoutput>
+        </td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr>
+        <td>
+        	<cfoutput>&nbsp;&nbsp;&nbsp;&nbsp;change selection:</cfoutput>                 
+        </td>
+    </tr>
+    <tr>
+		<td>
+			&nbsp;&nbsp;&nbsp;&nbsp;<cfselect name="department" bind="cfc:nomination.getDept ()" bindonload="true" />
 		</td>
 	</tr>
-	<tr><td>&nbsp;</td></tr>
+    <tr><td>&nbsp;</td></tr>
 	<tr>
 		<td>
 		<b>2. Select the nominee from the list below</b>
 		</td>
 	</tr>
-    	<td>
-			<cfselect name="employee" required="yes">
-				<cfoutput query="getEmployees">
-					<option value="#emp_id#" <cfif #session.employee# eq #emp_id#>selected="selected"</cfif>>#emp_full_name#</option>
-				</cfoutput>
-			</cfselect>
+    <tr>
+        <td>
+        	<p>&nbsp;&nbsp;&nbsp;&nbsp;previous selection:</p>
+        	<cfoutput>&nbsp;&nbsp;&nbsp;&nbsp;#nomineeName#</cfoutput><!--- need employee name --->
+        </td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr>
+        <td>
+        	<cfoutput>&nbsp;&nbsp;&nbsp;&nbsp;change selection:</cfoutput>                 
+        </td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr>
+		<td>
+			&nbsp;&nbsp;&nbsp;&nbsp;<cfselect name="employee" bind="cfc:nomination.getEmp ({department})" />
 		</td>
 	</tr>
     <tr><td>&nbsp;</td></tr>
@@ -220,7 +254,7 @@ session.nominator
 	</tr>
 	<tr>
 		<td>
-			<!--- <cfif awardTypeController eq 0> --->
+			<cfif session.awardtypeController eq 0>
 				<cfif session.awardtype is 1>
                     <cfoutput query="getAchievements">
                      <dl><input type="radio" name="achievement" value="#achievement_id#" <cfif #session.achievement# eq #achievement_id#>checked="checked"</cfif>><dt>#achievement#</dt><em><small><dd>#achievement_descrip#</dd></dl></small></em>
@@ -230,19 +264,19 @@ session.nominator
                     <input type="radio" name="achievement" value="#achievement_id#" <cfif #session.achievement# eq #achievement_id#>checked="checked"</cfif>> #achievement#<br /><br />
                     </cfoutput>
                 </cfif>
-            <!--- </cfif> --->
+            </cfif>
             
-            <!---  <cfif awardTypeController eq 1>
+            <cfif session.awardtypeController eq 1>
 				<cfif awardtype is 1>
                     <cfoutput query="getAchievements">
-                     <dl><cfinput type="radio" name="achievement" value="#achievement_id#" <cfif #session.achievement# eq #achievement_id#>checked="checked"</cfif>><dt>#achievement#</dt><em><small><dd>#achievement_descrip#</dd></dl></small></em>
+                     <dl><input type="radio" name="achievement" value="#achievement_id#" <cfif #session.achievement# eq #achievement_id#>checked="checked"</cfif>><dt>#achievement#</dt><em><small><dd>#achievement_descrip#</dd></dl></small></em>
                     </cfoutput>
                 <cfelse>
                     <cfoutput query="getAchievementsafety">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#" <cfif #session.achievement# eq #achievement_id#>checked="checked"</cfif>> #achievement#<br /><br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="achievement" value="#achievement_id#" <cfif #session.achievement# eq #achievement_id#>checked="checked"</cfif>> #achievement#<br /><br />
                     </cfoutput>
                 </cfif>
-            </cfif> --->
+            </cfif>
 		</td>	
 	</tr>
 	<tr><td>&nbsp;</td></tr>
@@ -263,7 +297,7 @@ session.nominator
 		</td>
 	</tr>
     <tr><td>&nbsp;</td></tr>
-	<tr>
+	<!--- <tr>
 		<td>&nbsp;&nbsp;&nbsp;
         	<cfoutput>#emp_full_name#</cfoutput><br />
             <cfinput type="hidden" id="nominator" value="#session.nominator#" name="session.nominator">
@@ -275,10 +309,10 @@ session.nominator
         	<cfoutput>&nbsp;&nbsp;&nbsp;&nbsp;If you are assisting someone to do the nomination,<br />&nbsp;&nbsp;&nbsp;&nbsp;please select their name from this menu</cfoutput>                 
         </td>
     </tr>
-    <tr><td>&nbsp;</td></tr>
+    <tr><td>&nbsp;</td></tr> --->
     <tr>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;
-			<select name="nominatorAnother">
+			<select name="nominator">
 				<option value=""></option>
 				<cfoutput query="getEmps">
 					<option value="#emp_id#" <cfif #session.nominator# eq #emp_id#>selected="selected"</cfif>>#emp_full_name#</option>
@@ -290,7 +324,7 @@ session.nominator
     <tr><td>&nbsp;</td></tr>
 	<tr>
         <td>
-        	<!--- <cfset session.awardtypeController = #awardtypeController#> --->
+        	<!--- <cfset session.session.awardtypeController = #session.awardtypeController#> --->
         	<input type="hidden" name="session.numNom" value ="#session.numNom#">
             <cfinput type="Hidden" name="session.awardtypeController" value="#session.awardtypeController#">
             <cfif StructKeyExists(form, "awardtype")>
@@ -307,12 +341,6 @@ session.nominator
 
 <!--- if nomination is multiple, then do the follow cfform insert --->
 <cfif session.numNom gt 1>
-
-
-
-
-
-
 
 
 <!--- pass nomination.getDept & nomination.getEm & achievement values to summary.cfm for confirmation --->
@@ -367,7 +395,7 @@ session.nominator
 	</tr>
 	<tr>
 		<td>
-			<cfif awardTypeController eq 0>
+			<cfif session.awardtypeController eq 0>
 				<cfif session.awardtype is 1>
                     <cfoutput query="getAchievements">
                      <dl><cfinput type="radio" name="achievement" value="#achievement_id#" checked=#checked#><dt>#achievement#</dt><em><small><dd>#achievement_descrip#</dd></dl></small></em>
@@ -379,7 +407,7 @@ session.nominator
                 </cfif>
             </cfif>
             
-            <cfif awardTypeController eq 1>
+            <cfif session.awardtypeController eq 1>
 				<cfif awardtype is 1>
                     <cfoutput query="getAchievements">
                      <dl><cfinput type="radio" name="achievement" value="#achievement_id#" checked=#checked#><dt>#achievement#</dt><em><small><dd>#achievement_descrip#</dd></dl></small></em>
@@ -431,52 +459,35 @@ session.nominator
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
 
 <!---  
-<cfdump var="#getDept#"><br />--->
+<cfdump var="#getDept#"><br />
 <cfdump var="#getDept.account_title#"><br />
 <cfdump var="#getEmployees.emp_full_name#"><br />
 <cfdump var="#getDept#"><br />
-<cfdump var="#getEmployees#"><br />
+<cfdump var="#getEmployees#"><br /> --->
 
 </body>
 </html>
 
 <!---
-Variables must be passed to summary.cfm
+Variables passed to summary.cfm
 SINGLE NOMINATION
-Department - #session.department#<
-Nominee - #session.employee#
-Achievement - #session.achievement#<
-Description - #session.description#
-Nominator - #session.nominator#
-Supervisor - #supervisor#
-numNom = 1
+department
+employee
+achievement
+Description
+nominator
+nominatorAnother
+session.numNom = 1
+session.awardtypeController
+awardtype
 BULK NOMINATION
-Department[i] - #session.department#<
-Nominee[i] - #session.employee#
-Achievement - #session.achievement#<
-Description[i] - #session.description#
-Nominator - #session.nominator#
-Supervisor - #supervisor#
-numNom > 1
+department
+achievement
+nominator
+nominatorAnother
+session.employeeArray[i]
+DescriptionArray[i]
+session.numNom = 2
+session.awardtypeController
+awardtype
 --->
-
-<!---
-================================================== -->
-      <!-- START THE FEATURETTES -->
-
-      <hr class="featurette-divider">
-
-      <div class="row featurette">
-        <div class="col-md-7 col-md-push-5">
-          <h2 class="featurette-heading">Bulk Nomination <span class="text-muted"></span></h2>
-          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-        </div>
-        <div class="col-md-5 col-md-pull-7">
-          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-        </div>
-      </div>
-
-      <hr class="featurette-divider">
-
-      <!-- /END THE FEATURETTES -->
-    </div><!-- /.container --->

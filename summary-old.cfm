@@ -246,24 +246,15 @@ numNom > 1
 
 <!--- pass nomination.getDept & nomination.getEm & achievement values to summary.cfm for confirmation --->
 <cfif session.numNom is 1>
-<cfform action="#URLSessionFormat("nomination-edit.cfm")#" method="POST">
+<cfform action="#URLSessionFormat("process.cfm")#" method="POST">
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr align="center">
 		<td>
             <!--- <cfinput type="button" value="    Edit   " onclick="history.go(-1);return true;"> --->
-            <cfinput type="hidden" id="session.awardtype" name="session.awardtype" value="#session.awardtype#">
-            <cfinput type="hidden" id="session.department" name="session.department" value="#session.department#">
-            <cfinput type="hidden" id="session.employee" name="session.employee" value="#session.employee#">
-            <cfinput type="hidden" id="session.achievement" name="session.achievement" value="#session.achievement#">
-            <cfinput type="hidden" id="session.description" name="session.description" value="#session.description#">
-            <cfinput type="hidden" id="session.nominator" name="session.nominator" value="#session.nominator#">
-            <input type="submit" class="btn btn-lg btn-primary" value="  Edit  " >
+            <input type="button" class="btn btn-lg btn-primary" value="    Edit   " onclick="history.go(-1);">
 		</td>
     </tr>
-</table>
-</cfform>
-<cfform action="#URLSessionFormat("process.cfm")#" method="POST">
-<table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
+    <tr><td>&nbsp;</td></tr>
     <tr align="center">
          <td>
         	<cfinput type="hidden" id="session.awardtype" name="session.awardtype" value="#session.awardtype#">

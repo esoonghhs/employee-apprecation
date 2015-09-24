@@ -1,34 +1,36 @@
 <!---
-Variables must be passed from nomination.cfm
+Variables passed from nomination.cfm
 SINGLE NOMINATION
-Department - #session.department#<
-Nominee - #employee#
-Achievement - #achievement#<
-Description - #description#
-Nominator - #session.nominator#
-numNom = 1
+department
+employee
+achievement
+Description
+nominator
+nominatorAnother
+session.numNom = 1
+session.awardtypeController
+awardtype
 BULK NOMINATION
-Department[i] - #session.department#
-Nominee[i] - #session.employee#
-Achievement - #session.achievement#
-Description[i] - #session.description#
-Nominator - #session.nominator#
-numNom > 1
+department
+achievement
+nominator
+nominatorAnother
+session.employeeArray[i]
+DescriptionArray[i]
+session.numNom = 2
+session.awardtypeController
+awardtype
 --->
 
-
-
-<cfif achievement is ''>
-	<cfoutput><b>You did not select an achievement. Please do so. Please click <Edit> button below to go back to nomination form to make an achievement selection.</b></cfoutput>
-</cfif>
-
 <!--- Find selected nominee name --->
-<CFQUERY NAME="getNomineeName" DATASOURCE="hatsoff">
-	SELECT emp_full_name
-	FROM employees
-	WHERE emp_id = #employee#
-</CFQUERY>.
-<cfset nomineeName = getNomineeName.emp_full_name>
+<cfif session.numNom is 1>
+    <CFQUERY NAME="getNomineeName" DATASOURCE="hatsoff">
+        SELECT emp_full_name
+        FROM employees
+        WHERE emp_id = #employee#
+    </CFQUERY>.
+    <cfset nomineeName = getNomineeName.emp_full_name>
+</cfif>
 
 <!--- Find selected department name --->
 <CFQUERY NAME="getDeptName" DATASOURCE="hatsoff">
@@ -59,7 +61,7 @@ numNom > 1
 <cfoutput></cfoutput><br />
 <cfoutput></cfoutput><br />
 
-<!--- Set the desired nominator --->
+<!--- Set the desired nominator 
 <cfoutput>Nominator is #nominator#</cfoutput><br />
 <cfoutput>The replacement nominator is #nominatorAnother#</cfoutput><br />
 <cfif len(#nominatorAnother#) eq 0>
@@ -67,7 +69,7 @@ numNom > 1
 <cfelse>
 	<cfset nominator = #nominatorAnother#>
 </cfif>
-<cfoutput>Nominator is #nominator#</cfoutput><br />
+<cfoutput>Nominator is #nominator#</cfoutput><br />--->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -102,7 +104,7 @@ numNom > 1
     <link href="assets/css/theme.css" rel="stylesheet">
 </head>
 
-<body onload="document.frmScan.nomination.focus();">
+<body>
 <!--- From awardtype determine which variable to use to determine logo --->
 <cfif session.awardtypeController eq 0>
 	<cfif session.awardtype is 1>
@@ -173,10 +175,31 @@ numNom > 1
       <div class="row">
         <div class="col-md-12">
           <table class="table">
+            <thead>
+              <tr>
+                <th>Department</th>
+                <th>Achievement</th>
+              </tr>
+            </thead>
             <tbody>
               <tr>
-                <td>Achievement</td>
-                <td><cfoutput>#achievement#</cfoutput></td>
+                <td><cfoutput>#deptName#</cfoutput></td>
+                <td>
+                	<cfif session.awardtypeController eq 0>
+						<cfif session.awardtype is 1>
+							<cfoutput>#achievement#&nbsp;&nbsp;&nbsp;#achievDesc1#</cfoutput>
+                        <cfelse>
+                    		<cfoutput>#achievement#&nbsp;&nbsp;&nbsp;#achievDesc2#</cfoutput>
+                        </cfif>
+                    </cfif>
+                    <cfif session.awardtypeController eq 1>
+						<cfif awardtype is 1>
+							<cfoutput>#achievement#&nbsp;&nbsp;&nbsp;#achievDesc1#</cfoutput>
+                        <cfelse>
+                    		<cfoutput>#achievement#&nbsp;&nbsp;&nbsp;#achievDesc2#</cfoutput>
+                        </cfif>
+                    </cfif>
+				</td>
               </tr>
             </tbody>
           </table>
@@ -187,17 +210,15 @@ numNom > 1
           <table class="table">
             <thead>
               <tr>
-                <th>Department</th>
                 <th>Nominee</th>
                 <th>Description</th>
               </tr>
             </thead>
             <tbody>
-            <cfloop index="i" from="1" to="#numNom#">
+            <cfloop index="i" from="1" to="#session.numNom#">
               <tr>
-                <td><cfoutput>#department[i]#</cfoutput></td>
-                <td><cfoutput>#employee[i]#</cfoutput></td>
-                <td><cfoutput>#Description[i]#</cfoutput></td>
+               <td><cfoutput>#evaluate("employeeArray#i#")#</cfoutput></td> 
+                <td><cfoutput>#evaluate("DescriptionArray#i#")#</cfoutput></td>
               </tr>
             </cfloop>
             </tbody>
@@ -220,23 +241,16 @@ numNom > 1
 </cfif>
 
 <cfif session.numNom GT 1>
+	<cfset session.department = #department#>
 	<cfset session.nominator = #nominator#>
     <cfset session.achievement = #achievement#>
-    <cfloop index="i" from="1" to="#numNom#">
-		<cfset session.department[i] = #department[i]#>
-        <cfset session.employee[i] = #employee[i]#>
-        <cfset session.description[i] = #Description[i]#>
-	</cfloop>
 </cfif>
 
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="425">
 	<tr align="center">
 		<td>
         	<div class="alert alert-warning" role="alert">
-            
-
-
-                <p class="text-left"><small>Press <b>Edit</b> if you would like to change the information.</small></p>
+ 	            <p class="text-left"><small>Press <b>Edit</b> if you would like to change the information.</small></p>
                 <p class="text-left"><small>Press <b>Submit</b> if no changes are required.</small></p>
                 <p class="text-left"><small>Press <b>Cancel</b> to return to the main page without submitting.</small></p>
             </div>
@@ -246,15 +260,25 @@ numNom > 1
 
 <!--- pass nomination.getDept & nomination.getEm & achievement values to summary.cfm for confirmation --->
 <cfif session.numNom is 1>
-<cfform action="#URLSessionFormat("process.cfm")#" method="POST">
+<cfform action="#URLSessionFormat("nomination-edit.cfm")#" method="POST">
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr align="center">
 		<td>
             <!--- <cfinput type="button" value="    Edit   " onclick="history.go(-1);return true;"> --->
-            <input type="button" class="btn btn-lg btn-primary" value="    Edit   " onclick="history.go(-1);">
+            <cfinput type="hidden" id="session.awardtype" name="session.awardtype" value="#session.awardtype#">
+            <cfinput type="hidden" id="awardtype" name="awardtype" value="#awardtype#">
+            <cfinput type="hidden" id="session.department" name="session.department" value="#session.department#">
+            <cfinput type="hidden" id="session.employee" name="session.employee" value="#session.employee#">
+            <cfinput type="hidden" id="session.achievement" name="session.achievement" value="#session.achievement#">
+            <cfinput type="hidden" id="session.description" name="session.description" value="#session.description#">
+            <cfinput type="hidden" id="session.nominator" name="session.nominator" value="#session.nominator#">
+            <input type="submit" class="btn btn-lg btn-primary" value="  Edit  " >
 		</td>
     </tr>
-    <tr><td>&nbsp;</td></tr>
+</table>
+</cfform>
+<cfform action="#URLSessionFormat("process.cfm")#" method="POST">
+<table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
     <tr align="center">
          <td>
         	<cfinput type="hidden" id="session.awardtype" name="session.awardtype" value="#session.awardtype#">
@@ -285,22 +309,24 @@ numNom > 1
             <input type="button" class="btn btn-lg btn-primary" value="    Edit   " onclick="history.go(-1);">
 		</td>
     </tr>
+     <tr><td>&nbsp;</td></tr>
         <tr align="center">
         <td>
         	<cfinput type="hidden" id="session.awardtype" name="session.awardtype" value="#session.awardtype#">
             <cfinput type="hidden" id="session.department" name="session.department" value="#session.department#">
             <cfinput type="hidden" id="session.nominator" name="session.nominator" value="#session.nominator#">
-        	<cfloop index="i" from="1" to="#numNom#">
-                <cfinput type="hidden" id="session.employee[i]" name="session.employee[i]" value="#session.employee[i]#">
-                <cfinput type="hidden" id="session.achievement[i]" name="session.achievement[i]" value="#session.achievement[i]#">
-                <cfinput type="hidden" id="session.description[i]" name="session.description[i]" value="#session.description[i]#">
+            <cfinput type="hidden" id="session.achievement" name="session.achievement" value="#session.achievement#">
+        	<cfloop index="i" from="1" to="#session.numNom#">
+                <cfinput type="hidden" id="session.employeeArray[i]" name="session.employeeArray[i]">
+                <cfinput type="hidden" id="session.DescriptionArray[i]" name="session.DescriptionArray[i]">
             </cfloop>
-            <input type="submit" value="  Submit  ">
+            <input type="submit" class="btn btn-lg btn-primary" value="  Submit  ">
         </td>
 	</tr>
+     <tr><td>&nbsp;</td></tr>
     <tr align="center">
         <td>
-        	<input type="button" value="    Cancel   " onclick="window.location='logiin.cfm';">
+        	<input type="button" class="btn btn-lg btn-primary" value="    Cancel   " onclick="window.location='logiin.cfm';">
         </td>
     </tr>
 </table>

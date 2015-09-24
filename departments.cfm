@@ -217,11 +217,28 @@ session.awardtype
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr>
     	<td>
-        	<cfoutput>The numNom is #numNom#</cfoutput><br /> 
-			<cfset numNom = 2>
-            <cfoutput>The numNom is #numNom#</cfoutput><br /> 
-        	Number of nominations:&nbsp;<input type="text" name="numNom" value="" placeholder="2" size="2" required>
-            <cfoutput>The numNom is #numNom#</cfoutput><br /> 
+            Number of nominations   <select name="numNom" id="numNom" value="">
+                  <option>1</option>
+                  <option selected>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                  <option>9</option>
+                  <option>10</option>
+                  <option>11</option>
+                  <option>12</option>
+                  <option>13</option>
+                  <option>14</option>
+                  <option>15</option>
+                  <option>16</option>
+                  <option>17</option>
+                  <option>18</option>
+                  <option>19</option>
+                  <option>20</option>
+            </select>
        	</td>
     </tr>
 	<cfloop index="i" from="1" to="#getNominatorDept.RecordCount#">
