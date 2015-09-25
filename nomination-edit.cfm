@@ -12,7 +12,7 @@ session.description
 session.nominator
 BULK NOMINATION
 --->
-<output>session.awardtypeController is #awardtypeController#></output>
+<output>session.awardtypeController is #session.awardtypeController#></output>
 			
 <cfif session.awardtypeController eq 0>
 <cfif session.awardtype is 1>
@@ -45,6 +45,9 @@ BULK NOMINATION
 </cfquery>
 </cfif>
 </cfif>
+
+<cfset deptUpdate = "0">
+<cfset empUpdate = "0">
 
 <!---
 <CFQUERY NAME="getNominatorDept" DATASOURCE="hatsoff">
@@ -213,13 +216,13 @@ BULK NOMINATION
     </tr>
     <tr><td>&nbsp;</td></tr>
     <tr>
-        <td>
-        	<cfoutput>&nbsp;&nbsp;&nbsp;&nbsp;change selection:</cfoutput>                 
+    	<td>
+            <cfinput type="checkbox" name="deptUpdate" value="1">&nbsp;&nbsp;check to change selection<br />
         </td>
     </tr>
     <tr>
 		<td>
-			&nbsp;&nbsp;&nbsp;&nbsp;<cfselect name="department" bind="cfc:nomination.getDept ()" bindonload="true" />
+			<cfselect name="departmentAnother" bind="cfc:nomination.getDept ()" bindonload="true" />
 		</td>
 	</tr>
     <tr><td>&nbsp;</td></tr>
@@ -231,19 +234,18 @@ BULK NOMINATION
     <tr>
         <td>
         	<p>&nbsp;&nbsp;&nbsp;&nbsp;previous selection:</p>
-        	<cfoutput>&nbsp;&nbsp;&nbsp;&nbsp;#nomineeName#</cfoutput><!--- need employee name --->
+        	<cfoutput>&nbsp;&nbsp;&nbsp;&nbsp;#nomineeName#</cfoutput>
         </td>
     </tr>
     <tr><td>&nbsp;</td></tr>
     <tr>
-        <td>
-        	<cfoutput>&nbsp;&nbsp;&nbsp;&nbsp;change selection:</cfoutput>                 
+     	<td>
+            <cfinput type="checkbox" name="empUpdate" value="1">&nbsp;&nbsp;check to change selection<br />
         </td>
     </tr>
-    <tr><td>&nbsp;</td></tr>
     <tr>
 		<td>
-			&nbsp;&nbsp;&nbsp;&nbsp;<cfselect name="employee" bind="cfc:nomination.getEmp ({department})" />
+            <cfselect name="employeeAnother" bind="cfc:nomination.getEmp ({departmentAnother})" />
 		</td>
 	</tr>
     <tr><td>&nbsp;</td></tr>
@@ -325,6 +327,7 @@ BULK NOMINATION
 	<tr>
         <td>
         	<!--- <cfset session.session.awardtypeController = #session.awardtypeController#> --->
+            <input type="hidden" name="session.employee">
         	<input type="hidden" name="session.numNom" value ="#session.numNom#">
             <cfinput type="Hidden" name="session.awardtypeController" value="#session.awardtypeController#">
             <cfif StructKeyExists(form, "awardtype")>

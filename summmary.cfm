@@ -22,23 +22,23 @@ session.awardtypeController
 awardtype
 --->
 
-<cfif StructKeyExists(form, "deptUpdate")>
+
 	 <!--- Set the desired department --->
 	<cfif deptUpdate eq 1>
 		<cfset department = #departmentAnother#>
         <cfelse>
         <cfset department = #department#>
     </cfif>
-</cfif>
 
-<cfif StructKeyExists(form, "empUpdate")>
+
+
 	 <!--- Set the desired department --->
 	<cfif empUpdate eq 1>
 		<cfset employee = #employeeAnother#>
         <cfelse>
-        <cfset employee = #employee#>
+        <cfset employee = #session.employee#>
     </cfif>
-</cfif>
+
 
 <!--- Find selected nominee name --->
 <cfif session.numNom is 1>
