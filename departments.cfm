@@ -218,7 +218,6 @@ session.awardtype
 	<tr>
     	<td>
             Number of nominations   <select name="numNom" id="numNom" value="">
-                  <option>1</option>
                   <option selected>2</option>
                   <option>3</option>
                   <option>4</option>
@@ -228,16 +227,6 @@ session.awardtype
                   <option>8</option>
                   <option>9</option>
                   <option>10</option>
-                  <option>11</option>
-                  <option>12</option>
-                  <option>13</option>
-                  <option>14</option>
-                  <option>15</option>
-                  <option>16</option>
-                  <option>17</option>
-                  <option>18</option>
-                  <option>19</option>
-                  <option>20</option>
             </select>
        	</td>
     </tr>
@@ -312,14 +301,14 @@ session.awardtype
     <script src="assets/js/vendor/holder.min.js"></script> 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
-    
+<!---  
 <cfdump var="#session.emp_id#"><br />
 <cfdump var="#session.empUID#"><br />
 <cfdump var="#logintime#"><br />
 <cfdump var="#getNominatorDept.emp_id#"><br />
 <cfdump var="#getNominatorDept.DepartmentName#"><br />
 <cfdump var="#getNominatorDept.RecordCount#"><br />
-<cfdump var="#result#">
+<cfdump var="#result#"> --->
 </body>
 </html>
 
