@@ -15,6 +15,7 @@ nav {
     padding-top: 18px;
     min-height: 115px;
     border-bottom: 6px solid #FFE800;
+	z-index: 7000;
 }
 
 .navtitle {

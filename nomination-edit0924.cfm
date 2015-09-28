@@ -1,25 +1,19 @@
-<!---
-Variables passed from departments.cfm
+<!--- Variables with values passed from summary.cfm
 SINGLE NOMINATION
-dept
-numNom
-awardtypeController
+session.awardtypeController
+session.numNom
+session.awardtype
 awardtype*
+session.vdept
+session.department
+session.employee
+session.achievement
+session.description
+session.nominator
 BULK NOMINATION
-dept
-numNom
-awardtypeController
-awardtype*
 --->
-
-<cfquery datasource="HatsOff">
-	Insert into audit
-	(admin_uid, nom_id, action, action_date, nominee_uid)
-	values
-	('#session.emp_id#', 0, 'Choose Department', #Now()#, '')
-</cfquery>
-
-<cfif awardTypeController eq 0>
+			
+<cfif session.awardtypeController eq 0>
 <cfif session.awardtype is 1>
     <cfquery name="getAchievements" datasource="hatsoff">
         Select * From achievements
@@ -35,7 +29,7 @@ awardtype*
 </cfif>
 </cfif>
 
-<cfif awardTypeController eq 1>
+<cfif session.awardtypeController eq 1>
 <cfif awardtype is 1>
     <cfquery name="getAchievements" datasource="hatsoff">
         Select * From achievements
@@ -51,15 +45,17 @@ awardtype*
 </cfif>
 </cfif>
 
+<cfset deptUpdate = "0">
+<cfset empUpdate = "0">
+
+<!---
 <CFQUERY NAME="getNominatorDept" DATASOURCE="hatsoff">
 	SELECT emp_full_name
 	FROM employees
 	WHERE emp_id = #session.empUID#
 </CFQUERY>.
 <cfset emp_full_name = getNominatorDept.emp_full_name>
-
-<!--- change numNom to session.numNom so can pass value to subsequent pages --->
-<cfset session.numNom = #numNom#>
+--->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -72,9 +68,10 @@ awardtype*
 <!--- <cfoutput>The award type is "#session.awardtype#"</cfoutput><br />
 <cfoutput>The dept is "#dept#"</cfoutput><br />
 <cfoutput>The nominator is #session.empUID#</cfoutput><br />
-<cfoutput>The nominator is #emp_full_name#</cfoutput><br /> --->
-<cfoutput>The numNom is #numNom#</cfoutput><br /> 
-<cfoutput>The awardTypeController is #awardTypeController#</cfoutput><br />
+<cfoutput>The nominator is #emp_full_name#</cfoutput>
+<cfoutput>The numNom is #numNom#</cfoutput> 
+<cfoutput>The session.awardtypeController is #session.awardtypeController#</cfoutput><br /> --->
+<output>The dept is #session.department#</output>
 
 <head>
     <meta charset="utf-8">
@@ -97,7 +94,7 @@ awardtype*
 
 <body>
 <!--- From awardtype determine which variable to use to determine logo --->
-<cfif awardTypeController eq 0>
+<cfif session.awardtypeController eq 0>
 	<cfif session.awardtype is 1>
         <cfinclude template="header-hatsoff.cfm">
     <cfelse> 
@@ -105,7 +102,7 @@ awardtype*
     </cfif><br />
 </cfif>
 
-<cfif awardTypeController eq 1>
+<cfif session.awardtypeController eq 1>
 	<cfif awardtype is 1>
         <cfinclude template="header-hatsoff.cfm">
     <cfelse> 
@@ -113,10 +110,12 @@ awardtype*
     </cfif><br />
 </cfif>
 
+<!---
 <cfset session.dept = dept>
 <cfset session.letter = "0">
 <cfset session.ood = "0">
-<cfset nominator = session.empUID>
+<cfset nominator = session.empUID> 
+--->
 
 <!--- set session.vdept value --->
 <cfif session.dept is "Conferences">
@@ -171,33 +170,82 @@ awardtype*
 	Order by emp_full_name
 </cfquery>
 
+<cfquery name="getDept" datasource="HatsOff">
+        SELECT account_number, account_title
+        FROM departments
+		<cfif session.vdept is not "All" and session.vdept is not "Letter">
+			WHERE departmentname = '#session.vdept#'  
+		</cfif>
+        ORDER BY account_title 
+</cfquery>
+
+<!--- Find selected subdepartment name --->
+<CFQUERY NAME="getSubDeptName" DATASOURCE="hatsoff">
+	SELECT account_title
+	FROM departments
+	WHERE account_number = #session.department#
+</CFQUERY>.
+<cfset subdeptName = getSubDeptName.account_title>
+
+<cfquery name="getEmployees" datasource="HatsOff">
+        SELECT emp_id, emp_full_name
+        FROM employees
+        WHERE emp_id = '#session.employee#'
+        ORDER BY emp_full_name
+</cfquery>
+<cfset nomineeName = getEmployees.emp_full_name>
+
 <hr class="featurette-divider">
 
 <!--- if nomination is single, then do the follow cfform insert --->
 <cfif session.numNom is 1>
 
 <!--- pass nomination.getDept & nomination.getEm & achievement values to summary.cfm for confirmation --->
-<cfform action="#URLSessionFormat("summary.cfm")#" method="POST">
+<cfform action="#URLSessionFormat("summmary.cfm")#" method="POST">
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr>
 		<td>
-		1. Select the location where your nominee works: 
+		<b>1. Select the location where your nominee works:</b>
 		</td>
 	</tr>
-	<tr>
+    <tr>
+        <td>
+        	<p>&nbsp;&nbsp;&nbsp;&nbsp;previous selection:</p>
+        	<cfoutput>&nbsp;&nbsp;&nbsp;&nbsp;#subdeptName#</cfoutput>
+        </td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr>
+    	<td>
+            <cfinput type="checkbox" name="deptUpdate" value="1">&nbsp;&nbsp;check to change selection<br />
+        </td>
+    </tr>
+    <tr>
 		<td>
-			<cfselect name="department" bind="cfc:nomination.getDept ()" bindonload="true" />
+			<cfselect name="departmentAnother" bind="cfc:nomination.getDept ()" bindonload="true" />
 		</td>
 	</tr>
-	<tr><td>&nbsp;</td></tr>
+    <tr><td>&nbsp;</td></tr>
 	<tr>
 		<td>
-		2. Select the nominee from the list below
+		<b>2. Select the nominee from the list below</b>
 		</td>
 	</tr>
-	<tr>
+    <tr>
+        <td>
+        	<p>&nbsp;&nbsp;&nbsp;&nbsp;previous selection:</p>
+        	<cfoutput>&nbsp;&nbsp;&nbsp;&nbsp;#nomineeName#</cfoutput>
+        </td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr>
+     	<td>
+            <cfinput type="checkbox" name="empUpdate" value="1">&nbsp;&nbsp;check to change selection<br />
+        </td>
+    </tr>
+    <tr>
 		<td>
-			<cfselect name="employee" bind="cfc:nomination.getEmp ({department})" />
+            <cfselect name="employeeAnother" bind="cfc:nomination.getEmp ({departmentAnother})" />
 		</td>
 	</tr>
     <tr><td>&nbsp;</td></tr>
@@ -208,26 +256,26 @@ awardtype*
 	</tr>
 	<tr>
 		<td>
-			<cfif awardTypeController eq 0>
+			<cfif session.awardtypeController eq 0>
 				<cfif session.awardtype is 1>
                     <cfoutput query="getAchievements">
-                     <dl><cfinput type="radio" name="achievement" value="#achievement_id#" checked=#checked#><dt>#achievement#</dt><em><small><dd>#achievement_descrip#</dd></dl></small></em>
+                     <dl><input type="radio" name="achievement" value="#achievement_id#" <cfif #session.achievement# eq #achievement_id#>checked="checked"</cfif>><dt>#achievement#</dt><em><small><dd>#achievement_descrip#</dd></dl></small></em>
                     </cfoutput>
                 <cfelse>
                     <cfoutput query="getAchievementsafety">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#" checked="#checked#"> #achievement#<br /><br />
+                    <input type="radio" name="achievement" value="#achievement_id#" <cfif #session.achievement# eq #achievement_id#>checked="checked"</cfif>> #achievement#<br /><br />
                     </cfoutput>
                 </cfif>
             </cfif>
             
-            <cfif awardTypeController eq 1>
+            <cfif session.awardtypeController eq 1>
 				<cfif awardtype is 1>
                     <cfoutput query="getAchievements">
-                     <dl><cfinput type="radio" name="achievement" value="#achievement_id#" checked=#checked#><dt>#achievement#</dt><em><small><dd>#achievement_descrip#</dd></dl></small></em>
+                     <dl><input type="radio" name="achievement" value="#achievement_id#" <cfif #session.achievement# eq #achievement_id#>checked="checked"</cfif>><dt>#achievement#</dt><em><small><dd>#achievement_descrip#</dd></dl></small></em>
                     </cfoutput>
                 <cfelse>
                     <cfoutput query="getAchievementsafety">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#" checked="#checked#"> #achievement#<br /><br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="achievement" value="#achievement_id#" <cfif #session.achievement# eq #achievement_id#>checked="checked"</cfif>> #achievement#<br /><br />
                     </cfoutput>
                 </cfif>
             </cfif>
@@ -241,7 +289,7 @@ awardtype*
 	</tr>
 	<tr>
 		<td>
-			<textarea name="Description" cols="50" rows="6" id="Description"  placeholder="Achievement description" onkeypress="return LimitThis()" onkeyup="return CountThis(myCounter1)" onmouseover="return CountThis(myCounter1)" wrap=physical maxLength="190" style="font-family:arial,helvetica, sans-serif;" required></textarea>
+			<textarea name="description" cols="50" rows="6" id="Description"  placeholder="Achievement description" onkeypress="return LimitThis()" onkeyup="return CountThis(myCounter1)" onmouseover="return CountThis(myCounter1)" wrap=physical maxLength="190" style="font-family:arial,helvetica, sans-serif;"><cfoutput>#session.description#</cfoutput></textarea>
 		</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>
@@ -253,15 +301,15 @@ awardtype*
     <tr><td>&nbsp;</td></tr>
     <tr>
         <td>
-        	<cfoutput>&nbsp;&nbsp;&nbsp;&nbsp;If you are assisting someone to do the nomination,<br />&nbsp;&nbsp;&nbsp;&nbsp;please select their name from this menu</cfoutput>                 
+        	<cfoutput>&nbsp;&nbsp;&nbsp;&nbsp;If you are assisting someone to do the nomination,<br />&nbsp;&nbsp;&nbsp;&nbsp;please select their name from this menu</cfoutput>
         </td>
     </tr>
-    <tr><td>&nbsp;</td></tr>
     <tr>
-     	<td>&nbsp;&nbsp;&nbsp;&nbsp;
-            <select name="nominator">
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;
+			<select name="nominator">
+				<option value=""></option>
 				<cfoutput query="getEmps">
-					<option value="#emp_id#" <cfif #nominator# eq #emp_id#>selected="selected"</cfif>>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#emp_full_name#</option>
+					<option value="#emp_id#" <cfif #session.nominator# eq #emp_id#>selected="selected"</cfif>>#emp_full_name#</option>
 				</cfoutput>
 			</select>
 		</td>
@@ -270,9 +318,15 @@ awardtype*
     <tr><td>&nbsp;</td></tr>
 	<tr>
         <td>
-        	<cfset session.awardtypeController = #awardtypeController#>
+        	<!--- <cfset session.session.awardtypeController = #session.awardtypeController#> --->
+            <cfset department = "#session.department#">
+            <input type="hidden" name="department">
+            <input type="hidden" name="session.employee">
+            <input type="hidden" name="employee">
+            <input type="hidden" name="deptUpdate">
+            <input type="hidden" name="empUpdate">
         	<input type="hidden" name="session.numNom" value ="#session.numNom#">
-            <input type="Hidden" name="session.awardtypeController" value="#session.awardtypeController#">
+            <cfinput type="Hidden" name="session.awardtypeController" value="#session.awardtypeController#">
             <cfif StructKeyExists(form, "awardtype")>
 				<cfinput type="Hidden" name="awardtype" value="#awardtype#">
             </cfif>
@@ -283,70 +337,85 @@ awardtype*
 </cfform>
 </cfif>
 
+<hr class="featurette-divider">
+
 <!--- if nomination is multiple, then do the follow cfform insert --->
-<cfif numNom gt 1>
+<cfif session.numNom gt 1>
 
 <!--- pass nomination.getDept & nomination.getEm & achievement values to summary.cfm for confirmation --->
-<cfform action="#URLSessionFormat("summary.cfm")#" method="POST">
+<cfform action="#URLSessionFormat("summmary.cfm")#" method="POST">
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 <tr><td>&nbsp;</td></tr>
 	<tr>
 		<td>
-			<b>1. Select the location where your nominee works:</b>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<cfselect name="department" bind="cfc:nomination.getDept ()" bindonload="true" />
+		<b>1. Select the location where your nominee works:</b>
 		</td>
 	</tr>
     <tr><td>&nbsp;</td></tr>
     <tr>
+        <td>
+        	<p>&nbsp;&nbsp;&nbsp;&nbsp;previous selection:</p>
+        	<cfoutput>&nbsp;&nbsp;&nbsp;&nbsp;#subdeptName#</cfoutput>
+        </td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
+        <tr>
+    	<td>
+            <cfinput type="checkbox" name="deptUpdate" value="1">&nbsp;&nbsp;check to change selection<br />
+        </td>
+    </tr>
+    <tr>
+		<td>
+			<cfselect name="departmentAnother" bind="cfc:nomination.getDept ()" bindonload="true" />
+		</td>
+	</tr>
+    <tr><td>&nbsp;</td></tr>
+    	<tr>
 		<td>
 		<b>2. Select the nominees achievement:</b>
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<cfif awardTypeController eq 0>
+			<cfif session.awardtypeController eq 0>
 				<cfif session.awardtype is 1>
                     <cfoutput query="getAchievements">
-                     <dl><cfinput type="radio" name="achievement" value="#achievement_id#" checked=#checked#><dt>#achievement#</dt><em><small><dd>#achievement_descrip#</dd></dl></small></em>
+                     <dl><input type="radio" name="achievement" value="#achievement_id#" <cfif #session.achievement# eq #achievement_id#>checked="checked"</cfif>><dt>#achievement#</dt><em><small><dd>#achievement_descrip#</dd></dl></small></em>
                     </cfoutput>
                 <cfelse>
                     <cfoutput query="getAchievementsafety">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#" checked="#checked#"> #achievement#<br /><br />
+                    <input type="radio" name="achievement" value="#achievement_id#" <cfif #session.achievement# eq #achievement_id#>checked="checked"</cfif>> #achievement#<br /><br />
                     </cfoutput>
                 </cfif>
             </cfif>
             
-            <cfif awardTypeController eq 1>
+            <cfif session.awardtypeController eq 1>
 				<cfif awardtype is 1>
                     <cfoutput query="getAchievements">
-                     <dl><cfinput type="radio" name="achievement" value="#achievement_id#" checked=#checked#><dt>#achievement#</dt><em><small><dd>#achievement_descrip#</dd></dl></small></em>
+                     <dl><input type="radio" name="achievement" value="#achievement_id#" <cfif #session.achievement# eq #achievement_id#>checked="checked"</cfif>><dt>#achievement#</dt><em><small><dd>#achievement_descrip#</dd></dl></small></em>
                     </cfoutput>
                 <cfelse>
                     <cfoutput query="getAchievementsafety">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <cfinput type="radio" name="achievement" value="#achievement_id#" checked="#checked#"> #achievement#<br /><br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="achievement" value="#achievement_id#" <cfif #session.achievement# eq #achievement_id#>checked="checked"</cfif>> #achievement#<br /><br />
                     </cfoutput>
                 </cfif>
             </cfif>
-		</td>
-   </tr>
-   <tr>
+		</td>	
+	</tr>
+    <tr><td>&nbsp;</td></tr>
+  	<tr>
 		<td>
 		<b>3. Enter the Nominator's name:</b>
 		</td>
 	</tr>
     <tr><td>&nbsp;</td></tr>
-	<tr>
+    <tr>
         <td>
         	<cfoutput>&nbsp;&nbsp;&nbsp;&nbsp;If you are assisting someone to do the nomination,<br />&nbsp;&nbsp;&nbsp;&nbsp;please select their name from this menu</cfoutput>
         </td>
     </tr>
-    <tr><td>&nbsp;</td></tr>
     <tr>
-        <td>&nbsp;&nbsp;
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;
 			<select name="nominator">
 				<option value=""></option>
 				<cfoutput query="getEmps">
@@ -355,8 +424,6 @@ awardtype*
 			</select>
 		</td>
 	</tr>
-    <tr><td>&nbsp;</td></tr>	
-	<tr><td>&nbsp;</td></tr>
 </table>
 
 <table align="center" border="1" border-collapse='collapse' cellpadding="0" cellspacing="4" width="400">
@@ -365,15 +432,17 @@ awardtype*
         <th>In the space provided, describe the nominee's achievement</th> <!---- :<br /><small><span id=myCounter1>1</span> Characters Remaining</small> --->
         <th></th>
 	</tr>
-    <cfset employeeArray = ArrayNew( 1 ) />
+    <cfset employeeAnotherArray = ArrayNew( 1 ) />
     <cfset DescriptionArray = ArrayNew( 1 ) />
     <cfloop index="i" from = "1" to = "#numNom#">
     <tr>
-    	<td><cfselect name="employeeArray#i#" bind="cfc:nomination.getEmp ({department})" /></td>
+    	<td>
+        	<cfinput type="checkbox" name="empUpdate[i]" value="1">&nbsp;&nbsp;check to change selection<br />
+        </td>
+        <td><cfselect name="employeeAnotherArray#i#" bind="cfc:nomination.getEmp ({departmentAnother})" /></td>
        	<td>
         	<cftextarea name="DescriptionArray#i#" cols="70" rows="3" placeholder="Achievement description" onkeypress="return LimitThis()" onkeyup="return CountThis(myCounter1)" onmouseover="return CountThis(myCounter1)" wrap="physical" validate="maxLength" maxLength="190" required></cftextarea>
        	</td>
-       
     </tr>
     </cfloop>
     <!---
@@ -436,8 +505,7 @@ awardtype*
 <cfdump var="#getDept.account_title#"><br />
 <cfdump var="#getEmployees.emp_full_name#"><br />
 <cfdump var="#getDept#"><br />
-<cfdump var="#getEmployees#"><br />
-<cfdump var="#nominator#"> --->
+<cfdump var="#getEmployees#"><br /> --->
 
 </body>
 </html>

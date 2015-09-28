@@ -22,7 +22,7 @@ session.awardtypeController
 awardtype
 --->
 
-
+<cfif session.numNom is 1>
 	 <!--- Set the desired department --->
 	<cfif deptUpdate eq 1>
 		<cfset department = #departmentAnother#>
@@ -30,15 +30,17 @@ awardtype
         <cfset department = #department#>
     </cfif>
 
-
-
-	 <!--- Set the desired department --->
+	 <!--- Set the desired employee --->
 	<cfif empUpdate eq 1>
 		<cfset employee = #employeeAnother#>
         <cfelse>
         <cfset employee = #session.employee#>
     </cfif>
+</cfif>
 
+
+
+<!--- <cfloop index="i" from = "1" to = "#session.numNom#"> --->
 
 <!--- Find selected nominee name --->
 <cfif session.numNom is 1>
@@ -50,13 +52,13 @@ awardtype
     <cfset nomineeName = getNomineeName.emp_full_name>
 </cfif>
 
-<!--- Find selected department name --->
-<CFQUERY NAME="getDeptName" DATASOURCE="hatsoff">
-	SELECT DepartmentName
+<!--- Find selected subdepartment name --->
+<CFQUERY NAME="getSubDeptName" DATASOURCE="hatsoff">
+	SELECT account_title
 	FROM departments
-	WHERE account_number = #department#
+	WHERE account_number = #session.department#
 </CFQUERY>.
-<cfset deptName = getDeptName.DepartmentName>
+<cfset subdeptName = getSubDeptName.account_title>
 
 <!--- Find selected achievement description --->
 <CFQUERY NAME="getAchievement1" DATASOURCE="hatsoff">
@@ -158,7 +160,7 @@ awardtype
             </thead>
             <tbody>
               <tr>
-                <td><cfoutput>#deptName#</cfoutput></td>
+                <td><cfoutput>#subdeptName#</cfoutput></td>
                 <td><cfoutput>#nomineeName#</cfoutput></td>
                 <td>
                  	<cfif session.awardtypeController eq 0>
@@ -284,7 +286,9 @@ awardtype
 		<td>
             <!--- <cfinput type="button" value="    Edit   " onclick="history.go(-1);return true;"> --->
             <cfinput type="hidden" id="session.awardtype" name="session.awardtype" value="#session.awardtype#">
-            <cfinput type="hidden" id="awardtype" name="awardtype" value="#awardtype#">
+            <cfif session.awardtypeController eq 1>
+            	<cfinput type="hidden" id="awardtype" name="awardtype" value="#awardtype#">
+            </cfif>
             <cfinput type="hidden" id="session.department" name="session.department" value="#session.department#">
             <cfinput type="hidden" id="session.employee" name="session.employee" value="#session.employee#">
             <cfinput type="hidden" id="session.achievement" name="session.achievement" value="#session.achievement#">

@@ -15,7 +15,7 @@ department
 achievement
 nominator
 nominatorAnother
-employeeArray#i#
+session.employeeArray[i]
 DescriptionArray[i]
 session.numNom = 2
 session.awardtypeController
@@ -248,8 +248,8 @@ awardtype
             <tbody>
             <cfloop index="i" from="1" to="#session.numNom#">
               <tr>
-               	<!--- <td><cfoutput>#evaluate("employeeArray#i#")#</cfoutput></td> --->
-                <td><cfoutput>#evaluate("nomineeNameArray[#i#]")#</cfoutput></td>
+               	<td><cfoutput>#evaluate("employeeArray#i#")#</cfoutput></td>
+                <!--- <td><cfoutput>#evaluate("nomineeNameArray#i#")#</cfoutput></td> --->
                 <td><cfoutput>#evaluate("DescriptionArray#i#")#</cfoutput></td>
               </tr>
             </cfloop>
@@ -335,37 +335,15 @@ awardtype
 </cfif>
 
 <cfif session.numNom GT 1>
-<cfform action="#URLSessionFormat("nomination-edit.cfm")#" method="POST">
+<cfform action="#URLSessionFormat("process.cfm")#" method="POST">
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr align="center">
 		<td>
             <!--- <cfinput type="button" value="    Edit   " onclick="history.go(-1);return true;"> --->
-            <cfinput type="hidden" id="session.awardtype" name="session.awardtype" value="#session.awardtype#">
-            <cfif session.awardtypeController eq 1>
-            	<cfinput type="hidden" id="awardtype" name="awardtype" value="#awardtype#">
-            </cfif>
-            <!--- <cfloop index="i" from="1" to="#session.numNom#">
-              <cfinput type="hidden" id="nomineeNameArray#i#" name="nomineeNameArray#i#">
-              <cfinput type="hidden" id="DescriptionArray#i#" name="DescriptionArray#i#"> --->
-            <!--- #evaluate("nomineeNameArray[#i#]")# --->
-            <cfif session.numNom eq '2'>
-            	<cfinput type="hidden" id="nomineeNameArray1" name="nomineeNameArray1" value="#evaluate("nomineeNameArray[1]")#">
-                <cfinput type="hidden" id="nomineeNameArray2" name="nomineeNameArray2" value="#evaluate("nomineeNameArray[2]")#">
-                <cfinput type="hidden" id="DescriptionArray1" name="DescriptionArray1" value="#DescriptionArray1#">
-                <cfinput type="hidden" id="DescriptionArray2" name="DescriptionArray2" value="#DescriptionArray2#">
-            </cfif>
-      
-            <cfinput type="hidden" id="session.department" name="session.department" value="#session.department#">
-            <cfinput type="hidden" id="session.employee" name="session.employee" value="#session.employee#">
-            <cfinput type="hidden" id="session.achievement" name="session.achievement" value="#session.achievement#">
-            <cfinput type="hidden" id="session.description" name="session.description" value="#session.description#">
-            <cfinput type="hidden" id="session.nominator" name="session.nominator" value="#session.nominator#">
-            <input type="submit" class="btn btn-lg btn-primary" value="  Edit  " >
+            <input type="button" class="btn btn-lg btn-primary" value="    Edit   " onclick="history.go(-1);">
 		</td>
     </tr>
-</table>
-</cfform><cfform action="#URLSessionFormat("process.cfm")#" method="POST">
-<table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
+     <tr><td>&nbsp;</td></tr>
         <tr align="center">
         <td>
         	<cfinput type="hidden" id="session.awardtype" name="session.awardtype" value="#session.awardtype#">
