@@ -430,12 +430,13 @@ BULK NOMINATION
         <th>In the space provided, describe the nominee's achievement</th> <!---- :<br /><small><span id=myCounter1>1</span> Characters Remaining</small> --->
         <th></th>
 	</tr>
-    <cfset employeeAnotherArray = ArrayNew( 1 ) />
+    <cfset empUpdateArray = ArrayNew( 1 ) />
+	<cfset employeeAnotherArray = ArrayNew( 1 ) />
     <cfset DescriptionArray = ArrayNew( 1 ) />
     <cfloop index="i" from = "1" to = "#session.numNom#">
     <tr>
     	<td>
-        	<cfinput type="checkbox" name="empUpdate[i]" value="1">
+        	<cfinput type="checkbox" name="empUpdateArray#i#" value="1">
         </td>
         
         <td><cfoutput>#evaluate("nomineeNameArray#i#")#</cfoutput></td> 
@@ -464,6 +465,79 @@ BULK NOMINATION
                 <input type="hidden" name="session.DescriptionArray[i]">
             </cfloop>
 			--->
+            <!--- Need to pass (input) nomineeNameArray[i] to summmary.cfm, need to hardcode depending on numNom --->
+            <cfif session.numNom eq '2'>
+            	<cfinput type="hidden" id="nomineeNameArray1" name="nomineeNameArray1" value="#evaluate("nomineeNameArray[1]")#">
+                <cfinput type="hidden" id="nomineeNameArray2" name="nomineeNameArray2" value="#evaluate("nomineeNameArray[2]")#">
+            </cfif>
+      		<cfif session.numNom eq '3'>
+            	<cfinput type="hidden" id="nomineeNameArray1" name="nomineeNameArray1" value="#evaluate("nomineeNameArray[1]")#">
+                <cfinput type="hidden" id="nomineeNameArray2" name="nomineeNameArray2" value="#evaluate("nomineeNameArray[2]")#">
+                <cfinput type="hidden" id="nomineeNameArray3" name="nomineeNameArray3" value="#evaluate("nomineeNameArray[3]")#">
+            </cfif>
+            <cfif session.numNom eq '4'>
+            	<cfinput type="hidden" id="nomineeNameArray1" name="nomineeNameArray1" value="#evaluate("nomineeNameArray[1]")#">
+                <cfinput type="hidden" id="nomineeNameArray2" name="nomineeNameArray2" value="#evaluate("nomineeNameArray[2]")#">
+                <cfinput type="hidden" id="nomineeNameArray3" name="nomineeNameArray3" value="#evaluate("nomineeNameArray[3]")#">
+                <cfinput type="hidden" id="nomineeNameArray4" name="nomineeNameArray4" value="#evaluate("nomineeNameArray[4]")#">
+            </cfif>
+            <cfif session.numNom eq '5'>
+            	<cfinput type="hidden" id="nomineeNameArray1" name="nomineeNameArray1" value="#evaluate("nomineeNameArray[1]")#">
+                <cfinput type="hidden" id="nomineeNameArray2" name="nomineeNameArray2" value="#evaluate("nomineeNameArray[2]")#">
+                <cfinput type="hidden" id="nomineeNameArray3" name="nomineeNameArray3" value="#evaluate("nomineeNameArray[3]")#">
+                <cfinput type="hidden" id="nomineeNameArray4" name="nomineeNameArray4" value="#evaluate("nomineeNameArray[4]")#">
+                <cfinput type="hidden" id="nomineeNameArray5" name="nomineeNameArray5" value="#evaluate("nomineeNameArray[5]")#">
+            </cfif>
+            <cfif session.numNom eq '6'>
+            	<cfinput type="hidden" id="nomineeNameArray1" name="nomineeNameArray1" value="#evaluate("nomineeNameArray[1]")#">
+                <cfinput type="hidden" id="nomineeNameArray2" name="nomineeNameArray2" value="#evaluate("nomineeNameArray[2]")#">
+                <cfinput type="hidden" id="nomineeNameArray3" name="nomineeNameArray3" value="#evaluate("nomineeNameArray[3]")#">
+                <cfinput type="hidden" id="nomineeNameArray4" name="nomineeNameArray4" value="#evaluate("nomineeNameArray[4]")#">
+                <cfinput type="hidden" id="nomineeNameArray5" name="nomineeNameArray5" value="#evaluate("nomineeNameArray[5]")#">
+                <cfinput type="hidden" id="nomineeNameArray6" name="nomineeNameArray6" value="#evaluate("nomineeNameArray[6]")#">
+            </cfif>
+            <cfif session.numNom eq '7'>
+            	<cfinput type="hidden" id="nomineeNameArray1" name="nomineeNameArray1" value="#evaluate("nomineeNameArray[1]")#">
+                <cfinput type="hidden" id="nomineeNameArray2" name="nomineeNameArray2" value="#evaluate("nomineeNameArray[2]")#">
+                <cfinput type="hidden" id="nomineeNameArray3" name="nomineeNameArray3" value="#evaluate("nomineeNameArray[3]")#">
+                <cfinput type="hidden" id="nomineeNameArray4" name="nomineeNameArray4" value="#evaluate("nomineeNameArray[4]")#">
+                <cfinput type="hidden" id="nomineeNameArray5" name="nomineeNameArray5" value="#evaluate("nomineeNameArray[5]")#">
+                <cfinput type="hidden" id="nomineeNameArray6" name="nomineeNameArray6" value="#evaluate("nomineeNameArray[6]")#">
+                <cfinput type="hidden" id="nomineeNameArray7" name="nomineeNameArray7" value="#evaluate("nomineeNameArray[7]")#">
+            </cfif>
+            <cfif session.numNom eq '8'>
+            	<cfinput type="hidden" id="nomineeNameArray1" name="nomineeNameArray1" value="#evaluate("nomineeNameArray[1]")#">
+                <cfinput type="hidden" id="nomineeNameArray2" name="nomineeNameArray2" value="#evaluate("nomineeNameArray[2]")#">
+                <cfinput type="hidden" id="nomineeNameArray3" name="nomineeNameArray3" value="#evaluate("nomineeNameArray[3]")#">
+                <cfinput type="hidden" id="nomineeNameArray4" name="nomineeNameArray4" value="#evaluate("nomineeNameArray[4]")#">
+                <cfinput type="hidden" id="nomineeNameArray5" name="nomineeNameArray5" value="#evaluate("nomineeNameArray[5]")#">
+                <cfinput type="hidden" id="nomineeNameArray6" name="nomineeNameArray6" value="#evaluate("nomineeNameArray[6]")#">
+                <cfinput type="hidden" id="nomineeNameArray7" name="nomineeNameArray7" value="#evaluate("nomineeNameArray[7]")#">
+                <cfinput type="hidden" id="nomineeNameArray8" name="nomineeNameArray8" value="#evaluate("nomineeNameArray[8]")#">
+            </cfif>
+            <cfif session.numNom eq '9'>
+            	<cfinput type="hidden" id="nomineeNameArray1" name="nomineeNameArray1" value="#evaluate("nomineeNameArray[1]")#">
+                <cfinput type="hidden" id="nomineeNameArray2" name="nomineeNameArray2" value="#evaluate("nomineeNameArray[2]")#">
+                <cfinput type="hidden" id="nomineeNameArray3" name="nomineeNameArray3" value="#evaluate("nomineeNameArray[3]")#">
+                <cfinput type="hidden" id="nomineeNameArray4" name="nomineeNameArray4" value="#evaluate("nomineeNameArray[4]")#">
+                <cfinput type="hidden" id="nomineeNameArray5" name="nomineeNameArray5" value="#evaluate("nomineeNameArray[5]")#">
+                <cfinput type="hidden" id="nomineeNameArray6" name="nomineeNameArray6" value="#evaluate("nomineeNameArray[6]")#">
+                <cfinput type="hidden" id="nomineeNameArray7" name="nomineeNameArray7" value="#evaluate("nomineeNameArray[7]")#">
+                <cfinput type="hidden" id="nomineeNameArray8" name="nomineeNameArray8" value="#evaluate("nomineeNameArray[8]")#">
+                <cfinput type="hidden" id="nomineeNameArray9" name="nomineeNameArray9" value="#evaluate("nomineeNameArray[9]")#">
+            </cfif>
+            <cfif session.numNom eq '10'>
+            	<cfinput type="hidden" id="nomineeNameArray1" name="nomineeNameArray1" value="#evaluate("nomineeNameArray[1]")#">
+                <cfinput type="hidden" id="nomineeNameArray2" name="nomineeNameArray2" value="#evaluate("nomineeNameArray[2]")#">
+                <cfinput type="hidden" id="nomineeNameArray3" name="nomineeNameArray3" value="#evaluate("nomineeNameArray[3]")#">
+                <cfinput type="hidden" id="nomineeNameArray4" name="nomineeNameArray4" value="#evaluate("nomineeNameArray[4]")#">
+                <cfinput type="hidden" id="nomineeNameArray5" name="nomineeNameArray5" value="#evaluate("nomineeNameArray[5]")#">
+                <cfinput type="hidden" id="nomineeNameArray6" name="nomineeNameArray6" value="#evaluate("nomineeNameArray[6]")#">
+                <cfinput type="hidden" id="nomineeNameArray7" name="nomineeNameArray7" value="#evaluate("nomineeNameArray[7]")#">
+                <cfinput type="hidden" id="nomineeNameArray8" name="nomineeNameArray8" value="#evaluate("nomineeNameArray[8]")#">
+                <cfinput type="hidden" id="nomineeNameArray9" name="nomineeNameArray9" value="#evaluate("nomineeNameArray[9]")#">
+                <cfinput type="hidden" id="nomineeNameArray10" name="nomineeNameArray10" value="#evaluate("nomineeNameArray[10]")#">
+            </cfif>
         	<input type="hidden" name="session.numNom" value ="#session.numNom#">
             <input type="Hidden" name="session.awardtypeController" value="#session.awardtypeController#">
             <cfif StructKeyExists(form, "awardtype")>

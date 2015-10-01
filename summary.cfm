@@ -136,7 +136,8 @@ awardtype
 </head>
 
 <body>
-<!--- From awardtype determine which variable to use to determine logo --->
+<cfinclude template="header-hatsoff.cfm">
+<!--- From awardtype determine which variable to use to determine logo 
 <cfif session.awardtypeController eq 0>
 	<cfif session.awardtype is 1>
         <cfinclude template="header-hatsoff.cfm">
@@ -152,6 +153,7 @@ awardtype
         <cfinclude template="header-safety.cfm">
     </cfif>
 </cfif>
+--->
 
 <cfif session.numNom is 1>
 <div class="container">

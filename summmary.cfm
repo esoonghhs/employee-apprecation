@@ -53,15 +53,23 @@ awardtype
 
 <!--- Find selected nominee name for multiple nominations --->
 <cfif session.numNom gt 1>
-<cfset nomineeNameArray = ArrayNew (1)>
 	<cfloop index="i" from="1" to="#session.numNom#">
-        <CFQUERY NAME="getNomineeName" DATASOURCE="hatsoff">
-            SELECT emp_full_name
-            FROM employees
-            WHERE emp_id = #evaluate("employeeAnotherArray#i#")#
-        </CFQUERY>.
-        <cfset nomineeNameArray[i] = getNomineeName.emp_full_name>
-    </cfloop>
+		<cfif isDefined("form.empUpdateArray#i#")>
+			<cfif #evaluate("empUpdateArray#i#")# eq 1>
+				<cfset nomineeNameArray = ArrayNew (1)>
+                    <cfloop index="i" from="1" to="#session.numNom#">
+                        <CFQUERY NAME="getNomineeName" DATASOURCE="hatsoff">
+                            SELECT emp_full_name
+                            FROM employees
+                            WHERE emp_id = #evaluate("employeeAnotherArray#i#")#
+                        </CFQUERY>.
+                        <cfset nomineeNameArray[i] = getNomineeName.emp_full_name>
+                    </cfloop> 
+			</cfif>
+        <cfelse>
+        	<cfset nomineeNameArray[i] = #evaluate("nomineeNameArray#i#")#>
+		</cfif>
+	</cfloop>
 </cfif>
 
 <!--- Find selected subdepartment name --->
