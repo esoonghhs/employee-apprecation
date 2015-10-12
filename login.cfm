@@ -201,3 +201,10 @@ A:	Ask your supervisor, or contact the program coordinator Aliana Lungo-Shapiro,
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>
+
+<!---
+Variables passed to validate.cfm
+awardchoice
+uname
+pword
+--->
