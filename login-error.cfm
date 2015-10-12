@@ -94,7 +94,7 @@
 				</div> <!--- modal-dialog --->
 			</div> <!--- modal fade --->
             </div><!--- /.container --->
-</cfif> --->
+</cfif>
 
     
 <cfinclude template="footer.cfm">
