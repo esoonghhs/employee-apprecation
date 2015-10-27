@@ -76,7 +76,7 @@ function CountThis(visCnt) {
 </cfquery>
 
 <body>
-<cfinclude template="header.cfm">
+<cfinclude template="header-award.cfm">
 <form action="nominator.cfm" name="myform" method="post">
 <table align="center" border="0" cellpadding="0" cellspacing="4" width="400">
 	<tr>

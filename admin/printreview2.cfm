@@ -10,7 +10,7 @@
 <cfset enddate = createdatetime(year(now()),12,31,23,59,59)>
 
 <body>
-<cfinclude template="../header.cfm">
+<cfinclude template="../header-award.cfm">
 <cfquery name="getAwards" datasource="#ds.hatsoff#">
 SELECT     awards.nom_id, awards.nominee_location, awards.nominee_uid, awards.nominee_achievement, awards.nominee_achievement_desc, 
                       achievements.achievement, administration.emp_full_name AS sup_name, administration.username

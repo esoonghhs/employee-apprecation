@@ -32,7 +32,7 @@
 	Select * From achievements
 	Order by achievement
 </cfquery>
-<cfinclude template="../header.cfm">
+<cfinclude template="../header-award.cfm">
 <cfform action="excelreport.cfm" method="post">
 
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="200">

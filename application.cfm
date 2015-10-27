@@ -3,9 +3,10 @@
 Thank you for supporting the H&HS Hats Off program. As part of the holiday black-out we will not be accepting Hats Off nominations at this time. If you have any nominations, you may submit them starting January 1, 2014.
 <cfabort>
 </cfif>--->
-
+<!---
 <cfif (CF_TEMPLATE_PATH DOES NOT CONTAIN "hatsoff\login.cfm") and (CF_TEMPLATE_PATH DOES NOT CONTAIN "hatsoff\validate.cfm")>
 	<cfif not isdefined('session.username')>
-		<cflocation url="login.cfm">
+		<cflocation url="login-error.cfm">
 	</cfif>
-</cfif>  
+</cfif>
+--->

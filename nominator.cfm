@@ -54,7 +54,7 @@
 </head>
 
 <body onload="document.frmScan.nominator.focus();">
-<cfinclude template="header.cfm">
+<cfinclude template="header-award.cfm">
 
 <cfset session.achievement = achievement>
 <cfset session.description = description>

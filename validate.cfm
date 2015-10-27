@@ -1,4 +1,9 @@
-
+<!---
+Variables passed from login.cfm
+awardchoice
+uname
+pword
+--->
 
 <CFIF uname IS "">
 	<CFLOCATION URL="login.cfm">
@@ -14,7 +19,7 @@
  
 	   <cfldap action="QUERY"
 	   name="AuthenticateUser"
-	   attributes="givenname,samaccountname,dn,cn,mail"
+	   attributes="givenname,samaccountname,employeeID,dn,cn,mail"
 	   start="dc=hhs,dc=local"
 	   maxrows="1"
 	   scope="subtree"
@@ -28,6 +33,31 @@
 	   <cfset LoginMessage = "User Authentication Failed">
 	   </cfcatch>
 	  </cftry>
+      
+      <!--- Validate what values are returned from AD for testing purposes
+      <table border=1 cellspacing=2 cellpadding=2> 
+      <tr> 
+         <th colspan=4><cfoutput>#AuthenticateUser.RecordCount# matches found</cfoutput> 
+         </th> 
+      </tr> 
+      <tr> 
+         <th>GivenName</th> 
+         <th>AccountName</th> 
+         <th>EmployeeID</th> 
+         <th>dn</th>
+         <th>cn</th> 
+         <th>mail</th> 
+      </tr> 
+     <cfoutput query="AuthenticateUser"> 
+      <tr> 
+         <td>#givenname#</td> 
+         <td>#samaccountname#</td> 
+         <td>#employeeID#</a></td> 
+         <td>#dn#</td>
+         <td>#cn#</td> 
+         <td>#mail#</td>  
+     </tr> 
+     </cfoutput> --->
 	  
 	<cfif IsDefined('AuthenticateUser.recordcount')>
 		<cfif AuthenticateUser.recordcount GT "0">
@@ -44,6 +74,7 @@
 			<cfset session.username="jsinger">
 		<cfelse>
 			<cfset session.username="#form.uname#">
+            <cfset session.empUID="#AuthenticateUser.employeeID#">
 		</cfif>
 
 		<cfquery name="getID" datasource="Hatsoff">
@@ -57,11 +88,22 @@
 		<cfif session.emp_id is "">
 			<cfset session.emp_id = "#session.username#">
 		</cfif>
-		
+        
+        <cfif awardchoice is "1">
+        	<cfset session.awardtype = "1">
+        <cfelse>
+        	<cfset session.awardtype = "2">
+        </cfif>
+        		
 		<cflocation url="departments.cfm" addtoken="No">
 		<cfabort>
 	<cfelse>
-		<cflocation url="login.cfm" addtoken="No">
+        <cfif awardchoice is "1">
+        	<cfset session.awardtype = "1">
+        <cfelse>
+        	<cfset session.awardtype = "2">
+        </cfif>
+		<cflocation url="login-error.cfm" addtoken="No">
 		<cfabort>
 	</cfif>
 
@@ -69,8 +111,10 @@
 	<CFLOCATION URL="login.cfm" addtoken="No">
 	<CFABORT>
 </CFIF>
-
-
 <CFABORT>
 
-
+<!---
+Variables passed to departments.cfm
+session.emp_id (nominator)
+session.awardtype
+--->

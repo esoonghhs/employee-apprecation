@@ -82,8 +82,8 @@ unit="cm"
 </cfoutput>
 
 <!--- window.location.href='printreview.cfm'; --->
-<cfinclude template="../header.cfm">
- <body onload="javascript: poponLoad()">
+<cfinclude template="../header-award.cfm">
+ <body onLoad="javascript: poponLoad()">
 <form action="print.cfm" method="post">
 <cfoutput>
 <input type="hidden" name="nom" value="#nom#">
@@ -98,7 +98,7 @@ unit="cm"
 	<tr><td>&nbsp;&nbsp;&nbsp;</td></tr>
 	<tr>
 		<td align="center">
-			<input type="submit" value="  Reprint  ">&nbsp;&nbsp;&nbsp;<input type="button" value="  Next Award  " onclick="window.location='printreview.cfm';">
+			<input type="submit" value="  Reprint  ">&nbsp;&nbsp;&nbsp;<input type="button" value="  Next Award  " onClick="window.location='printreview.cfm';">
 		</td>
 	</tr>
  </table>

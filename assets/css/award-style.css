@@ -1,0 +1,31 @@
+body { 
+	background: #FFFFFF !important; 
+}
+td {
+	font-size: 100%; color: #555555; font-family: Arial, Helvetica, sans-serif
+}
+
+nav {
+    background: url('../img/header-background.png') no-repeat;
+    background: linear-gradient(to left, rgb(53, 131, 190), rgb(16, 82, 134));
+}
+
+.navbar {
+    background: url('../img/header-background.png') no-repeat;
+	background: linear-gradient(to left, rgb(53, 131, 190), rgb(16, 82, 134));
+	display: block;
+    padding-top: 18px;
+    min-height: 115px;
+    border-bottom: 6px solid #FFE800;
+	z-index: 7000;
+}
+
+.navtitle {
+    padding-top: 100px;
+	padding-bottom: 30px;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:xx-large;
+	font-weight:800;
+	text-align:center;
+	color:#1E6A95;
+}

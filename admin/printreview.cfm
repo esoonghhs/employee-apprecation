@@ -30,7 +30,7 @@ FROM         awards INNER JOIN
                       achievements ON awards.nominee_achievement = achievements.achievement_id INNER JOIN
                       administration ON awards.supervisor_uid = administration.emp_id --->
 <body>
-<cfinclude template="../header.cfm">
+<cfinclude template="../header-award.cfm">
 <cfquery name="getAwards" datasource="#ds.hatsoff#">
 
 					  
